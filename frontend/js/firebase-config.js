@@ -9,15 +9,32 @@
    update the dashboard in whichever language is currently selected.
    ===================================================================== */
 
+/* =====================================================================
+   SITAGARAA — Firebase configuration & live data wiring
+   ===================================================================== */
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
-import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import {
+  getDatabase,
+  ref,
+  onValue
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-// Your web app's Firebase configuration with Asia-Southeast1 Realtime DB URL
+// Gemini API key from .env
+const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
+
+// Optional safety check
+if (!GEMINI_API_KEY) {
+  console.warn("GEMINI_API_KEY is not configured in the .env file.");
+}
+
+// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAWlDnQQbgElBAI2x5MnezQyVTyvvKITAY",
+  apiKey: "[GCP_API_KEY]",
   authDomain: "vegetable-box-system.firebaseapp.com",
-  databaseURL: "https://vegetable-box-system-default-rtdb.asia-southeast1.firebasedatabase.app",
+  databaseURL:
+    "https://vegetable-box-system-default-rtdb.asia-southeast1.firebasedatabase.app",
   projectId: "vegetable-box-system",
   storageBucket: "vegetable-box-system.firebasestorage.app",
   messagingSenderId: "753357154695",
@@ -31,15 +48,17 @@ const app = initializeApp(firebaseConfig);
 try {
   getAnalytics(app);
 } catch (err) {
-  console.warn("Firebase Analytics not available in local/file environment:", err);
+  console.warn(
+    "Firebase Analytics not available in local/file environment:",
+    err
+  );
 }
 
 const db = getDatabase(app);
 
 document.addEventListener("DOMContentLoaded", function () {
 
-  // Real-time listener for live sensor telemetry posted by ESP32 firmware:
-  // Path: /liveData -> temperature, humidity, co2, gasLevel, solarBattery, solarWatts, coolingState, updatedAt
+  // Real-time listener for live sensor telemetry
   onValue(ref(db, "liveData"), function (snapshot) {
     const d = snapshot.val();
     if (!d) return;
@@ -55,12 +74,16 @@ document.addEventListener("DOMContentLoaded", function () {
       updatedAt: d.updatedAt || Date.now()
     });
 
-    if (typeof d.temperature === "number") window.addTemperaturePoint(d.temperature);
-    if (typeof d.gasLevel === "number") window.addGasPoint(d.gasLevel);
+    if (typeof d.temperature === "number") {
+      window.addTemperaturePoint(d.temperature);
+    }
+
+    if (typeof d.gasLevel === "number") {
+      window.addGasPoint(d.gasLevel);
+    }
   });
 
-  // Real-time listener for AI Vision & vegetable detection:
-  // Path: /vegetableInfo -> currentVegetable, confidence, freshnessScore, daysStored, quantity, spoilageAlert
+  // Real-time listener for AI Vision & vegetable detection
   onValue(ref(db, "vegetableInfo"), function (snapshot) {
     const d = snapshot.val();
     if (!d) return;
