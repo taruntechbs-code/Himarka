@@ -1,0 +1,82 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: himarka-backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_ENV=development
+      - DEBUG=true
+      - DATABASE_URL=postgresql+asyncpg://himarka_user:himarka_pass@db:5432/himarka_db
+      - SECRET_KEY=replace_with_a_secure_random_64_byte_secret_key
+      - CORS_ORIGINS=["http://localhost:5173","http://localhost:3000"]
+      - LOG_LEVEL=INFO
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./backend:/app
+    networks:
+      - himarka-net
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: ../infrastructure/docker/Dockerfile.frontend
+    container_name: himarka-frontend
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_BASE_URL=http://localhost:8000/api/v1
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    networks:
+      - himarka-net
+
+  db:
+    image: postgres:16-alpine
+    container_name: himarka-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: himarka_user
+      POSTGRES_PASSWORD: himarka_pass
+      POSTGRES_DB: himarka_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - himarka-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U himarka_user -d himarka_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - himarka-net
+
+  redis:
+    image: redis:7-alpine
+    container_name: himarka-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - himarka-net
+
+networks:
+  himarka-net:
+    driver: bridge
+
+volumes:
+  himarka-pgdata:

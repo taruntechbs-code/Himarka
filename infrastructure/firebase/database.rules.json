@@ -1,0 +1,14 @@
+{
+  "rules": {
+    "telemetry": {
+      "$device_id": {
+        ".read": "auth != null",
+        ".write": "auth != null && auth.token.is_edge_device === true"
+      }
+    },
+    "alerts": {
+      ".read": "auth != null",
+      ".write": "auth != null && auth.token.role === 'admin'"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "name": "himarka-workspace",
+  "version": "0.1.0",
+  "description": "Solar-Powered Smart Mini Cold Storage System for Fresh Vegetables in the North Eastern Region of India",
+  "private": true,
+  "workspaces": [
+    "frontend"
+  ],
+  "scripts": {
+    "dev:frontend": "npm run dev --prefix frontend",
+    "build:frontend": "npm run build --prefix frontend",
+    "lint:frontend": "npm run lint --prefix frontend",
+    "test:frontend": "npm run test --prefix frontend",
+    "test:backend": "pytest backend/tests",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down"
+  },
+  "keywords": [
+    "cold-storage",
+    "solar-energy",
+    "iot",
+    "esp32",
+    "agriculture",
+    "fastapi",
+    "react"
+  ],
+  "author": "HIMARKA Core Team",
+  "license": "MIT"
+}

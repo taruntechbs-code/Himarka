@@ -1,0 +1,32 @@
+{
+  "app": {
+    "title": "HIMARKA",
+    "tagline": "Solar-Powered Smart Mini Cold Storage System",
+    "region": "North Eastern Region of India",
+    "phase": "Phase 0 Architectural Shell"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "telemetry": "Telemetry",
+    "storage": "Storage Units",
+    "produce": "Produce",
+    "devices": "Devices",
+    "energy": "Solar & Energy",
+    "alerts": "Alerts",
+    "settings": "Settings"
+  },
+  "status": {
+    "healthy": "Healthy",
+    "degraded": "Degraded",
+    "offline": "Offline",
+    "active": "Active",
+    "online": "Online"
+  },
+  "common": {
+    "loading": "Loading system data...",
+    "error": "An error occurred",
+    "retry": "Retry",
+    "save": "Save",
+    "cancel": "Cancel"
+  }
+}

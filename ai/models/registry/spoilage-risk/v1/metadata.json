@@ -1,0 +1,25 @@
+{
+  "model_name": "spoilage-risk-estimator",
+  "version": "v1.0.0",
+  "task_type": "SPOILAGE_RISK",
+  "framework": "scikit-learn / XGBoost",
+  "status": "PLANNED",
+  "input_schema": {
+    "features": [
+      "storage_duration_hours",
+      "mean_temperature_c",
+      "mean_humidity_percent",
+      "gas_ppm_surge",
+      "produce_type_encoded"
+    ]
+  },
+  "output_schema": {
+    "risk_score": "float (0.0 - 1.0)",
+    "risk_category": "string (LOW, MODERATE, HIGH, CRITICAL)",
+    "confidence": "float"
+  },
+  "model_artifact_path": "checkpoints/spoilage_xgb_v1.bin",
+  "evaluation_metrics": {
+    "status": "PENDING_LAB_CALIBRATION"
+  }
+}

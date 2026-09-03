@@ -1,0 +1,18 @@
+export const API_ENDPOINTS = {
+  HEALTH: '/health',
+  HEALTH_LIVE: '/health/live',
+  HEALTH_READY: '/health/ready',
+  AUTH_LOGIN: '/auth/login',
+  AUTH_REGISTER: '/auth/register',
+  TELEMETRY_LATEST: '/telemetry/latest',
+  TELEMETRY_HISTORY: '/telemetry/history',
+  TELEMETRY_INGEST: '/telemetry/ingest',
+  DEVICES: '/devices',
+  DEVICE_HEARTBEAT: '/devices/heartbeat',
+  STORAGE_UNITS: '/storage',
+  PRODUCE_BATCHES: '/produce/batches',
+  ALERTS: '/alerts',
+  ENERGY_LATEST: '/energy/latest',
+  AI_DETECTION: '/ai/detection',
+  AI_SPOILAGE: '/ai/spoilage-risk',
+} as const;

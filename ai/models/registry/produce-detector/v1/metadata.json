@@ -1,0 +1,28 @@
+{
+  "model_name": "produce-detector",
+  "version": "v1.0.0",
+  "task_type": "DETECTION",
+  "framework": "Ultralytics YOLOv8",
+  "status": "PLANNED",
+  "input_schema": {
+    "format": "image/jpeg",
+    "resolution": [640, 640],
+    "channels": 3
+  },
+  "output_schema": {
+    "type": "array",
+    "items": {
+      "class_name": "string",
+      "confidence": "float",
+      "bbox": ["x_min", "y_min", "x_max", "y_max"]
+    }
+  },
+  "model_artifact_path": "checkpoints/produce_yolov8n.pt",
+  "training_metadata": {
+    "target_classes": ["Tomato", "King Chilli", "Ginger", "Cabbage"],
+    "dataset_source": "datasets/processed/ne_produce_v1"
+  },
+  "evaluation_metrics": {
+    "status": "PENDING_BENCHMARK"
+  }
+}
