@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
-        content="HIMARKA - Solar Powered Smart Mini Cold Storage System for Fresh Vegetables in Northeast India with IoT real-time monitoring and AI produce detection.">
+        content="HIMARKA — Solar Powered Smart Mini Cold Storage System for Fresh Vegetables in Northeast India with IoT real-time monitoring and AI produce detection.">
     <title>HIMARKA | Solar Powered Smart Cold Storage</title>
 
     <link rel="stylesheet" href="css/style.css">
@@ -14,7 +14,7 @@
 
 <body class="dark-theme">
 
-    <!-- Vector icon set -->
+    <!-- Vector Icon Symbols -->
     <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
         <symbol id="icon-snowflake" viewBox="0 0 24 24">
             <line x1="12" y1="2" x2="12" y2="22" />
@@ -94,441 +94,607 @@
         </symbol>
     </svg>
 
-    <!-- Animated Canvas Background -->
+    <!-- Background Canvas -->
     <canvas id="bgCanvas" aria-hidden="true"></canvas>
 
-    <!-- CINEMATIC OPENING ANIMATION (TWO LARGE HALVES) -->
-    <div id="portalIntro" class="portal-intro" aria-label="Portal Introduction">
-        <div class="portal-sticky-stage is-closed" id="portalStickyStage">
-            <!-- Left & Right Solid Panels meeting in center -->
-            <div class="portal-half portal-half-left" id="portalHalfLeft" aria-hidden="true"></div>
-            <div class="portal-half portal-half-right" id="portalHalfRight" aria-hidden="true"></div>
+    <!-- FIXED 58PX MINIMAL NAVIGATION -->
+    <header class="site-nav" role="banner">
+        <a href="#hero" class="nav-brand" aria-label="Himarka Home">
+            <span class="brand-mark">HIMARKA<span class="brand-dot">.</span></span>
+        </a>
 
-            <!-- Center Content & HIMARKA Wordmark -->
-            <div class="portal-center-content" id="portalCenterContent">
-                <div class="portal-top-meta">
-                    <span>SOLAR POWERED COLD STORAGE</span>
-                    <span class="portal-meta-dot"></span>
-                    <span>NORTHEAST INDIA</span>
-                </div>
+        <nav class="nav-links" aria-label="Main Navigation">
+            <a href="#system" class="nav-link">SYSTEM</a>
+            <a href="#ai" class="nav-link">AI</a>
+            <a href="#monitor" class="nav-link">MONITOR</a>
+            <a href="#prototype" class="nav-link">PROTOTYPE</a>
+        </nav>
 
-                <div class="portal-wordmark-container" id="portalWordmarkContainer" aria-label="HIMARKA">
-                    <span class="portal-word-span" id="portalWordHim">HIM</span><span class="portal-word-span" id="portalWordArka">ARKA</span>
-                </div>
+        <div class="nav-actions">
+            <!-- 9-Language Regional Selector -->
+            <select id="languageSelect" class="nav-lang-select" aria-label="Select Interface Language" onchange="window.handleLanguageChange(this.value)">
+                <option value="English">English</option>
+                <option value="Assamese">অসমীয়া (Assamese)</option>
+                <option value="Bengali">বাংলা (Bengali)</option>
+                <option value="Hindi">हिंदी (Hindi)</option>
+                <option value="Nepali">नेपाली (Nepali)</option>
+                <option value="Manipuri">মৈতৈলোন্ (Manipuri)</option>
+                <option value="Bodo">बर' (Bodo)</option>
+                <option value="Mizo">Mizo ṭawng (Mizo)</option>
+                <option value="Khasi">Ka Ktien Khasi (Khasi)</option>
+            </select>
 
-                <div class="portal-bottom-meta" id="portalBottomMeta">
-                    <span>SCROLL TO ENTER</span>
-                    <div class="portal-scroll-indicator"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- WELCOME / LANGUAGE PAGE -->
-    <section id="welcomePage" class="welcome-page">
-
-        <button id="welcomeThemeToggle" class="theme-toggle welcome-theme-toggle" type="button"
-            aria-label="Toggle theme">
-            <svg class="icon icon-sm">
-                <use href="#icon-sun" />
-            </svg> <span data-i18n="theme_light">Light Mode</span>
-        </button>
-
-        <div class="language-card">
-
-            <div class="logo welcome-logo">
-                <svg class="icon icon-md logo-icon">
-                    <use href="#icon-snowflake" />
-                </svg>
-                <span>HIM<span class="highlight">ARKA</span></span>
-            </div>
-
-            <div class="language-icon">
-                <svg class="icon icon-lg">
-                    <use href="#icon-globe" />
-                </svg>
-            </div>
-
-            <p class="eyebrow" data-i18n="eyebrow_platform">
-                SOLAR POWERED SMART COLD STORAGE PLATFORM
-            </p>
-
-            <h1 data-i18n="welcome_title">Welcome to HIMARKA</h1>
-
-            <p class="welcome-description" data-i18n="welcome_desc">
-                Select your preferred Northeast regional language to access real-time cold storage monitoring, AI
-                produce detection, and solar analytics.
-            </p>
-
-            <div class="language-selector">
-
-                <label for="languageSelect" data-i18n="choose_language_label">
-                    Choose your language
-                </label>
-
-                <select id="languageSelect" onchange="window.handleLanguageChange(this.value)">
-                    <option value="English">English</option>
-                    <option value="Assamese">অসমীয়া — Assamese (Assam)</option>
-                    <option value="Bengali">বাংলা — Bengali (Tripura &amp; Barak Valley)</option>
-                    <option value="Hindi">हिंदी — Hindi (Inter-State / NE)</option>
-                    <option value="Nepali">नेपाली — Nepali (Sikkim &amp; Hill Districts)</option>
-                    <option value="Manipuri">মৈতৈলোন্ — Manipuri / Meitei (Manipur)</option>
-                    <option value="Bodo">बर' — Bodo (Bodoland, Assam)</option>
-                    <option value="Mizo">Mizo ṭawng — Mizo (Mizoram)</option>
-                    <option value="Khasi">Ka Ktien Khasi — Khasi (Meghalaya)</option>
-                </select>
-
-            </div>
-
-            <button id="continueBtn" class="continue-btn" type="button" onclick="window.handleContinueClick(event)">
-                <span data-i18n="continue_btn">Continue to Dashboard</span>
-                <span class="arrow">→</span>
+            <!-- Theme Toggle -->
+            <button id="dashboardThemeToggle" class="btn-icon" type="button" aria-label="Toggle Color Theme" onclick="window.toggleTheme()">
+                <svg class="icon icon-sm"><use href="#icon-sun"/></svg>
             </button>
 
-            <p id="selectedLanguageText" class="language-info">
-                English is selected as the default language.
-            </p>
-
+            <!-- Compact Pill Button -->
+            <a href="#monitor" class="btn-pill">
+                <span class="dot dot-amber dot-pulse"></span>
+                <span>MONITOR</span>
+            </a>
         </div>
+    </header>
 
-    </section>
+    <!-- MAIN INTERFACE FLOW -->
+    <main id="mainContent">
 
-    <!-- DASHBOARD PAGE -->
-    <section id="dashboardPage" class="dashboard-page hidden">
+        <!-- =======================================================
+             1. PORTAL HERO — SIGNATURE SCROLL-DRIVEN OPENING
+             ======================================================= -->
+        <section id="hero" aria-label="Cinematic Opening Portal">
+            <div class="portal-stage" id="portalStage">
 
-        <aside class="sidebar">
-
-            <div class="logo sidebar-logo">
-                <svg class="icon icon-md logo-icon">
-                    <use href="#icon-snowflake" />
-                </svg>
-                <span>HIM<span class="highlight">ARKA</span></span>
-            </div>
-
-            <nav>
-                <a href="#dashboard" class="active">
-                    <svg class="icon icon-sm">
-                        <use href="#icon-home" />
-                    </svg>
-                    <span data-i18n="nav_dashboard">Dashboard</span>
-                </a>
-
-                <a href="#environment">
-                    <svg class="icon icon-sm">
-                        <use href="#icon-thermometer" />
-                    </svg>
-                    <span data-i18n="nav_environment">Environment</span>
-                </a>
-
-                <a href="#analytics">
-                    <svg class="icon icon-sm">
-                        <use href="#icon-chart" />
-                    </svg>
-                    <span data-i18n="nav_analytics">Analytics</span>
-                </a>
-
-                <a href="#vegetables">
-                    <svg class="icon icon-sm">
-                        <use href="#icon-box" />
-                    </svg>
-                    <span data-i18n="nav_storage_ai">Storage AI</span>
-                </a>
-
-                <a href="#camera">
-                    <svg class="icon icon-sm">
-                        <use href="#icon-camera" />
-                    </svg>
-                    <span data-i18n="nav_vision">Vision System</span>
-                </a>
-            </nav>
-
-            <div class="sidebar-bottom">
-
-                <button id="dashboardThemeToggle" class="theme-toggle" type="button">
-                    <svg class="icon icon-sm">
-                        <use href="#icon-sun" />
-                    </svg> <span data-i18n="theme_light">Light Mode</span>
-                </button>
-
-                <button id="changeLanguageBtn" class="change-language" type="button"
-                    onclick="window.handleWelcomeClick(event)">
-                    <svg class="icon icon-sm">
-                        <use href="#icon-globe" />
-                    </svg>
-                    <span data-i18n="change_language_btn">Change Language</span>
-                </button>
-
-                <div class="system-status">
-                    <span class="pulse"></span>
-                    <span data-i18n="system_online">SYSTEM ONLINE</span>
+                <!-- Full-Bleed Chamber Visual Behind Panels -->
+                <div class="portal-bg-wrap">
+                    <img src="assets/himarka_chamber.jpg" alt="Himarka Solar Cold Storage Prototype Chamber" class="portal-bg-img" id="portalBgImg">
                 </div>
 
-            </div>
+                <!-- Radial Darkening Veil -->
+                <div class="portal-veil" aria-hidden="true"></div>
 
-        </aside>
+                <!-- Two Solid Halves Meeting in Center -->
+                <div class="portal-panel portal-panel-left" id="panelLeft" aria-hidden="true"></div>
+                <div class="portal-panel portal-panel-right" id="panelRight" aria-hidden="true"></div>
 
-        <main>
+                <!-- Accent Dots Travelling Outward -->
+                <div class="portal-accent-dot dot-amber" id="dotAmber" aria-hidden="true"></div>
+                <div class="portal-accent-dot dot-teal" id="dotTeal" aria-hidden="true"></div>
 
-            <header>
-                <div>
-                    <p class="eyebrow" data-i18n="header_eyebrow">
-                        AI + SOLAR IoT COLD CHAIN SYSTEM — NORTHEAST REGION
-                    </p>
-
-                    <h1 data-i18n="header_title">
-                        Smart Vegetable Storage Command Center
+                <!-- HIMARKA Splitting, Expanding & Tightening Wordmark -->
+                <div class="portal-wordmark-wrap" id="wordmarkWrap" aria-hidden="true">
+                    <h1 class="portal-wordmark">
+                        <span class="word-split word-left" id="wordLeft">HIM</span><span class="word-split word-right" id="wordRight">ARKA</span>
                     </h1>
+                </div>
 
-                    <p class="subtitle" data-i18n="header_subtitle">
-                        Real-time microclimate tracking, solar energy management &amp; AI produce freshness analysis.
+                <!-- Editorial Metadata in Hero -->
+                <div class="portal-meta-top">
+                    <span class="label-mono">SOLAR POWERED</span>
+                    <span class="label-mono text-amber">SMART COLD STORAGE</span>
+                    <span class="label-mono">NER / AGRICULTURE / IOT</span>
+                </div>
+
+                <div class="portal-meta-bottom">
+                    <div class="label-mono">
+                        DECENTRALIZED PRESERVATION<br>
+                        PERISHABLE HORTICULTURE
+                    </div>
+
+                    <div class="scroll-indicator" aria-label="Scroll to open portal">
+                        <span class="label-mono text-muted">SCROLL TO ENTER</span>
+                        <div class="scroll-line"></div>
+                    </div>
+
+                    <div class="label-mono" style="text-align: right;">
+                        26.1445° N, 91.7362° E<br>
+                        AUTONOMOUS MICROCLIMATE
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- =======================================================
+             2. STATEMENT FOLD
+             ======================================================= -->
+        <section id="statement" class="section-statement">
+            <div class="statement-layout">
+                <div>
+                    <span class="label-mono text-amber">[ PURPOSE 01 ] &bull; DECENTRALIZED COLD-CHAIN</span>
+                    <div class="statement-index" aria-hidden="true">01</div>
+                    <h2 class="statement-title">
+                        KEEP FRESHNESS <span class="text-amber">WHERE IT STARTS.</span>
+                    </h2>
+                    <p class="statement-body">
+                        In rural horticulture belts across Northeast India, erratic grid power causes high-value crops—like organic tomatoes, King Chili, ginger, and cabbage—to spoil within days. 
+                        <strong>HIMARKA</strong> combines autonomous solar photovoltaic energy, active microclimate regulation, and real-time edge computer vision to secure farmer income at the point of harvest.
                     </p>
                 </div>
-            </header>
 
-            <!-- TEMPERATURE HERO CARD -->
-            <section id="dashboard" class="hero-panel">
+                <div class="statement-visual-wrap">
+                    <div class="statement-circle" id="statementCircle">
+                        <img src="assets/himarka_sensor_core.jpg" alt="Himarka Microcontroller Sensor Core Assembly">
+                        <div class="statement-reticle" aria-hidden="true"></div>
+                    </div>
+                    <div class="statement-meta-badge">
+                        <span class="dot dot-teal"></span> SENSOR CORE &bull; DUAL ESP32 NODE
+                    </div>
+                </div>
+            </div>
+        </section>
 
-                <div class="hero-content">
-                    <p data-i18n="storage_environment">STORAGE ENVIRONMENT</p>
+        <!-- =======================================================
+             3. SYSTEM SECTION — TWO-COLUMN WITH THROWABLE CARD DECK
+             ======================================================= -->
+        <section id="system" class="section-system">
+            <div class="system-two-col">
+                <!-- Left Column -->
+                <div class="system-left-col">
+                    <span class="label-mono text-amber">SYSTEM ARCHITECTURE</span>
+                    <h2 class="system-headline">Physical-to-Digital Subsystems</h2>
+                    <p class="system-lede">
+                        Modular solar-powered microclimate containment engineered for off-grid agricultural corridors in Northeast India.
+                        Each subsystem operates autonomously with fail-safe telemetry sync.
+                    </p>
+                    <div class="system-btn-row">
+                        <a href="#monitor" class="btn-pill">
+                            <span>EXPLORE TELEMETRY ↓</span>
+                        </a>
+                        <a href="https://github.com/taruntechbs-code/Himarka.git" target="_blank" rel="noopener noreferrer" class="btn-pill btn-pill-secondary">
+                            <span>VIEW GITHUB ↗</span>
+                        </a>
+                    </div>
+                </div>
 
-                    <h2 id="temperature">--°C</h2>
+                <!-- Right Column: Throwable Physical Card Deck -->
+                <div class="prototype-deck-container" id="prototype">
+                    <div class="card-deck" id="cardDeck" tabindex="0" role="region" aria-label="Prototype Card Deck. Use left and right arrow keys to navigate.">
+                        
+                        <!-- Card 1: Solar Power -->
+                        <article class="deck-card" data-card="0" aria-label="Card 1: Solar Power">
+                            <img src="assets/himarka_solar_power.jpg" alt="Monocrystalline Solar PV Array" class="deck-card-image">
+                            <div>
+                                <div class="deck-card-header">
+                                    <span class="deck-card-num">01 / 06</span>
+                                    <span class="label-mono">PHOTOVOLTAIC</span>
+                                </div>
+                                <h3 class="deck-card-title">01 — Solar Power</h3>
+                                <p class="deck-card-desc">
+                                    Monocrystalline PV array coupled with an MPPT charge buffer and voltage divider, ensuring 24/7 unassisted cooling in off-grid districts.
+                                </p>
+                            </div>
+                        </article>
 
-                    <div class="hero-meta-row">
-                        <div class="meta-chip hidden" id="coolingChip">
-                            <span class="chip-label" data-i18n="cooling_status_label">COOLING SYSTEM</span>
-                            <span class="chip-value" id="coolingStateText" data-i18n="cooling_active">ACTIVE
-                                (Peltier/Compressor)</span>
+                        <!-- Card 2: Cooling Relay -->
+                        <article class="deck-card" data-card="1" aria-label="Card 2: Cooling">
+                            <img src="assets/himarka_chamber.jpg" alt="Thermoelectric Cooling Relay Node" class="deck-card-image">
+                            <div>
+                                <div class="deck-card-header">
+                                    <span class="deck-card-num">02 / 06</span>
+                                    <span class="label-mono">THERMOSTAT</span>
+                                </div>
+                                <h3 class="deck-card-title">02 — Cooling</h3>
+                                <p class="deck-card-desc">
+                                    Autonomous solid-state hysteresis relay controlling Peltier / DC compression unit maintaining optimal 4°C–8°C storage temperature.
+                                </p>
+                            </div>
+                        </article>
+
+                        <!-- Card 3: Sensor Core -->
+                        <article class="deck-card" data-card="2" aria-label="Card 3: Sensor Core">
+                            <img src="assets/himarka_sensor_core.jpg" alt="Precision Microclimate Sensor Probe" class="deck-card-image">
+                            <div>
+                                <div class="deck-card-header">
+                                    <span class="deck-card-num">03 / 06</span>
+                                    <span class="label-mono">MICROCLIMATE</span>
+                                </div>
+                                <h3 class="deck-card-title">03 — Sensor Core</h3>
+                                <p class="deck-card-desc">
+                                    Calibrated DHT22 thermistor and MQ-135 agricultural gas probe measuring rising volatile amines and ethylene decay indicators.
+                                </p>
+                            </div>
+                        </article>
+
+                        <!-- Card 4: AI Vision -->
+                        <article class="deck-card" data-card="3" aria-label="Card 4: AI Vision">
+                            <img src="assets/himarka_chamber.jpg" alt="Internal Chamber Produce Vision Feed" class="deck-card-image">
+                            <div>
+                                <div class="deck-card-header">
+                                    <span class="deck-card-num">04 / 06</span>
+                                    <span class="label-mono">COMPUTER VISION</span>
+                                </div>
+                                <h3 class="deck-card-title">04 — AI Vision</h3>
+                                <p class="deck-card-desc">
+                                    Internal wide-angle OV2640 camera streaming to a lightweight YOLOv8 edge inference script for non-destructive produce detection.
+                                </p>
+                            </div>
+                        </article>
+
+                        <!-- Card 5: Cloud Monitoring -->
+                        <article class="deck-card" data-card="4" aria-label="Card 5: Cloud Monitoring">
+                            <img src="assets/himarka_sensor_core.jpg" alt="Firebase RTDB Sync Client Node" class="deck-card-image">
+                            <div>
+                                <div class="deck-card-header">
+                                    <span class="deck-card-num">05 / 06</span>
+                                    <span class="label-mono">TELEMETRY SYNC</span>
+                                </div>
+                                <h3 class="deck-card-title">05 — Cloud Monitoring</h3>
+                                <p class="deck-card-desc">
+                                    Low-latency Firebase Realtime Database integration broadcasting /liveData and /vegetableInfo payloads every 15 seconds.
+                                </p>
+                            </div>
+                        </article>
+
+                        <!-- Card 6: Storage Chamber -->
+                        <article class="deck-card" data-card="5" aria-label="Card 6: Storage Chamber">
+                            <img src="assets/himarka_chamber.jpg" alt="Insulated PUF Cold Storage Chamber" class="deck-card-image">
+                            <div>
+                                <div class="deck-card-header">
+                                    <span class="deck-card-num">06 / 06</span>
+                                    <span class="label-mono">HERMETIC ENCLOSURE</span>
+                                </div>
+                                <h3 class="deck-card-title">06 — Storage</h3>
+                                <p class="deck-card-desc">
+                                    Double-wall 60mm PUF thermal insulation with airtight magnetic perimeter gaskets to minimize thermal transfer during high ambient heat.
+                                </p>
+                            </div>
+                        </article>
+
+                    </div>
+
+                    <!-- Deck Controls -->
+                    <div class="deck-controls">
+                        <button type="button" class="deck-control-btn" id="deckPrevBtn" aria-label="Previous Module">&larr; PREV</button>
+                        <span class="label-mono text-muted" id="deckCounter">1 / 6</span>
+                        <button type="button" class="deck-control-btn" id="deckNextBtn" aria-label="Next Module">NEXT &rarr;</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =======================================================
+             4. ROSTER-STYLE SECTION (HAIRLINE-RULED LIVE TELEMETRY)
+             ======================================================= -->
+        <section class="section-roster" aria-label="Live System Telemetry Roster">
+            <div class="roster-container">
+                <span class="label-mono text-amber">REAL-TIME TELEMETRY MATRIX</span>
+                <h2 class="system-headline" style="margin-top:0.5rem;">Operational Parameters</h2>
+
+                <div class="roster-list">
+                    <!-- Row 1: Temperature -->
+                    <div class="roster-row">
+                        <div class="roster-left">
+                            <span class="roster-label">[ CORE THERMAL ]</span>
+                            <span class="roster-name">CHAMBER TEMPERATURE</span>
+                        </div>
+                        <div class="roster-right">
+                            <span class="roster-val text-amber" id="rosterTemp">--°C</span>
+                            <span class="roster-sub">TARGET: 4°C – 8°C</span>
                         </div>
                     </div>
 
-                    <div class="last-update">
-                        <span data-i18n="last_updated">Last updated:</span>
-                        <span id="lastUpdate">--</span>
-                    </div>
-                </div>
-
-                <div class="hero-icon">
-                    <svg class="icon">
-                        <use href="#icon-snowflake" />
-                    </svg>
-                </div>
-
-            </section>
-
-            <!-- 6-CARD SENSOR & SOLAR GRID -->
-            <section id="environment" class="stats-grid">
-
-                <!-- HUMIDITY -->
-                <div class="glass-card">
-                    <div class="card-top">
-                        <svg class="icon icon-md accent-icon">
-                            <use href="#icon-droplet" />
-                        </svg>
-                        <p data-i18n="humidity_label">HUMIDITY</p>
-                    </div>
-
-                    <h2 id="humidity">--%</h2>
-
-                    <div class="progress">
-                        <div id="humidityBar" class="progress-fill" style="width:0%"></div>
-                    </div>
-                    <small data-i18n="humidity_optimal">Optimal: 85% - 95% RH</small>
-                </div>
-
-                <!-- CO2 LEVEL -->
-                <div class="glass-card">
-                    <div class="card-top">
-                        <svg class="icon icon-md accent-icon">
-                            <use href="#icon-cloud" />
-                        </svg>
-                        <p data-i18n="co2_label">CO₂ LEVEL</p>
-                    </div>
-
-                    <h2 id="co2">-- ppm</h2>
-                    <small id="co2Status" data-i18n="co2_fresh">Fresh air circulation</small>
-                </div>
-
-                <!-- GAS LEVEL / TVOC -->
-                <div class="glass-card">
-                    <div class="card-top">
-                        <svg class="icon icon-md accent-icon">
-                            <use href="#icon-flask" />
-                        </svg>
-                        <p data-i18n="gas_label">GAS / TVOC</p>
-                    </div>
-
-                    <h2 id="gas">--</h2>
-                    <small id="gasStatusText" data-i18n="gas_status_normal">Normal air quality</small>
-                </div>
-
-                <!-- SOLAR BATTERY -->
-                <div class="glass-card">
-                    <div class="card-top">
-                        <svg class="icon icon-md accent-icon">
-                            <use href="#icon-sun" />
-                        </svg>
-                        <p data-i18n="solar_label">SOLAR BATTERY</p>
-                    </div>
-
-                    <h2 id="solar">--%</h2>
-                    <div class="progress">
-                        <div id="solarBar" class="progress-fill solar-fill" style="width:0%"></div>
-                    </div>
-                    <small data-i18n="battery_solar_monitoring">Battery charge &amp; solar PV generation</small>
-                </div>
-
-                <!-- SOLAR POWER INPUT -->
-                <div class="glass-card">
-                    <div class="card-top">
-                        <svg class="icon icon-md accent-icon">
-                            <use href="#icon-zap" />
-                        </svg>
-                        <p data-i18n="solar_power_label">SOLAR POWER INPUT</p>
-                    </div>
-
-                    <h2 id="solarWatts">-- W</h2>
-                    <small data-i18n="solar_power_sub">Peak Power Generation (12V/24V PV)</small>
-                </div>
-
-                <!-- CLIMATE PRESERVATION STATUS -->
-                <div class="glass-card">
-                    <div class="card-top">
-                        <svg class="icon icon-md accent-icon">
-                            <use href="#icon-leaf" />
-                        </svg>
-                        <p data-i18n="preservation_label">PRESERVATION STATUS</p>
-                    </div>
-
-                    <h2 id="preservationStatus" class="status-highlight" data-i18n="status_optimal">OPTIMAL</h2>
-                    <small data-i18n="preservation_sub">Zero-decay cold chain active</small>
-                </div>
-
-            </section>
-
-            <!-- LIVE TELEMETRY CHARTS -->
-            <section id="analytics" class="content-grid">
-
-                <!-- TEMPERATURE CHART -->
-                <div class="chart-card">
-                    <div class="section-header">
-                        <div>
-                            <p class="eyebrow" data-i18n="live_analytics">LIVE TELEMETRY ANALYTICS</p>
-                            <h2 data-i18n="temperature_variation">Temperature Variation (°C)</h2>
+                    <!-- Row 2: Humidity -->
+                    <div class="roster-row">
+                        <div class="roster-left">
+                            <span class="roster-label">[ MICROCLIMATE ]</span>
+                            <span class="roster-name">CHAMBER HUMIDITY</span>
                         </div>
-                        <span class="live-tag-badge" data-i18n="live_tag">LIVE HARDWARE</span>
+                        <div class="roster-right">
+                            <span class="roster-val text-teal" id="rosterHumidity">--%</span>
+                            <span class="roster-sub">OPTIMAL: 85% – 95%</span>
+                        </div>
                     </div>
 
-                    <canvas id="temperatureChart"></canvas>
+                    <!-- Row 3: Solar Battery -->
+                    <div class="roster-row">
+                        <div class="roster-left">
+                            <span class="roster-label">[ PHOTOVOLTAIC ]</span>
+                            <span class="roster-name">SOLAR BATTERY BUFFER</span>
+                        </div>
+                        <div class="roster-right">
+                            <span class="roster-val" id="rosterBattery">--%</span>
+                            <span class="roster-sub">12V / 24V BUS</span>
+                        </div>
+                    </div>
+
+                    <!-- Row 4: Solar Generation -->
+                    <div class="roster-row">
+                        <div class="roster-left">
+                            <span class="roster-label">[ GENERATION ]</span>
+                            <span class="roster-name">SOLAR POWER INPUT</span>
+                        </div>
+                        <div class="roster-right">
+                            <span class="roster-val text-amber" id="rosterSolarWatts">-- W</span>
+                            <span class="roster-sub">PEAK PV POWER</span>
+                        </div>
+                    </div>
+
+                    <!-- Row 5: Air Quality -->
+                    <div class="roster-row">
+                        <div class="roster-left">
+                            <span class="roster-label">[ AIR QUALITY ]</span>
+                            <span class="roster-name">VOLATILE GAS / TVOC</span>
+                        </div>
+                        <div class="roster-right">
+                            <span class="roster-val text-teal" id="rosterGas">-- ppm</span>
+                            <span class="roster-sub">ETHYLENE INDEX</span>
+                        </div>
+                    </div>
+
+                    <!-- Row 6: Preservation Integrity -->
+                    <div class="roster-row">
+                        <div class="roster-left">
+                            <span class="roster-label">[ INTEGRITY ]</span>
+                            <span class="roster-name">PRESERVATION STATUS</span>
+                        </div>
+                        <div class="roster-right">
+                            <span class="roster-val" style="color:var(--green);" id="rosterPreservation">OPTIMAL</span>
+                            <span class="roster-sub">ZERO DECAY ACTIVE</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =======================================================
+             5. DATES / LIVE DATA TABLE & MONITORING COMMAND CENTER
+             ======================================================= -->
+        <section id="monitor" class="section-live-data">
+            <div class="roster-container">
+                <div style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:1rem;">
+                    <div>
+                        <span class="label-mono text-amber">COMMAND CENTER &bull; TELEMETRY LOG</span>
+                        <h2 class="system-headline" style="margin-top:0.5rem;" data-i18n="header_title">Live System Telemetry Table</h2>
+                    </div>
+
+                    <!-- Live Hardware Status Badges -->
+                    <div style="display:flex; align-items:center; gap:0.75rem;">
+                        <span class="dot dot-green dot-pulse"></span>
+                        <span class="label-mono text-primary" id="alertState" data-i18n="alert_normal_tag">SYSTEM NORMAL</span>
+                        <span class="label-mono text-muted">&bull;</span>
+                        <span class="label-mono text-muted" id="lastUpdate">--</span>
+                    </div>
                 </div>
 
-                <!-- GAS VARIATION CHART -->
-                <div class="chart-card">
-                    <div class="section-header">
-                        <div>
-                            <p class="eyebrow" data-i18n="air_quality">AIR QUALITY &amp; GAS MONITOR</p>
-                            <h2 data-i18n="gas_variation">Gas Variation (ppm)</h2>
-                        </div>
-                        <span class="live-tag-badge" data-i18n="live_tag">LIVE HARDWARE</span>
-                    </div>
-
-                    <canvas id="gasChart"></canvas>
+                <!-- Live Data Table -->
+                <div class="live-table-wrap">
+                    <table class="live-data-table" role="table">
+                        <thead>
+                            <tr>
+                                <th>PARAMETER</th>
+                                <th>SENSOR &amp; PIN</th>
+                                <th>OPERATIONAL STATUS</th>
+                                <th>LIVE READING</th>
+                                <th>TARGET RANGE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="td-param" data-col="PARAMETER">Chamber Temperature</td>
+                                <td data-col="SENSOR & PIN">DHT22 (GPIO 4)</td>
+                                <td data-col="STATUS">
+                                    <span class="dot dot-amber"></span>
+                                    <span id="coolingStateText" data-i18n="cooling_active">Cooling Active</span>
+                                </td>
+                                <td class="td-val text-amber" data-col="LIVE READING" id="temperature">--°C</td>
+                                <td data-col="TARGET RANGE">4°C – 8°C Optimal</td>
+                            </tr>
+                            <tr>
+                                <td class="td-param" data-col="PARAMETER">Relative Humidity</td>
+                                <td data-col="SENSOR & PIN">DHT22 (GPIO 4)</td>
+                                <td data-col="STATUS">
+                                    <span class="dot dot-teal"></span> Microclimate Balanced
+                                </td>
+                                <td class="td-val text-teal" data-col="LIVE READING" id="humidity">--%</td>
+                                <td data-col="TARGET RANGE">85% – 95% RH</td>
+                            </tr>
+                            <tr>
+                                <td class="td-param" data-col="PARAMETER">Carbon Dioxide (CO₂)</td>
+                                <td data-col="SENSOR & PIN">MQ-135 (GPIO 34)</td>
+                                <td data-col="STATUS">
+                                    <span class="dot dot-teal"></span> <span id="co2Status" data-i18n="co2_fresh">Fresh Air Circulation</span>
+                                </td>
+                                <td class="td-val" data-col="LIVE READING" id="co2">-- ppm</td>
+                                <td data-col="TARGET RANGE">&lt; 600 ppm</td>
+                            </tr>
+                            <tr>
+                                <td class="td-param" data-col="PARAMETER">Gas / TVOC Index</td>
+                                <td data-col="SENSOR & PIN">MQ-135 (GPIO 34)</td>
+                                <td data-col="STATUS">
+                                    <span class="dot dot-green"></span> <span id="gasStatusText" data-i18n="gas_status_normal">Normal Air Quality</span>
+                                </td>
+                                <td class="td-val text-teal" data-col="LIVE READING" id="gas">-- ppm</td>
+                                <td data-col="TARGET RANGE">&lt; 350 ppm</td>
+                            </tr>
+                            <tr>
+                                <td class="td-param" data-col="PARAMETER">Solar Battery Buffer</td>
+                                <td data-col="SENSOR & PIN">Voltage Divider (GPIO 35)</td>
+                                <td data-col="STATUS">
+                                    <span class="dot dot-amber"></span> High Charge Buffer
+                                </td>
+                                <td class="td-val text-amber" data-col="LIVE READING" id="solar">--%</td>
+                                <td data-col="TARGET RANGE">24V / 12V LiFePO4</td>
+                            </tr>
+                            <tr>
+                                <td class="td-param" data-col="PARAMETER">Solar Power Generation</td>
+                                <td data-col="SENSOR & PIN">PV Current Sensor</td>
+                                <td data-col="STATUS">
+                                    <span class="dot dot-amber"></span> Monocrystalline Active
+                                </td>
+                                <td class="td-val text-amber" data-col="LIVE READING" id="solarWatts">-- W</td>
+                                <td data-col="TARGET RANGE">Irradiance Driven</td>
+                            </tr>
+                            <tr>
+                                <td class="td-param" data-col="PARAMETER">Produce Freshness State</td>
+                                <td data-col="SENSOR & PIN">Sensor Fusion Loop</td>
+                                <td data-col="STATUS">
+                                    <span class="dot dot-green"></span> <span id="alertDesc" data-i18n="alert_normal_desc">Optimal preservation</span>
+                                </td>
+                                <td class="td-val" style="color:var(--green);" data-col="LIVE READING" id="preservationStatus" data-i18n="status_optimal">OPTIMAL</td>
+                                <td data-col="TARGET RANGE">Zero Thermal Spoilage</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
 
-            </section>
+                <!-- Hidden progress bar compatibility bridges -->
+                <div style="display:none;" aria-hidden="true">
+                    <div id="humidityBar" style="width:0%;"></div>
+                    <div id="solarBar" style="width:0%;"></div>
+                    <div id="coolingChip"></div>
+                </div>
 
-            <!-- AI INVENTORY & CAMERA VISION -->
-            <section id="vegetables" class="bottom-grid">
-
-                <!-- AI INVENTORY CARD -->
-                <div class="storage-card">
-                    <div class="section-header">
-                        <div>
-                            <p class="eyebrow" data-i18n="ai_inventory">AI PRODUCE INVENTORY</p>
-                            <h2 data-i18n="vegetables_inside_storage">Vegetables Inside Storage</h2>
+                <!-- Spline Charts Grid -->
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <div>
+                                <span class="label-mono text-amber">TELEMETRY SPLINE</span>
+                                <h3 style="font-size:1.15rem; margin-top:0.25rem;" data-i18n="temperature_variation">Temperature Variation (°C)</h3>
+                            </div>
+                            <span class="label-mono text-muted" data-i18n="live_tag">LIVE SENSORS</span>
                         </div>
-                        <span class="ai-badge hidden" id="aiCameraActiveBadge" data-i18n="yolo_active">AI CAMERA ACTIVE</span>
+                        <div class="chart-canvas-wrap">
+                            <canvas id="temperatureChart"></canvas>
+                        </div>
                     </div>
 
-                    <div class="vegetable-list" id="vegetableList">
-                        <p class="muted-note" id="vegetableEmptyNote" data-i18n="vegetable_waiting">
-                            Waiting for camera produce scan…
-                        </p>
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <div>
+                                <span class="label-mono text-teal">AIR QUALITY SPLINE</span>
+                                <h3 style="font-size:1.15rem; margin-top:0.25rem;" data-i18n="gas_variation">Gas Variation (ppm)</h3>
+                            </div>
+                            <span class="label-mono text-muted" data-i18n="live_tag">LIVE SENSORS</span>
+                        </div>
+                        <div class="chart-canvas-wrap">
+                            <canvas id="gasChart"></canvas>
+                        </div>
                     </div>
                 </div>
 
-                <!-- COMPUTER VISION & CAMERA CARD -->
-                <div id="camera" class="camera-card">
-                    <div class="section-header">
-                        <div>
-                            <p class="eyebrow" data-i18n="computer_vision">COMPUTER VISION &amp; CAMERA</p>
-                            <h2 data-i18n="cold_storage_camera">Storage Box Live Camera</h2>
+                <!-- AI Vision & ESP32-CAM Area -->
+                <div id="ai" class="vision-grid">
+                    <div>
+                        <span class="label-mono text-teal">AI VISION PIPELINE &bull; ESP32-CAM</span>
+                        <h3 class="system-headline" style="font-size:1.6rem; margin:0.35rem 0 1rem;">Internal Inspection Stream</h3>
+
+                        <div class="camera-screen-wrap" id="cameraScreenContainer">
+                            <img id="cameraStream" class="camera-stream-img hidden" alt="Live chamber video stream">
+
+                            <div class="camera-offline-slate" id="cameraPlaceholder">
+                                <svg class="icon icon-lg"><use href="#icon-camera"/></svg>
+                                <h4 style="margin-top:0.5rem;" data-i18n="yolo_vision_system">AI Produce Vision System</h4>
+                                <p id="cameraPlaceholderText" style="font-size:0.8rem; margin-top:0.35rem;" data-i18n="camera_feed_placeholder">
+                                    Camera stream standby. Click button below to activate MJPEG stream.
+                                </p>
+                            </div>
+
+                            <!-- Real-time Bounding Box Overlay -->
+                            <div class="detection-box hidden" id="detectionBox">
+                                <span class="detection-tag" id="detectionLabel" data-i18n="veg_tomatoes">Organic Tomatoes</span>
+                                <span class="detection-conf" id="detectionConfidence">98% <span data-i18n="unit_match">Match</span></span>
+                            </div>
                         </div>
 
-                        <div class="camera-header-actions">
-                            <span class="camera-live hidden" id="cameraStatusBadge">
-                                ● <span id="cameraStatusText" data-i18n="status_active">Active Stream</span>
-                            </span>
+                        <!-- Camera Toolbar -->
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:1rem;">
+                            <div style="display:flex; align-items:center; gap:0.75rem;">
+                                <span class="label-mono hidden" id="cameraStatusBadge">
+                                    <span class="dot dot-green dot-pulse"></span>
+                                    <span id="cameraStatusText" data-i18n="status_active">Stream Online</span>
+                                </span>
+                                <span class="label-mono text-teal hidden" id="aiCameraActiveBadge" data-i18n="yolo_active">YOLOv8 ACTIVE</span>
+                            </div>
 
-                            <button type="button" id="cameraToggleBtn" class="camera-toggle-btn" disabled>
+                            <button type="button" id="cameraToggleBtn" class="btn-pill btn-pill-secondary" disabled>
                                 Turn Camera On
                             </button>
                         </div>
                     </div>
 
-                    <div class="camera-screen" id="cameraScreenContainer">
-                        <div class="camera-grid"></div>
+                    <!-- AI Produce Inventory Feed -->
+                    <div class="ai-inventory-box">
+                        <div>
+                            <span class="label-mono text-amber" data-i18n="ai_inventory">AI PRODUCE INVENTORY</span>
+                            <h3 style="font-size:1.35rem; margin-top:0.35rem;" data-i18n="vegetables_inside_storage">Vegetables Inside Storage</h3>
 
-                        <!-- Video / Image Stream element -->
-                        <img id="cameraStream" class="camera-stream hidden" alt="Live camera feed inside storage box">
-
-                        <!-- Camera Offline Placeholder -->
-                        <div class="camera-placeholder" id="cameraPlaceholder">
-                            <div class="camera-icon">
-                                <svg class="icon">
-                                    <use href="#icon-camera" />
-                                </svg>
+                            <div class="inventory-list" id="vegetableList">
+                                <p class="text-muted" id="vegetableEmptyNote" style="font-size:0.85rem;" data-i18n="vegetable_waiting">
+                                    Waiting for produce detection…
+                                </p>
                             </div>
-                            <h3 data-i18n="yolo_vision_system">AI Produce Vision System</h3>
-                            <p id="cameraPlaceholderText" data-i18n="camera_feed_placeholder">
-                                Camera stream offline. Toggle camera button to activate.
-                            </p>
                         </div>
 
-                        <!-- AI Bounding Box Overlay -->
-                        <div class="detection-box hidden" id="detectionBox">
-                            <div class="box-reticle"></div>
-                            <span id="detectionLabel" data-i18n="veg_tomatoes">Organic Tomatoes</span>
-                            <b id="detectionConfidence">98% <span data-i18n="unit_match">Match</span></b>
+                        <div style="border-top:1px solid var(--hairline); padding-top:1rem; font-size:0.75rem; color:var(--ink-muted); line-height:1.6;">
+                            <strong class="text-secondary">REAL-TIME PIPELINE:</strong><br>
+                            ESP32-CAM &rarr; Camera Stream &rarr; OpenCV &rarr; YOLOv8 &rarr; Vegetable Detection &rarr; Firebase RTDB &rarr; HIMARKA
                         </div>
                     </div>
-
                 </div>
 
-            </section>
+            </div>
+        </section>
 
-            <!-- SMART ALERT PANEL -->
-            <section class="alert-panel">
-                <div class="alert-icon" id="alertIcon">
-                    <svg class="icon">
-                        <use href="#icon-alert" />
-                    </svg>
+        <!-- =======================================================
+             6. CLOSE / MINIMAL FOOTER
+             ======================================================= -->
+        <footer class="site-footer" id="footer">
+            <div class="footer-inner">
+                <div class="footer-top">
+                    <div>
+                        <h2 style="font-size:1.6rem; margin-bottom:0.75rem;">HIMARKA<span class="brand-dot">.</span></h2>
+                        <p style="font-size:0.85rem; color:var(--ink-secondary); line-height:1.6; max-width:440px;">
+                            Autonomous solar cold chain preservation infrastructure for agricultural sustainability in Northeast India.
+                        </p>
+                    </div>
+
+                    <div>
+                        <span class="label-mono text-muted" style="display:block; margin-bottom:1.25rem;">DOCUMENTATION</span>
+                        <ul style="list-style:none; display:flex; flex-direction:column; gap:0.65rem; font-size:0.85rem;">
+                            <li><a href="https://github.com/taruntechbs-code/Himarka/blob/main/docs/architecture.md" target="_blank" rel="noopener noreferrer" style="color:var(--ink-secondary); text-decoration:none;">System Architecture</a></li>
+                            <li><a href="https://github.com/taruntechbs-code/Himarka/blob/main/docs/hardware.md" target="_blank" rel="noopener noreferrer" style="color:var(--ink-secondary); text-decoration:none;">Hardware &amp; Pinout</a></li>
+                            <li><a href="https://github.com/taruntechbs-code/Himarka/blob/main/docs/firebase.md" target="_blank" rel="noopener noreferrer" style="color:var(--ink-secondary); text-decoration:none;">Firebase Security Model</a></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <span class="label-mono text-muted" style="display:block; margin-bottom:1.25rem;">OPEN SOURCE</span>
+                        <ul style="list-style:none; display:flex; flex-direction:column; gap:0.65rem; font-size:0.85rem;">
+                            <li><a href="https://github.com/taruntechbs-code/Himarka.git" target="_blank" rel="noopener noreferrer" style="color:var(--ink-secondary); text-decoration:none;">GitHub Repository</a></li>
+                            <li><a href="https://github.com/taruntechbs-code/Himarka/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" style="color:var(--ink-secondary); text-decoration:none;">MIT License</a></li>
+                            <li><a href="https://github.com/taruntechbs-code/Himarka/blob/main/docs/deployment.md" target="_blank" rel="noopener noreferrer" style="color:var(--ink-secondary); text-decoration:none;">Field Deployment</a></li>
+                        </ul>
+                    </div>
                 </div>
 
-                <div>
-                    <h3 data-i18n="smart_alert_system">Smart Storage Alert System</h3>
-                    <p id="alertDesc" data-i18n="alert_normal_desc">
-                        All cold storage conditions are optimal for fresh vegetables.
-                    </p>
+                <!-- Giant Cropped HIMARKA Display -->
+                <div class="footer-giant-wordmark-wrap" aria-hidden="true">
+                    <div class="footer-giant-wordmark">HIMARKA</div>
                 </div>
 
-                <div class="alert-state" id="alertState" data-i18n="alert_normal_tag">
-                    OPTIMAL
+                <!-- Hairline Bottom Rule -->
+                <div class="footer-bottom-bar">
+                    <span>&copy; 2026 HIMARKA &bull; NORTHEAST INDIA</span>
+                    <span>COORDINATES: 26.1445° N, 91.7362° E</span>
+                    <span>ALL SYSTEMS OPERATIONAL</span>
                 </div>
-            </section>
+            </div>
+        </footer>
 
-        </main>
+    </main>
 
-    </section>
+    <!-- Hidden compatibility bridges for legacy script hooks -->
+    <div id="welcomePage" class="hidden" style="display:none;" aria-hidden="true">
+        <button id="continueBtn" style="display:none;"></button>
+        <button id="welcomeThemeToggle" style="display:none;"></button>
+        <span id="selectedLanguageText" style="display:none;"></span>
+    </div>
+    <div id="dashboardPage" class="hidden" style="display:none;" aria-hidden="true">
+        <button id="changeLanguageBtn" style="display:none;"></button>
+    </div>
 
     <!-- Scripts -->
     <script src="js/translations.js"></script>

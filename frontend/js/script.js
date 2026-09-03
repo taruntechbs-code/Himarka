@@ -1,318 +1,306 @@
 /* =====================================================================
-   SITAGARAA — Smart Cold Storage Dashboard Logic
+   HIMARKA — Architectural Frontend Engine & Interaction Controller
    ---------------------------------------------------------------------
-   Handles:
-     1. Instant 9-Language Northeast Translation Engine
-     2. Reliable Page Navigation (Welcome Screen -> Command Center)
-     3. Dual Theme Switching (Dark Aurora / Crisp Light Mode)
-     4. Real-time Firebase & 15s Fallback Demo Telemetry Loop
-     5. Dynamic Spline Charts (Temperature & Gas/TVOC)
-     6. Camera Stream ON/OFF Controls & AI Vision Inspection Overlay
+   Core Capabilities:
+     1. Scroll-Driven Cinematic Portal Opening Animation (Reversible)
+     2. Growing, Tightening & Splitting "HIMARKA" Wordmark Physics
+     3. Statement Image Drift & Rotation with Scroll Linked Movement
+     4. Physical Throwable Card Deck for 6 Subsystems (Mouse, Touch, Keyboard)
+     5. Roster & Live Data Table Telemetry Synchronization
+     6. 9-Language Northeast Regional Translation Engine
+     7. Dual Theme Support (Architectural Dark / Crisp Light)
+     8. Real-time Firebase & 15s Fallback Telemetry Integration
+     9. High-Precision Chart.js Splines (Temperature & Gas/TVOC)
+     10. Camera Stream & AI Vision Inspection Overlay
    ===================================================================== */
 
-/* ---------------- TOP-LEVEL GLOBAL NAVIGATION HANDLERS ---------------- */
-window.handleContinueClick = function (e) {
-    if (e && typeof e.preventDefault === "function") e.preventDefault();
+(function () {
+    "use strict";
 
-    const welcomePage = document.getElementById("welcomePage");
-    const dashboardPage = document.getElementById("dashboardPage");
-    const languageSelect = document.getElementById("languageSelect");
-
-    if (languageSelect) {
-        const selectedLanguage = languageSelect.value;
-        localStorage.setItem("sitagaraaLanguage", selectedLanguage);
-        if (typeof window.applyLanguage === "function") {
-            window.applyLanguage(selectedLanguage);
-        }
-    }
-
-    if (welcomePage) {
-        welcomePage.classList.add("hidden");
-        welcomePage.style.display = "none";
-    }
-
-    if (dashboardPage) {
-        dashboardPage.classList.remove("hidden");
-        dashboardPage.style.display = "block";
-    }
-
-    window.location.hash = "dashboard";
-    const portalIntro = document.getElementById("portalIntro");
-    const portalOffset = portalIntro ? Math.max(0, portalIntro.offsetHeight - window.innerHeight + 2) : 0;
-    window.scrollTo({ top: portalOffset, behavior: "smooth" });
-    return false;
-};
-
-window.handleWelcomeClick = function (e) {
-    if (e && typeof e.preventDefault === "function") e.preventDefault();
-
-    const welcomePage = document.getElementById("welcomePage");
-    const dashboardPage = document.getElementById("dashboardPage");
-
-    if (dashboardPage) {
-        dashboardPage.classList.add("hidden");
-        dashboardPage.style.display = "none";
-    }
-
-    if (welcomePage) {
-        welcomePage.classList.remove("hidden");
-        welcomePage.style.display = "grid";
-    }
-
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    return false;
-};
-
-window.handleLanguageChange = function (val) {
-    if (!val) return;
-    localStorage.setItem("sitagaraaLanguage", val);
-    if (typeof window.applyLanguage === "function") {
-        window.applyLanguage(val);
-    }
-    // Selecting a language only updates the selection — it no longer
-    // jumps to the dashboard on its own. Only the Continue button does that.
-};
-
-// Global Click Delegation for Continue & Language Buttons
-document.addEventListener("click", function (e) {
-    const continueTarget = e.target && e.target.closest ? e.target.closest("#continueBtn") : null;
-    if (continueTarget) {
-        window.handleContinueClick(e);
-        return;
-    }
-
-    const changeLangTarget = e.target && e.target.closest ? e.target.closest("#changeLanguageBtn") : null;
-    if (changeLangTarget) {
-        window.handleWelcomeClick(e);
-        return;
-    }
-});
-
-/* ---------------- APPLICATION INITIALIZATION ---------------- */
-function initApp() {
-
-    const welcomePage = document.getElementById("welcomePage");
-    const dashboardPage = document.getElementById("dashboardPage");
-
-    const continueBtn = document.getElementById("continueBtn");
-    const changeLanguageBtn = document.getElementById("changeLanguageBtn");
-
-    const welcomeThemeToggle = document.getElementById("welcomeThemeToggle");
-    const dashboardThemeToggle = document.getElementById("dashboardThemeToggle");
-
-    const languageSelect = document.getElementById("languageSelect");
-    const selectedLanguageText = document.getElementById("selectedLanguageText");
-
-    // Persisted language state
+    /* ---------------- GLOBAL SCOPE SAFE BRIDGES ---------------- */
     let currentLanguage = localStorage.getItem("sitagaraaLanguage") || "English";
-
-    if (languageSelect && languageSelect.options) {
-        if (!Array.from(languageSelect.options).some(opt => opt.value === currentLanguage)) {
-            currentLanguage = "English";
-            localStorage.setItem("sitagaraaLanguage", currentLanguage);
-        }
-    }
-
     let lastReadings = null;
     let lastVegetable = null;
-
-    // Chart instances — declared here (not down near the Chart.js
-    // setup code) because window.applyLanguage() references them
-    // and gets called during page init, before the canvases are
-    // built. Referencing a `let` variable before its declaration
-    // line has run throws a ReferenceError in JS, which was silently
-    // aborting handleContinueClick partway through — that's why the
-    // button looked broken. Declaring them early with null fixes it;
-    // the actual Chart.js objects still get assigned later, in the
-    // chart-setup section further down.
     let temperatureChart = null;
     let gasChart = null;
+    let esp32Connected = false;
+    let tempSimInterval = null;
+    let cameraOn = false;
 
-    // Same reason these move up: renderReadings() (which uses them)
-    // gets called via applyLanguage() during init, before this point
-    // in the file was previously reached.
     const TEMP_OK_MAX = 8.5;
     const TEMP_CRITICAL_MAX = 12.0;
     const GAS_WARNING_PPM = 350;
     const GAS_CRITICAL_PPM = 650;
-
-    // Simulation state
-    let esp32Connected = false;
-    let tempSimInterval = null;
-
-    // Camera Stream State
     const ESP32_CAM_STREAM_URL = "http://192.168.1.50:81/stream";
-    let cameraOn = false;
 
-    if (continueBtn) {
-        continueBtn.addEventListener("click", window.handleContinueClick);
-    }
+    /* ---------------- 1. CINEMATIC PORTAL SCROLL PHYSICS ---------------- */
+    function initPortalAnimation() {
+        const heroEl = document.getElementById("hero");
+        const panelLeft = document.getElementById("panelLeft");
+        const panelRight = document.getElementById("panelRight");
+        const wordLeft = document.getElementById("wordLeft");
+        const wordRight = document.getElementById("wordRight");
+        const wordmarkWrap = document.getElementById("wordmarkWrap");
+        const dotAmber = document.getElementById("dotAmber");
+        const dotTeal = document.getElementById("dotTeal");
+        const portalBgImg = document.getElementById("portalBgImg");
+        const statementCircle = document.getElementById("statementCircle");
 
-    if (changeLanguageBtn) {
-        changeLanguageBtn.addEventListener("click", window.handleWelcomeClick);
-    }
+        if (!heroEl || !panelLeft || !panelRight) return;
 
-    if (languageSelect) {
-        languageSelect.addEventListener("change", function () {
-            window.handleLanguageChange(languageSelect.value);
-        });
-    }
+        const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    /* ---------------- Camera Controls ---------------- */
-    function updateCameraButtonLabel() {
-        const btn = document.getElementById("cameraToggleBtn");
-        if (!btn) return;
-        if (btn.disabled) {
-            btn.textContent = t("camera_connect_first", currentLanguage);
-            return;
-        }
-        btn.textContent = cameraOn
-            ? t("camera_turn_off", currentLanguage)
-            : t("camera_turn_on", currentLanguage);
-        btn.classList.toggle("is-on", cameraOn);
-    }
-
-    function setCameraButtonEnabled(enabled) {
-        const btn = document.getElementById("cameraToggleBtn");
-        if (!btn) return;
-        btn.disabled = !enabled;
-        updateCameraButtonLabel();
-    }
-
-    function updateAiCameraBadge() {
-        const badge = document.getElementById("aiCameraActiveBadge");
-        if (!badge) return;
-        // Only ever says "active" once the ESP32 is actually
-        // connected AND the camera has been turned on — not a
-        // permanent label like it was before.
-        badge.classList.toggle("hidden", !(esp32Connected && cameraOn));
-    }
-
-    function setCameraOn(on) {
-        cameraOn = on;
-        const streamImg = document.getElementById("cameraStream");
-        const placeholder = document.getElementById("cameraPlaceholder");
-        const cameraBadge = document.getElementById("cameraStatusBadge");
-        const cameraBadgeText = document.getElementById("cameraStatusText");
-        const box = document.getElementById("detectionBox");
-
-        if (cameraOn) {
-            if (streamImg) {
-                streamImg.src = ESP32_CAM_STREAM_URL;
-                streamImg.classList.remove("hidden");
+        function onScroll() {
+            if (prefersReducedMotion) {
+                panelLeft.style.transform = "translateX(-105%)";
+                panelRight.style.transform = "translateX(105%)";
+                if (portalBgImg) portalBgImg.style.transform = "scale(1)";
+                return;
             }
-            if (placeholder) placeholder.classList.add("hidden");
-            if (cameraBadge) cameraBadge.classList.remove("hidden");
-            if (cameraBadgeText) cameraBadgeText.textContent = t("status_active", currentLanguage);
-            if (box) box.classList.remove("hidden");
-        } else {
-            if (streamImg) {
-                streamImg.src = "";
-                streamImg.classList.add("hidden");
+
+            const heroRect = heroEl.getBoundingClientRect();
+            const heroHeight = heroEl.offsetHeight;
+            const winHeight = window.innerHeight;
+
+            // Scroll travel within hero track: 0 when hero is at top, 1 when hero finishes
+            const scrolled = -heroRect.top;
+            const maxScroll = Math.max(1, heroHeight - winHeight);
+            const progress = Math.max(0, Math.min(1, scrolled / maxScroll));
+
+            // Smooth cubic acceleration easing
+            const easeProgress = Math.pow(progress, 1.15);
+
+            // Left & Right Panels: Move completely beyond viewport (> 100px travel during initial scroll)
+            const panelTravel = easeProgress * 105;
+            panelLeft.style.transform = `translate3d(-${panelTravel}%, 0, 0)`;
+            panelRight.style.transform = `translate3d(${panelTravel}%, 0, 0)`;
+
+            // Background visual: Settles smoothly from scale 1.18 down to 1.00
+            if (portalBgImg) {
+                const imgScale = Math.max(1.0, 1.18 - easeProgress * 0.18);
+                portalBgImg.style.transform = `scale(${imgScale})`;
             }
-            if (placeholder) placeholder.classList.remove("hidden");
-            if (cameraBadge) cameraBadge.classList.add("hidden");
-            if (box) box.classList.add("hidden");
+
+            // Wordmark: GROWING + TIGHTENING + SPLITTING simultaneously!
+            if (wordmarkWrap && wordLeft && wordRight) {
+                const wordScale = 1.0 + easeProgress * 0.32;
+                const letterSpacingEm = 0.06 - easeProgress * 0.13;
+                wordmarkWrap.style.letterSpacing = `${letterSpacingEm}em`;
+                wordmarkWrap.style.transform = `translate(-50%, -50%) scale(${wordScale})`;
+
+                const splitDistanceVw = easeProgress * 28;
+                wordLeft.style.transform = `translate3d(-${splitDistanceVw}vw, 0, 0)`;
+                wordRight.style.transform = `translate3d(${splitDistanceVw}vw, 0, 0)`;
+
+                const fadeProgress = Math.max(0, (progress - 0.72) / 0.28);
+                wordmarkWrap.style.opacity = Math.max(0, 1 - fadeProgress * 1.3);
+            }
+
+            // Accent Dots: Travel outward to opposite screen quadrants
+            if (dotAmber && dotTeal) {
+                const dotTravelX = easeProgress * 36;
+                const dotTravelY = easeProgress * 24;
+                dotAmber.style.transform = `translate(calc(-50% - ${dotTravelX}vw), calc(-50% - ${dotTravelY}vh))`;
+                dotTeal.style.transform = `translate(calc(-50% + ${dotTravelX}vw), calc(-50% + ${dotTravelY}vh))`;
+            }
+
+            // Subtle Statement Circle Motion (Drift & Rotation)
+            if (statementCircle) {
+                const statementRect = statementCircle.getBoundingClientRect();
+                if (statementRect.top < winHeight && statementRect.bottom > 0) {
+                    const circleDist = winHeight - statementRect.top;
+                    const circleRot = (circleDist * 0.05) % 360;
+                    const circleDrift = (circleDist * 0.04);
+                    statementCircle.style.transform = `translate3d(0, ${circleDrift}px, 0) rotate(${circleRot}deg)`;
+                }
+            }
         }
 
-        updateCameraButtonLabel();
-        updateAiCameraBadge();
+        window.addEventListener("scroll", onScroll, { passive: true });
+        window.addEventListener("resize", onScroll, { passive: true });
+        onScroll();
     }
 
-    const cameraToggleBtn = document.getElementById("cameraToggleBtn");
-    if (cameraToggleBtn) {
-        cameraToggleBtn.addEventListener("click", function (e) {
-            if (e) e.preventDefault();
-            if (cameraToggleBtn.disabled) return;
-            setCameraOn(!cameraOn);
+    /* ---------------- 2. THROWABLE PHYSICAL CARD DECK (6 CARDS) ---------------- */
+    function initThrowableCardDeck() {
+        const deckEl = document.getElementById("cardDeck");
+        if (!deckEl) return;
+
+        const cards = Array.from(deckEl.querySelectorAll(".deck-card"));
+        if (!cards.length) return;
+
+        let currentIndex = 0;
+        const totalCards = cards.length;
+        const counterEl = document.getElementById("deckCounter");
+        const prevBtn = document.getElementById("deckPrevBtn");
+        const nextBtn = document.getElementById("deckNextBtn");
+
+        // Physical stacking profiles (depth, rotation, scale)
+        const stackStyles = [
+            { x: 0, y: 0, z: 0, rot: 0, scale: 1.0, opacity: 1 },
+            { x: 10, y: 12, z: -15, rot: 2.2, scale: 0.96, opacity: 0.92 },
+            { x: -10, y: 22, z: -30, rot: -2.6, scale: 0.92, opacity: 0.82 },
+            { x: 12, y: 30, z: -45, rot: 3.0, scale: 0.88, opacity: 0.70 },
+            { x: -8, y: 36, z: -60, rot: -1.6, scale: 0.84, opacity: 0.58 },
+            { x: 4, y: 42, z: -75, rot: 1.2, scale: 0.80, opacity: 0.45 }
+        ];
+
+        function applyDeckLayout(animate = true) {
+            cards.forEach((card, i) => {
+                const offset = (i - currentIndex + totalCards) % totalCards;
+                const profile = stackStyles[Math.min(offset, stackStyles.length - 1)];
+
+                card.style.zIndex = totalCards - offset;
+                card.style.transition = animate ? "transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease" : "none";
+                card.style.transform = `translate3d(${profile.x}px, ${profile.y}px, ${profile.z}px) rotate(${profile.rot}deg) scale(${profile.scale})`;
+                card.style.opacity = profile.opacity;
+                card.setAttribute("aria-hidden", offset === 0 ? "false" : "true");
+            });
+
+            if (counterEl) {
+                counterEl.textContent = `${currentIndex + 1} / ${totalCards}`;
+            }
+        }
+
+        function cycleNext() {
+            const topCard = cards[currentIndex];
+            topCard.style.transition = "transform 0.28s ease, opacity 0.28s ease";
+            topCard.style.transform = "translate3d(140%, -10px, 0) rotate(18deg) scale(0.95)";
+            topCard.style.opacity = "0";
+
+            setTimeout(() => {
+                currentIndex = (currentIndex + 1) % totalCards;
+                applyDeckLayout(true);
+            }, 180);
+        }
+
+        function cyclePrev() {
+            currentIndex = (currentIndex - 1 + totalCards) % totalCards;
+            const newTopCard = cards[currentIndex];
+            newTopCard.style.transition = "none";
+            newTopCard.style.transform = "translate3d(-140%, 10px, 0) rotate(-18deg) scale(0.95)";
+            newTopCard.style.opacity = "0";
+
+            requestAnimationFrame(() => {
+                applyDeckLayout(true);
+            });
+        }
+
+        // Pointer Drag & Throw Physics
+        let isDragging = false;
+        let startX = 0;
+        let startY = 0;
+        let currentX = 0;
+        let currentY = 0;
+
+        function onPointerDown(e) {
+            const topCard = cards[currentIndex];
+            if (!topCard || e.button !== 0) return;
+
+            isDragging = true;
+            startX = e.clientX;
+            startY = e.clientY;
+            currentX = startX;
+            currentY = startY;
+
+            topCard.setPointerCapture(e.pointerId);
+            topCard.style.transition = "none";
+            topCard.style.cursor = "grabbing";
+        }
+
+        function onPointerMove(e) {
+            if (!isDragging) return;
+            currentX = e.clientX;
+            currentY = e.clientY;
+
+            const deltaX = currentX - startX;
+            const deltaY = currentY - startY;
+            const rot = deltaX * 0.08;
+            const topCard = cards[currentIndex];
+
+            topCard.style.transform = `translate3d(${deltaX}px, ${deltaY * 0.25}px, 0) rotate(${rot}deg) scale(1.03)`;
+        }
+
+        function onPointerUp(e) {
+            if (!isDragging) return;
+            isDragging = false;
+
+            const topCard = cards[currentIndex];
+            topCard.style.cursor = "grab";
+            try {
+                topCard.releasePointerCapture(e.pointerId);
+            } catch (_) {}
+
+            const deltaX = currentX - startX;
+            const deckWidth = deckEl.offsetWidth || 400;
+            const threshold = deckWidth * 0.12; // 12% throw threshold
+
+            if (Math.abs(deltaX) > threshold) {
+                const sign = deltaX > 0 ? 1 : -1;
+                topCard.style.transition = "transform 0.26s ease, opacity 0.26s ease";
+                topCard.style.transform = `translate3d(${sign * 140}%, 0, 0) rotate(${sign * 22}deg)`;
+                topCard.style.opacity = "0";
+
+                setTimeout(() => {
+                    currentIndex = (currentIndex + 1) % totalCards;
+                    applyDeckLayout(true);
+                }, 180);
+            } else {
+                applyDeckLayout(true);
+            }
+        }
+
+        deckEl.addEventListener("pointerdown", onPointerDown);
+        deckEl.addEventListener("pointermove", onPointerMove);
+        deckEl.addEventListener("pointerup", onPointerUp);
+        deckEl.addEventListener("pointercancel", onPointerUp);
+
+        // Accessible Keyboard Controls
+        deckEl.addEventListener("keydown", (e) => {
+            if (e.key === "ArrowRight") {
+                e.preventDefault();
+                cycleNext();
+            } else if (e.key === "ArrowLeft") {
+                e.preventDefault();
+                cyclePrev();
+            }
         });
-    }
-    setCameraButtonEnabled(false); // starts disabled until the ESP32 actually connects
 
-    /* ---------------- Telemetry Simulation Loop ---------------- */
-    function showSimulatedReadings() {
-        if (esp32Connected) return;
+        if (nextBtn) nextBtn.addEventListener("click", cycleNext);
+        if (prevBtn) prevBtn.addEventListener("click", cyclePrev);
 
-        const simTemp = Math.random() * 20;        // 0-20°C
-        const simHumidity = 85 + Math.random() * 10; // 85-95%
-        const simCo2 = 415 + Math.floor(Math.random() * 45);
-        const simGas = 180 + Math.floor(Math.random() * 60);
-        const simSolar = 90 + Math.floor(Math.random() * 9);
-        const simSolarWatts = 42 + Math.floor(Math.random() * 12);
-
-        renderReadings({
-            temperature: simTemp,
-            humidity: simHumidity,
-            co2: simCo2,
-            gasLevel: simGas,
-            solar: simSolar,
-            solarWatts: simSolarWatts,
-            coolingState: true,
-            updatedAt: Date.now(),
-            isSimulated: true
-        });
-
-        // Keep the graphs moving from the start too, not just once
-        // the ESP32 connects. Guarded with typeof checks because
-        // this can fire (via applyLanguage) before the chart section
-        // further down in this file has run and defined these yet.
-        if (typeof window.addTemperaturePoint === "function") window.addTemperaturePoint(simTemp);
-        if (typeof window.addGasPoint === "function") window.addGasPoint(simGas);
+        applyDeckLayout(false);
     }
 
-    /* ---------------- Theme Toggle ---------------- */
-    function updateThemeButtons() {
-        const isDark = document.body.classList.contains("dark-theme");
-        const label = isDark
-            ? '<svg class="icon icon-sm"><use href="#icon-sun"/></svg> <span data-i18n="theme_light">' + t("theme_light", currentLanguage) + "</span>"
-            : '<svg class="icon icon-sm"><use href="#icon-moon"/></svg> <span data-i18n="theme_dark">' + t("theme_dark", currentLanguage) + "</span>";
-
-        if (welcomeThemeToggle) welcomeThemeToggle.innerHTML = label;
-        if (dashboardThemeToggle) dashboardThemeToggle.innerHTML = label;
+    /* ---------------- 3. MULTILINGUAL TRANSLATION ENGINE ---------------- */
+    function t(key, lang) {
+        if (typeof TRANSLATIONS === "undefined") return key;
+        const dict = TRANSLATIONS[lang] || {};
+        return dict[key] || (TRANSLATIONS.English && TRANSLATIONS.English[key]) || key;
     }
 
-    window.toggleTheme = function () {
-        document.body.classList.toggle("dark-theme");
-        const currentTheme = document.body.classList.contains("dark-theme") ? "dark" : "light";
-        localStorage.setItem("sitagaraaTheme", currentTheme);
-        updateThemeButtons();
+    window.handleLanguageChange = function (lang) {
+        if (!lang) return;
+        currentLanguage = lang;
+        localStorage.setItem("sitagaraaLanguage", lang);
+        window.applyLanguage(lang);
     };
 
-    const savedTheme = localStorage.getItem("sitagaraaTheme");
-    if (savedTheme === "light") {
-        document.body.classList.remove("dark-theme");
-    } else {
-        document.body.classList.add("dark-theme");
-    }
-
-    if (welcomeThemeToggle) welcomeThemeToggle.addEventListener("click", window.toggleTheme);
-    if (dashboardThemeToggle) dashboardThemeToggle.addEventListener("click", window.toggleTheme);
-
-    /* ---------------- Complete Language Switcher ---------------- */
     window.applyLanguage = function (lang) {
         currentLanguage = lang;
 
-        if (languageSelect && languageSelect.value !== lang) {
-            languageSelect.value = lang;
+        const langSelect = document.getElementById("languageSelect");
+        if (langSelect && langSelect.value !== lang) {
+            langSelect.value = lang;
         }
 
-        // 1. Update all elements with data-i18n
-        document.querySelectorAll("[data-i18n]").forEach(function (el) {
+        // Update all data-i18n elements
+        document.querySelectorAll("[data-i18n]").forEach((el) => {
             const key = el.getAttribute("data-i18n");
             el.textContent = t(key, lang);
         });
 
-        // 2. Selected language text under dropdown
-        if (selectedLanguageText && languageSelect && languageSelect.selectedIndex >= 0) {
-            const selectedOptionLabel = languageSelect.options[languageSelect.selectedIndex].text;
-            selectedLanguageText.textContent = selectedOptionLabel + " " + t("lang_selected_suffix", lang);
-        }
-
-        // 3. Theme & Camera Buttons
-        updateThemeButtons();
-        updateCameraButtonLabel();
-
-        // 4. Update Charts
+        // Re-label charts
         if (temperatureChart && temperatureChart.data.datasets[0]) {
             temperatureChart.data.datasets[0].label = t("temperature_variation", lang);
             temperatureChart.update();
@@ -322,26 +310,49 @@ function initApp() {
             gasChart.update();
         }
 
-        // 5. Re-render live/simulated readings in new language
+        // Re-render telemetry & AI produce
         if (lastReadings) {
             renderReadings(lastReadings);
         } else {
             showSimulatedReadings();
         }
 
-        // 6. Re-render AI Vegetable inventory item
         if (lastVegetable) {
             renderVegetable(lastVegetable);
         }
+
+        updateCameraButtonLabel();
     };
 
-    if (languageSelect) {
-        languageSelect.value = currentLanguage;
+    /* ---------------- 4. THEME CONTROLLER ---------------- */
+    window.toggleTheme = function () {
+        document.body.classList.toggle("dark-theme");
+        document.body.classList.toggle("light-theme");
+        const activeTheme = document.body.classList.contains("dark-theme") ? "dark" : "light";
+        localStorage.setItem("sitagaraaTheme", activeTheme);
+        updateThemeIcons();
+    };
+
+    function updateThemeIcons() {
+        const isDark = document.body.classList.contains("dark-theme");
+        const btn = document.getElementById("dashboardThemeToggle");
+        if (!btn) return;
+        btn.innerHTML = isDark
+            ? '<svg class="icon icon-sm"><use href="#icon-sun"/></svg>'
+            : '<svg class="icon icon-sm"><use href="#icon-moon"/></svg>';
     }
-    window.applyLanguage(currentLanguage);
 
-    /* ---------------- Telemetry Rendering ---------------- */
+    const savedTheme = localStorage.getItem("sitagaraaTheme");
+    if (savedTheme === "light") {
+        document.body.classList.remove("dark-theme");
+        document.body.classList.add("light-theme");
+    } else {
+        document.body.classList.add("dark-theme");
+        document.body.classList.remove("light-theme");
+    }
+    updateThemeIcons();
 
+    /* ---------------- 5. TELEMETRY DISPLAY & ALERTS ---------------- */
     function renderReadings(data) {
         if (!esp32Connected && data && data.updatedAt && !data.isSimulated) {
             esp32Connected = true;
@@ -353,10 +364,13 @@ function initApp() {
 
         lastReadings = data;
 
-        // Temperature
+        // Temperature (Updates both Table and Roster)
         if (typeof data.temperature === "number") {
+            const formattedTemp = data.temperature.toFixed(1) + t("unit_celsius", currentLanguage);
             const tempEl = document.getElementById("temperature");
-            if (tempEl) tempEl.textContent = data.temperature.toFixed(1) + t("unit_celsius", currentLanguage);
+            const rosterTemp = document.getElementById("rosterTemp");
+            if (tempEl) tempEl.textContent = formattedTemp;
+            if (rosterTemp) rosterTemp.textContent = formattedTemp;
 
             let alertLevel = "normal";
             if (data.temperature > TEMP_CRITICAL_MAX) alertLevel = "critical";
@@ -367,14 +381,19 @@ function initApp() {
         // Cooling status
         const coolingEl = document.getElementById("coolingStateText");
         if (coolingEl) {
-            coolingEl.textContent = data.coolingState !== false ? t("cooling_active", currentLanguage) : t("cooling_standby", currentLanguage);
+            coolingEl.textContent = data.coolingState !== false
+                ? t("cooling_active", currentLanguage)
+                : t("cooling_standby", currentLanguage);
         }
 
-        // Humidity
+        // Humidity (Updates both Table and Roster)
         if (typeof data.humidity === "number") {
+            const formattedHum = Math.round(data.humidity) + t("unit_percent", currentLanguage);
             const humEl = document.getElementById("humidity");
+            const rosterHum = document.getElementById("rosterHumidity");
             const humBar = document.getElementById("humidityBar");
-            if (humEl) humEl.textContent = Math.round(data.humidity) + t("unit_percent", currentLanguage);
+            if (humEl) humEl.textContent = formattedHum;
+            if (rosterHum) rosterHum.textContent = formattedHum;
             if (humBar) humBar.style.width = Math.max(0, Math.min(100, data.humidity)) + "%";
         }
 
@@ -388,11 +407,14 @@ function initApp() {
             }
         }
 
-        // Gas Level / TVOC
+        // Gas Level / TVOC (Updates both Table and Roster)
         if (typeof data.gasLevel === "number") {
+            const formattedGas = Math.round(data.gasLevel) + " " + t("unit_ppm", currentLanguage);
             const gasEl = document.getElementById("gas");
+            const rosterGas = document.getElementById("rosterGas");
             const gasStatusEl = document.getElementById("gasStatusText");
-            if (gasEl) gasEl.textContent = Math.round(data.gasLevel) + " " + t("unit_ppm", currentLanguage);
+            if (gasEl) gasEl.textContent = formattedGas;
+            if (rosterGas) rosterGas.textContent = formattedGas;
 
             let gasKey = "gas_status_normal";
             if (data.gasLevel >= GAS_CRITICAL_PPM) gasKey = "gas_status_critical";
@@ -401,24 +423,37 @@ function initApp() {
             if (gasStatusEl) gasStatusEl.textContent = t(gasKey, currentLanguage);
         }
 
-        // Solar Battery (%)
+        // Solar Battery (%) (Updates both Table and Roster)
         if (typeof data.solar === "number") {
+            const formattedSolar = Math.round(data.solar) + t("unit_percent", currentLanguage);
             const solarEl = document.getElementById("solar");
+            const rosterBattery = document.getElementById("rosterBattery");
             const solarBar = document.getElementById("solarBar");
-            if (solarEl) solarEl.textContent = Math.round(data.solar) + t("unit_percent", currentLanguage);
+            if (solarEl) solarEl.textContent = formattedSolar;
+            if (rosterBattery) rosterBattery.textContent = formattedSolar;
             if (solarBar) solarBar.style.width = Math.max(0, Math.min(100, data.solar)) + "%";
         }
 
-        // Solar Power Watts
+        // Solar Power Watts (Updates both Table and Roster)
         if (typeof data.solarWatts === "number") {
+            const formattedWatts = Math.round(data.solarWatts) + " " + t("unit_watts", currentLanguage);
             const solarWattsEl = document.getElementById("solarWatts");
-            if (solarWattsEl) solarWattsEl.textContent = Math.round(data.solarWatts) + " " + t("unit_watts", currentLanguage);
+            const rosterWatts = document.getElementById("rosterSolarWatts");
+            if (solarWattsEl) solarWattsEl.textContent = formattedWatts;
+            if (rosterWatts) rosterWatts.textContent = formattedWatts;
         }
+
+        // Preservation Status (Updates both Table and Roster)
+        const presEl = document.getElementById("preservationStatus");
+        const rosterPres = document.getElementById("rosterPreservation");
+        const presText = t("status_optimal", currentLanguage);
+        if (presEl) presEl.textContent = presText;
+        if (rosterPres) rosterPres.textContent = presText;
 
         // Timestamp
         if (data.updatedAt) {
             const lastUpdateEl = document.getElementById("lastUpdate");
-            if (lastUpdateEl) lastUpdateEl.textContent = new Date(data.updatedAt).toLocaleString();
+            if (lastUpdateEl) lastUpdateEl.textContent = new Date(data.updatedAt).toLocaleTimeString();
         }
     }
 
@@ -431,22 +466,99 @@ function initApp() {
 
         if (level === "critical") {
             descEl.textContent = t("alert_critical_desc", currentLanguage);
-            stateEl.textContent = t("alert_critical_tag", currentLanguage);
+            stateEl.innerHTML = '<span class="dot dot-red dot-pulse"></span> ' + t("alert_critical_tag", currentLanguage);
             stateEl.classList.add("critical");
         } else if (level === "warning") {
             descEl.textContent = t("alert_warning_desc", currentLanguage);
-            stateEl.textContent = t("alert_warning_tag", currentLanguage);
+            stateEl.innerHTML = '<span class="dot dot-amber dot-pulse"></span> ' + t("alert_warning_tag", currentLanguage);
             stateEl.classList.add("warning");
         } else {
             descEl.textContent = t("alert_normal_desc", currentLanguage);
-            stateEl.textContent = t("alert_normal_tag", currentLanguage);
+            stateEl.innerHTML = '<span class="dot dot-green dot-pulse"></span> ' + t("alert_normal_tag", currentLanguage);
         }
     }
 
-    /* ---------------- AI Vegetable Detection Rendering ---------------- */
+    function showSimulatedReadings() {
+        if (esp32Connected) return;
+
+        const simTemp = 5.2 + (Math.random() * 2.2 - 1.1);
+        const simHumidity = 88 + (Math.random() * 4 - 2);
+        const simCo2 = 425 + Math.floor(Math.random() * 30);
+        const simGas = 185 + Math.floor(Math.random() * 35);
+        const simSolar = 94 + Math.floor(Math.random() * 5);
+        const simSolarWatts = 46 + Math.floor(Math.random() * 8);
+
+        renderReadings({
+            temperature: simTemp,
+            humidity: simHumidity,
+            co2: simCo2,
+            gasLevel: simGas,
+            solar: simSolar,
+            solarWatts: simSolarWatts,
+            coolingState: true,
+            updatedAt: Date.now(),
+            isSimulated: true
+        });
+
+        if (typeof window.addTemperaturePoint === "function") window.addTemperaturePoint(simTemp);
+        if (typeof window.addGasPoint === "function") window.addGasPoint(simGas);
+    }
+
+    /* ---------------- 6. CAMERA & AI PRODUCE VISION ---------------- */
+    function updateCameraButtonLabel() {
+        const btn = document.getElementById("cameraToggleBtn");
+        if (!btn) return;
+        if (btn.disabled) {
+            btn.textContent = t("camera_connect_first", currentLanguage);
+            return;
+        }
+        btn.textContent = cameraOn
+            ? t("camera_turn_off", currentLanguage)
+            : t("camera_turn_on", currentLanguage);
+    }
+
+    function setCameraButtonEnabled(enabled) {
+        const btn = document.getElementById("cameraToggleBtn");
+        if (!btn) return;
+        btn.disabled = !enabled;
+        updateCameraButtonLabel();
+    }
+
+    function setCameraOn(on) {
+        cameraOn = on;
+        const streamImg = document.getElementById("cameraStream");
+        const placeholder = document.getElementById("cameraPlaceholder");
+        const cameraBadge = document.getElementById("cameraStatusBadge");
+        const cameraBadgeText = document.getElementById("cameraStatusText");
+        const box = document.getElementById("detectionBox");
+        const aiBadge = document.getElementById("aiCameraActiveBadge");
+
+        if (cameraOn) {
+            if (streamImg) {
+                streamImg.src = ESP32_CAM_STREAM_URL;
+                streamImg.classList.remove("hidden");
+            }
+            if (placeholder) placeholder.classList.add("hidden");
+            if (cameraBadge) cameraBadge.classList.remove("hidden");
+            if (cameraBadgeText) cameraBadgeText.textContent = t("status_active", currentLanguage);
+            if (box) box.classList.remove("hidden");
+            if (aiBadge) aiBadge.classList.remove("hidden");
+        } else {
+            if (streamImg) {
+                streamImg.src = "";
+                streamImg.classList.add("hidden");
+            }
+            if (placeholder) placeholder.classList.remove("hidden");
+            if (cameraBadge) cameraBadge.classList.add("hidden");
+            if (box) box.classList.add("hidden");
+            if (aiBadge) aiBadge.classList.add("hidden");
+        }
+
+        updateCameraButtonLabel();
+    }
+
     function renderVegetable(data) {
         lastVegetable = data;
-
         const list = document.getElementById("vegetableList");
         const emptyNote = document.getElementById("vegetableEmptyNote");
         if (!list) return;
@@ -461,7 +573,6 @@ function initApp() {
             list.appendChild(row);
         }
 
-        // Map common vegetable names to translation keys if available
         let vegName = data.name || "Organic Tomatoes";
         if (vegName.toLowerCase().includes("tomato")) vegName = t("veg_tomatoes", currentLanguage);
         else if (vegName.toLowerCase().includes("cabbage")) vegName = t("veg_cabbage", currentLanguage);
@@ -474,24 +585,24 @@ function initApp() {
         const freshnessLabel = freshness > 85 ? t("freshness_good", currentLanguage) : (freshness > 60 ? t("freshness_medium", currentLanguage) : t("freshness_bad", currentLanguage));
 
         row.innerHTML =
-            '<div class="veg-icon"><svg class="icon"><use href="#icon-leaf"/></svg></div>' +
-            '<div class="veg-info">' +
-            '<h3>' + vegName + '</h3>' +
-            '<p>' + t("detected_by_ai", currentLanguage) + ' • ' + (data.quantity || "Stored Batch") + '</p>' +
-            '<div class="freshness-meter">' +
+            '<div style="display:flex;align-items:center;gap:0.85rem;">' +
+            '<div class="text-teal"><svg class="icon"><use href="#icon-leaf"/></svg></div>' +
+            '<div>' +
+            '<h4 style="font-size:1.05rem;margin-bottom:0.25rem;">' + vegName + '</h4>' +
+            '<p style="font-size:0.75rem;color:var(--ink-muted);">' + t("detected_by_ai", currentLanguage) + ' &bull; ' + (data.quantity || "Batch #1") + '</p>' +
+            '<div style="display:flex;align-items:center;gap:0.65rem;margin-top:0.4rem;">' +
             '<div class="meter-bar"><div class="meter-fill" style="width:' + freshness + '%"></div></div>' +
             '<small style="font-size:11px;font-weight:700;color:var(--green)">' + freshnessLabel + ' (' + freshness + '%)</small>' +
             '</div>' +
             '</div>' +
-            '<div class="days">' +
-            '<strong>' + (data.daysStored != null ? data.daysStored : "0") + '</strong>' +
-            '<span>' + t("days_stored", currentLanguage) + '</span>' +
+            '</div>' +
+            '<div style="text-align:right;">' +
+            '<strong style="font-size:1.3rem;font-family:var(--font-display);display:block;">' + (data.daysStored != null ? data.daysStored : "1") + '</strong>' +
+            '<span class="label-mono">' + t("days_stored", currentLanguage) + '</span>' +
             '</div>';
 
-        // Update detection box label
         const labelEl = document.getElementById("detectionLabel");
         const confEl = document.getElementById("detectionConfidence");
-
         if (labelEl) labelEl.textContent = vegName;
         if (confEl) {
             const confVal = typeof data.confidence === "number"
@@ -501,92 +612,91 @@ function initApp() {
         }
     }
 
-    window.updateReadings = renderReadings;
-    window.updateVegetable = renderVegetable;
+    /* ---------------- 7. CHART.JS SPLINE VISUALIZATIONS ---------------- */
+    function initCharts() {
+        const tempCanvas = document.getElementById("temperatureChart");
+        if (tempCanvas && typeof Chart !== "undefined") {
+            const ctxTemp = tempCanvas.getContext("2d");
+            const gradTemp = ctxTemp.createLinearGradient(0, 0, 0, 220);
+            gradTemp.addColorStop(0, "rgba(232, 145, 60, 0.35)");
+            gradTemp.addColorStop(1, "rgba(232, 145, 60, 0.0)");
 
-    /* ---------------- Chart.js Setup ---------------- */
-    const tempCanvas = document.getElementById("temperatureChart");
-    if (tempCanvas && typeof Chart !== "undefined") {
-        const ctxTemp = tempCanvas.getContext("2d");
-        const gradTemp = ctxTemp.createLinearGradient(0, 0, 0, 200);
-        gradTemp.addColorStop(0, "rgba(0, 229, 255, 0.4)");
-        gradTemp.addColorStop(1, "rgba(0, 229, 255, 0.0)");
-
-        temperatureChart = new Chart(tempCanvas, {
-            type: "line",
-            data: {
-                labels: [],
-                datasets: [{
-                    label: t("temperature_variation", currentLanguage),
-                    data: [],
-                    borderColor: "#00e5ff",
-                    borderWidth: 3,
-                    backgroundColor: gradTemp,
-                    fill: true,
-                    tension: 0.4,
-                    pointRadius: 4,
-                    pointHoverRadius: 7,
-                    pointBackgroundColor: "#00e5ff"
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    x: { grid: { color: "rgba(255,255,255,0.05)" }, ticks: { color: "#8cbddc" } },
-                    y: { grid: { color: "rgba(255,255,255,0.05)" }, ticks: { color: "#8cbddc" } }
+            temperatureChart = new Chart(tempCanvas, {
+                type: "line",
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: t("temperature_variation", currentLanguage),
+                        data: [],
+                        borderColor: "#E8913C",
+                        borderWidth: 2.5,
+                        backgroundColor: gradTemp,
+                        fill: true,
+                        tension: 0.38,
+                        pointRadius: 3,
+                        pointHoverRadius: 6,
+                        pointBackgroundColor: "#E8913C"
+                    }]
                 },
-                plugins: {
-                    legend: { labels: { color: "#f0f9ff", font: { family: "Inter", weight: "bold" } } }
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { grid: { color: "rgba(237, 231, 220, 0.06)" }, ticks: { color: "#6C7378", font: { family: "Sora", size: 10 } } },
+                        y: { grid: { color: "rgba(237, 231, 220, 0.06)" }, ticks: { color: "#6C7378", font: { family: "Sora", size: 10 } } }
+                    },
+                    plugins: {
+                        legend: { labels: { color: "#EDE7DC", font: { family: "Sora", size: 12, weight: "600" } } }
+                    }
                 }
-            }
-        });
-    }
+            });
+        }
 
-    const gasCanvas = document.getElementById("gasChart");
-    if (gasCanvas && typeof Chart !== "undefined") {
-        const ctxGas = gasCanvas.getContext("2d");
-        const gradGas = ctxGas.createLinearGradient(0, 0, 0, 200);
-        gradGas.addColorStop(0, "rgba(0, 230, 118, 0.4)");
-        gradGas.addColorStop(1, "rgba(0, 230, 118, 0.0)");
+        const gasCanvas = document.getElementById("gasChart");
+        if (gasCanvas && typeof Chart !== "undefined") {
+            const ctxGas = gasCanvas.getContext("2d");
+            const gradGas = ctxGas.createLinearGradient(0, 0, 0, 220);
+            gradGas.addColorStop(0, "rgba(46, 107, 114, 0.35)");
+            gradGas.addColorStop(1, "rgba(46, 107, 114, 0.0)");
 
-        gasChart = new Chart(gasCanvas, {
-            type: "line",
-            data: {
-                labels: [],
-                datasets: [{
-                    label: t("gas_variation", currentLanguage),
-                    data: [],
-                    borderColor: "#00e676",
-                    borderWidth: 3,
-                    backgroundColor: gradGas,
-                    fill: true,
-                    tension: 0.4,
-                    pointRadius: 4,
-                    pointHoverRadius: 7,
-                    pointBackgroundColor: "#00e676"
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    x: { grid: { color: "rgba(255,255,255,0.05)" }, ticks: { color: "#8cbddc" } },
-                    y: { grid: { color: "rgba(255,255,255,0.05)" }, ticks: { color: "#8cbddc" } }
+            gasChart = new Chart(gasCanvas, {
+                type: "line",
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: t("gas_variation", currentLanguage),
+                        data: [],
+                        borderColor: "#3ea2ad",
+                        borderWidth: 2.5,
+                        backgroundColor: gradGas,
+                        fill: true,
+                        tension: 0.38,
+                        pointRadius: 3,
+                        pointHoverRadius: 6,
+                        pointBackgroundColor: "#3ea2ad"
+                    }]
                 },
-                plugins: {
-                    legend: { labels: { color: "#f0f9ff", font: { family: "Inter", weight: "bold" } } }
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { grid: { color: "rgba(237, 231, 220, 0.06)" }, ticks: { color: "#6C7378", font: { family: "Sora", size: 10 } } },
+                        y: { grid: { color: "rgba(237, 231, 220, 0.06)" }, ticks: { color: "#6C7378", font: { family: "Sora", size: 10 } } }
+                    },
+                    plugins: {
+                        legend: { labels: { color: "#EDE7DC", font: { family: "Sora", size: 12, weight: "600" } } }
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     const MAX_CHART_POINTS = 20;
-    function pushPoint(chart, value) {
+    function pushPoint(chart, val) {
         if (!chart) return;
         const timeLabel = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" });
         chart.data.labels.push(timeLabel);
-        chart.data.datasets[0].data.push(value);
+        chart.data.datasets[0].data.push(val);
         if (chart.data.labels.length > MAX_CHART_POINTS) {
             chart.data.labels.shift();
             chart.data.datasets[0].data.shift();
@@ -594,88 +704,50 @@ function initApp() {
         chart.update();
     }
 
+    /* ---------------- 8. EXPOSING GLOBAL HANDLERS ---------------- */
+    window.updateReadings = renderReadings;
+    window.updateVegetable = renderVegetable;
     window.addTemperaturePoint = function (val) { pushPoint(temperatureChart, val); };
     window.addGasPoint = function (val) { pushPoint(gasChart, val); };
 
-    // Kick off 15-second simulation loop immediately
-    showSimulatedReadings();
-    tempSimInterval = setInterval(showSimulatedReadings, 15000);
+    window.handleContinueClick = function (e) {
+        if (e && typeof e.preventDefault === "function") e.preventDefault();
+        const monitorEl = document.getElementById("monitor");
+        if (monitorEl) monitorEl.scrollIntoView({ behavior: "smooth" });
+        return false;
+    };
 
-    // Initialize Cinematic Portal Opening Animation
-    initPortalIntro();
-}
+    window.handleWelcomeClick = function (e) {
+        if (e && typeof e.preventDefault === "function") e.preventDefault();
+        const heroEl = document.getElementById("hero");
+        if (heroEl) heroEl.scrollIntoView({ behavior: "smooth" });
+        return false;
+    };
 
-/* ---------------- CINEMATIC PORTAL SCROLL PHYSICS ---------------- */
-function initPortalIntro() {
-    const introEl = document.getElementById("portalIntro");
-    const stageEl = document.getElementById("portalStickyStage");
-    const leftHalf = document.getElementById("portalHalfLeft");
-    const rightHalf = document.getElementById("portalHalfRight");
-    const wordmarkWrap = document.getElementById("portalWordmarkContainer");
-    const wordHim = document.getElementById("portalWordHim");
-    const wordArka = document.getElementById("portalWordArka");
-    const centerContent = document.getElementById("portalCenterContent");
+    /* ---------------- 9. DOM INITIALIZATION ---------------- */
+    function init() {
+        initPortalAnimation();
+        initThrowableCardDeck();
+        initCharts();
 
-    if (!introEl || !leftHalf || !rightHalf || !wordmarkWrap) return;
-
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        introEl.style.display = "none";
-        return;
-    }
-
-    function updatePortal() {
-        const rect = introEl.getBoundingClientRect();
-        const totalHeight = introEl.offsetHeight;
-        const winH = window.innerHeight;
-        const maxScroll = Math.max(1, totalHeight - winH);
-        const scrolled = -rect.top;
-        const progress = Math.max(0, Math.min(1, scrolled / maxScroll));
-
-        // Smooth cubic ease
-        const ease = Math.pow(progress, 1.15);
-
-        // 1. Two halves split apart and travel beyond viewport edges (> 100px travel)
-        const panelTravel = ease * 105;
-        leftHalf.style.transform = `translate3d(-${panelTravel}%, 0, 0)`;
-        rightHalf.style.transform = `translate3d(${panelTravel}%, 0, 0)`;
-
-        // 2. Wordmark: SPLIT + EXPAND (Scale) + TIGHTEN (Letter Spacing)
-        const scale = 1.0 + ease * 0.28;
-        const letterSpacing = 0.05 - ease * 0.12;
-        wordmarkWrap.style.letterSpacing = `${letterSpacing}em`;
-        wordmarkWrap.style.transform = `scale(${scale})`;
-
-        // Spans move outward
-        const splitVw = ease * 25;
-        if (wordHim) wordHim.style.transform = `translate3d(-${splitVw}vw, 0, 0)`;
-        if (wordArka) wordArka.style.transform = `translate3d(${splitVw}vw, 0, 0)`;
-
-        // Fade center metadata gracefully
-        if (centerContent) {
-            const fade = Math.max(0, (progress - 0.65) / 0.35);
-            centerContent.style.opacity = Math.max(0, 1 - fade * 1.25);
+        // Camera button hook
+        const camBtn = document.getElementById("cameraToggleBtn");
+        if (camBtn) {
+            camBtn.addEventListener("click", () => setCameraOn(!cameraOn));
         }
 
-        // Pointer-events toggled when completely open
-        if (stageEl) {
-            if (progress >= 0.96) {
-                stageEl.classList.remove("is-closed");
-                stageEl.style.visibility = "hidden";
-            } else {
-                stageEl.classList.add("is-closed");
-                stageEl.style.visibility = "visible";
-            }
-        }
+        // Active language initialization
+        window.applyLanguage(currentLanguage);
+
+        // Fallback simulation loop
+        showSimulatedReadings();
+        tempSimInterval = setInterval(showSimulatedReadings, 15000);
     }
 
-    window.addEventListener("scroll", updatePortal, { passive: true });
-    window.addEventListener("resize", updatePortal, { passive: true });
-    updatePortal();
-}
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", init);
+    } else {
+        init();
+    }
 
-// Reliable Initialization Guard
-if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initApp);
-} else {
-    initApp();
-}
+})();

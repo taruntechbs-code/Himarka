@@ -30,9 +30,9 @@
     const isDark = document.body.classList.contains("dark-theme");
     return {
       isDark: isDark,
-      cyan: isDark ? "#00e5ff" : "#0284c7",
-      blue: isDark ? "#38bdf8" : "#0369a1",
-      solar: isDark ? "#ffab00" : "#d97706"
+      cyan: isDark ? "#3ea2ad" : "#1F555C",
+      blue: isDark ? "#2E6B72" : "#2E6B72",
+      solar: isDark ? "#E8913C" : "#C66E1D"
     };
   }
 
