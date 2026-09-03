@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="SITAGARAA - Solar Powered Smart Mini Cold Storage System for Fresh Vegetables in Northeast India with IoT real-time monitoring and AI produce detection.">
+    <title>SITAGARAA | Solar Powered Smart Cold Storage</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body class="dark-theme">
+
+    <!-- Vector icon set -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+        <symbol id="icon-snowflake" viewBox="0 0 24 24">
+            <line x1="12" y1="2" x2="12" y2="22" />
+            <line x1="4.2" y1="7" x2="19.8" y2="17" />
+            <line x1="19.8" y1="7" x2="4.2" y2="17" />
+            <line x1="9" y1="4.5" x2="7" y2="2.5" />
+            <line x1="15" y1="4.5" x2="17" y2="2.5" />
+            <line x1="9" y1="19.5" x2="7" y2="21.5" />
+            <line x1="15" y1="19.5" x2="17" y2="21.5" />
+        </symbol>
+        <symbol id="icon-sun" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="4.2" />
+            <line x1="12" y1="1.5" x2="12" y2="4.5" />
+            <line x1="12" y1="19.5" x2="12" y2="22.5" />
+            <line x1="1.5" y1="12" x2="4.5" y2="12" />
+            <line x1="19.5" y1="12" x2="22.5" y2="12" />
+            <line x1="4.5" y1="4.5" x2="6.6" y2="6.6" />
+            <line x1="17.4" y1="17.4" x2="19.5" y2="19.5" />
+            <line x1="4.5" y1="19.5" x2="6.6" y2="17.4" />
+            <line x1="17.4" y1="6.6" x2="19.5" y2="4.5" />
+        </symbol>
+        <symbol id="icon-moon" viewBox="0 0 24 24">
+            <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z" />
+        </symbol>
+        <symbol id="icon-globe" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="9.5" />
+            <ellipse cx="12" cy="12" rx="4.2" ry="9.5" />
+            <line x1="2.5" y1="12" x2="21.5" y2="12" />
+            <path d="M4.5 6.5h15M4.5 17.5h15" />
+        </symbol>
+        <symbol id="icon-home" viewBox="0 0 24 24">
+            <path d="M4 11.5 12 4l8 7.5" />
+            <path d="M6 10v9.5h12V10" />
+            <path d="M10 19.5v-6h4v6" />
+        </symbol>
+        <symbol id="icon-thermometer" viewBox="0 0 24 24">
+            <path d="M12 3.5a2 2 0 0 1 2 2v9.6a4 4 0 1 1-4 0V5.5a2 2 0 0 1 2-2Z" />
+            <line x1="12" y1="8" x2="12" y2="14" />
+        </symbol>
+        <symbol id="icon-chart" viewBox="0 0 24 24">
+            <line x1="5" y1="21" x2="5" y2="13" />
+            <line x1="12" y1="21" x2="12" y2="7" />
+            <line x1="19" y1="21" x2="19" y2="10" />
+            <line x1="3" y1="21" x2="21" y2="21" />
+        </symbol>
+        <symbol id="icon-box" viewBox="0 0 24 24">
+            <path d="M3.5 8 12 3.5 20.5 8 12 12.5 3.5 8Z" />
+            <path d="M3.5 8v9L12 21.5 20.5 17V8" />
+            <line x1="12" y1="12.5" x2="12" y2="21.5" />
+        </symbol>
+        <symbol id="icon-camera" viewBox="0 0 24 24">
+            <path d="M3.5 8h3l1.5-2.5h8L17.5 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-16a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1Z" />
+            <circle cx="12" cy="13" r="3.5" />
+        </symbol>
+        <symbol id="icon-droplet" viewBox="0 0 24 24">
+            <path d="M12 2.5s6.5 7.2 6.5 11.8a6.5 6.5 0 0 1-13 0C5.5 9.7 12 2.5 12 2.5Z" />
+        </symbol>
+        <symbol id="icon-cloud" viewBox="0 0 24 24">
+            <path d="M7 18.5a4.5 4.5 0 0 1-.5-9 5.5 5.5 0 0 1 10.7-1.7A4 4 0 0 1 17 18.5H7Z" />
+        </symbol>
+        <symbol id="icon-flask" viewBox="0 0 24 24">
+            <path d="M9.5 3h5" />
+            <path d="M10.2 3v6.2L4.8 18a2 2 0 0 0 1.7 3h11a2 2 0 0 0 1.7-3l-5.4-8.8V3" />
+            <line x1="7.5" y1="14.5" x2="16.5" y2="14.5" />
+        </symbol>
+        <symbol id="icon-alert" viewBox="0 0 24 24">
+            <path d="M12 3.5 22 20.5H2Z" />
+            <line x1="12" y1="9.5" x2="12" y2="14.5" />
+            <circle cx="12" cy="17.3" r="0.9" fill="currentColor" stroke="none" />
+        </symbol>
+        <symbol id="icon-leaf" viewBox="0 0 24 24">
+            <path d="M20 4C10 4 4 10 4 18v2h2c8 0 14-6 14-16Z" />
+            <line x1="6" y1="20" x2="14" y2="12" />
+        </symbol>
+        <symbol id="icon-zap" viewBox="0 0 24 24">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+        </symbol>
+    </svg>
+
+    <!-- Animated Canvas Background -->
+    <canvas id="bgCanvas" aria-hidden="true"></canvas>
+
+    <!-- WELCOME / LANGUAGE PAGE -->
+    <section id="welcomePage" class="welcome-page">
+
+        <button id="welcomeThemeToggle" class="theme-toggle welcome-theme-toggle" type="button"
+            aria-label="Toggle theme">
+            <svg class="icon icon-sm">
+                <use href="#icon-sun" />
+            </svg> <span data-i18n="theme_light">Light Mode</span>
+        </button>
+
+        <div class="language-card">
+
+            <div class="logo welcome-logo">
+                <svg class="icon icon-md logo-icon">
+                    <use href="#icon-snowflake" />
+                </svg>
+                <span>SITA<span class="highlight">GARAA</span></span>
+            </div>
+
+            <div class="language-icon">
+                <svg class="icon icon-lg">
+                    <use href="#icon-globe" />
+                </svg>
+            </div>
+
+            <p class="eyebrow" data-i18n="eyebrow_platform">
+                SOLAR POWERED SMART COLD STORAGE PLATFORM
+            </p>
+
+            <h1 data-i18n="welcome_title">Welcome to SITAGARAA</h1>
+
+            <p class="welcome-description" data-i18n="welcome_desc">
+                Select your preferred Northeast regional language to access real-time cold storage monitoring, AI
+                produce detection, and solar analytics.
+            </p>
+
+            <div class="language-selector">
+
+                <label for="languageSelect" data-i18n="choose_language_label">
+                    Choose your language
+                </label>
+
+                <select id="languageSelect" onchange="window.handleLanguageChange(this.value)">
+                    <option value="English">English</option>
+                    <option value="Assamese">অসমীয়া — Assamese (Assam)</option>
+                    <option value="Bengali">বাংলা — Bengali (Tripura &amp; Barak Valley)</option>
+                    <option value="Hindi">हिंदी — Hindi (Inter-State / NE)</option>
+                    <option value="Nepali">नेपाली — Nepali (Sikkim &amp; Hill Districts)</option>
+                    <option value="Manipuri">মৈতৈলোন্ — Manipuri / Meitei (Manipur)</option>
+                    <option value="Bodo">बर' — Bodo (Bodoland, Assam)</option>
+                    <option value="Mizo">Mizo ṭawng — Mizo (Mizoram)</option>
+                    <option value="Khasi">Ka Ktien Khasi — Khasi (Meghalaya)</option>
+                </select>
+
+            </div>
+
+            <button id="continueBtn" class="continue-btn" type="button" onclick="window.handleContinueClick(event)">
+                <span data-i18n="continue_btn">Continue to Dashboard</span>
+                <span class="arrow">→</span>
+            </button>
+
+            <p id="selectedLanguageText" class="language-info">
+                English is selected as the default language.
+            </p>
+
+        </div>
+
+    </section>
+
+    <!-- DASHBOARD PAGE -->
+    <section id="dashboardPage" class="dashboard-page hidden">
+
+        <aside class="sidebar">
+
+            <div class="logo sidebar-logo">
+                <svg class="icon icon-md logo-icon">
+                    <use href="#icon-snowflake" />
+                </svg>
+                <span>SITA<span class="highlight">GARAA</span></span>
+            </div>
+
+            <nav>
+                <a href="#dashboard" class="active">
+                    <svg class="icon icon-sm">
+                        <use href="#icon-home" />
+                    </svg>
+                    <span data-i18n="nav_dashboard">Dashboard</span>
+                </a>
+
+                <a href="#environment">
+                    <svg class="icon icon-sm">
+                        <use href="#icon-thermometer" />
+                    </svg>
+                    <span data-i18n="nav_environment">Environment</span>
+                </a>
+
+                <a href="#analytics">
+                    <svg class="icon icon-sm">
+                        <use href="#icon-chart" />
+                    </svg>
+                    <span data-i18n="nav_analytics">Analytics</span>
+                </a>
+
+                <a href="#vegetables">
+                    <svg class="icon icon-sm">
+                        <use href="#icon-box" />
+                    </svg>
+                    <span data-i18n="nav_storage_ai">Storage AI</span>
+                </a>
+
+                <a href="#camera">
+                    <svg class="icon icon-sm">
+                        <use href="#icon-camera" />
+                    </svg>
+                    <span data-i18n="nav_vision">Vision System</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-bottom">
+
+                <button id="dashboardThemeToggle" class="theme-toggle" type="button">
+                    <svg class="icon icon-sm">
+                        <use href="#icon-sun" />
+                    </svg> <span data-i18n="theme_light">Light Mode</span>
+                </button>
+
+                <button id="changeLanguageBtn" class="change-language" type="button"
+                    onclick="window.handleWelcomeClick(event)">
+                    <svg class="icon icon-sm">
+                        <use href="#icon-globe" />
+                    </svg>
+                    <span data-i18n="change_language_btn">Change Language</span>
+                </button>
+
+                <div class="system-status">
+                    <span class="pulse"></span>
+                    <span data-i18n="system_online">SYSTEM ONLINE</span>
+                </div>
+
+            </div>
+
+        </aside>
+
+        <main>
+
+            <header>
+                <div>
+                    <p class="eyebrow" data-i18n="header_eyebrow">
+                        AI + SOLAR IoT COLD CHAIN SYSTEM — NORTHEAST REGION
+                    </p>
+
+                    <h1 data-i18n="header_title">
+                        Smart Vegetable Storage Command Center
+                    </h1>
+
+                    <p class="subtitle" data-i18n="header_subtitle">
+                        Real-time microclimate tracking, solar energy management &amp; AI produce freshness analysis.
+                    </p>
+                </div>
+            </header>
+
+            <!-- TEMPERATURE HERO CARD -->
+            <section id="dashboard" class="hero-panel">
+
+                <div class="hero-content">
+                    <p data-i18n="storage_environment">STORAGE ENVIRONMENT</p>
+
+                    <h2 id="temperature">--°C</h2>
+
+                    <div class="hero-meta-row">
+                        <div class="meta-chip hidden" id="coolingChip">
+                            <span class="chip-label" data-i18n="cooling_status_label">COOLING SYSTEM</span>
+                            <span class="chip-value" id="coolingStateText" data-i18n="cooling_active">ACTIVE
+                                (Peltier/Compressor)</span>
+                        </div>
+                    </div>
+
+                    <div class="last-update">
+                        <span data-i18n="last_updated">Last updated:</span>
+                        <span id="lastUpdate">--</span>
+                    </div>
+                </div>
+
+                <div class="hero-icon">
+                    <svg class="icon">
+                        <use href="#icon-snowflake" />
+                    </svg>
+                </div>
+
+            </section>
+
+            <!-- 6-CARD SENSOR & SOLAR GRID -->
+            <section id="environment" class="stats-grid">
+
+                <!-- HUMIDITY -->
+                <div class="glass-card">
+                    <div class="card-top">
+                        <svg class="icon icon-md accent-icon">
+                            <use href="#icon-droplet" />
+                        </svg>
+                        <p data-i18n="humidity_label">HUMIDITY</p>
+                    </div>
+
+                    <h2 id="humidity">--%</h2>
+
+                    <div class="progress">
+                        <div id="humidityBar" class="progress-fill" style="width:0%"></div>
+                    </div>
+                    <small data-i18n="humidity_optimal">Optimal: 85% - 95% RH</small>
+                </div>
+
+                <!-- CO2 LEVEL -->
+                <div class="glass-card">
+                    <div class="card-top">
+                        <svg class="icon icon-md accent-icon">
+                            <use href="#icon-cloud" />
+                        </svg>
+                        <p data-i18n="co2_label">CO₂ LEVEL</p>
+                    </div>
+
+                    <h2 id="co2">-- ppm</h2>
+                    <small id="co2Status" data-i18n="co2_fresh">Fresh air circulation</small>
+                </div>
+
+                <!-- GAS LEVEL / TVOC -->
+                <div class="glass-card">
+                    <div class="card-top">
+                        <svg class="icon icon-md accent-icon">
+                            <use href="#icon-flask" />
+                        </svg>
+                        <p data-i18n="gas_label">GAS / TVOC</p>
+                    </div>
+
+                    <h2 id="gas">--</h2>
+                    <small id="gasStatusText" data-i18n="gas_status_normal">Normal air quality</small>
+                </div>
+
+                <!-- SOLAR BATTERY -->
+                <div class="glass-card">
+                    <div class="card-top">
+                        <svg class="icon icon-md accent-icon">
+                            <use href="#icon-sun" />
+                        </svg>
+                        <p data-i18n="solar_label">SOLAR BATTERY</p>
+                    </div>
+
+                    <h2 id="solar">--%</h2>
+                    <div class="progress">
+                        <div id="solarBar" class="progress-fill solar-fill" style="width:0%"></div>
+                    </div>
+                    <small data-i18n="battery_solar_monitoring">Battery charge &amp; solar PV generation</small>
+                </div>
+
+                <!-- SOLAR POWER INPUT -->
+                <div class="glass-card">
+                    <div class="card-top">
+                        <svg class="icon icon-md accent-icon">
+                            <use href="#icon-zap" />
+                        </svg>
+                        <p data-i18n="solar_power_label">SOLAR POWER INPUT</p>
+                    </div>
+
+                    <h2 id="solarWatts">-- W</h2>
+                    <small data-i18n="solar_power_sub">Peak Power Generation (12V/24V PV)</small>
+                </div>
+
+                <!-- CLIMATE PRESERVATION STATUS -->
+                <div class="glass-card">
+                    <div class="card-top">
+                        <svg class="icon icon-md accent-icon">
+                            <use href="#icon-leaf" />
+                        </svg>
+                        <p data-i18n="preservation_label">PRESERVATION STATUS</p>
+                    </div>
+
+                    <h2 id="preservationStatus" class="status-highlight" data-i18n="status_optimal">OPTIMAL</h2>
+                    <small data-i18n="preservation_sub">Zero-decay cold chain active</small>
+                </div>
+
+            </section>
+
+            <!-- LIVE TELEMETRY CHARTS -->
+            <section id="analytics" class="content-grid">
+
+                <!-- TEMPERATURE CHART -->
+                <div class="chart-card">
+                    <div class="section-header">
+                        <div>
+                            <p class="eyebrow" data-i18n="live_analytics">LIVE TELEMETRY ANALYTICS</p>
+                            <h2 data-i18n="temperature_variation">Temperature Variation (°C)</h2>
+                        </div>
+                        <span class="live-tag-badge" data-i18n="live_tag">LIVE HARDWARE</span>
+                    </div>
+
+                    <canvas id="temperatureChart"></canvas>
+                </div>
+
+                <!-- GAS VARIATION CHART -->
+                <div class="chart-card">
+                    <div class="section-header">
+                        <div>
+                            <p class="eyebrow" data-i18n="air_quality">AIR QUALITY &amp; GAS MONITOR</p>
+                            <h2 data-i18n="gas_variation">Gas Variation (ppm)</h2>
+                        </div>
+                        <span class="live-tag-badge" data-i18n="live_tag">LIVE HARDWARE</span>
+                    </div>
+
+                    <canvas id="gasChart"></canvas>
+                </div>
+
+            </section>
+
+            <!-- AI INVENTORY & CAMERA VISION -->
+            <section id="vegetables" class="bottom-grid">
+
+                <!-- AI INVENTORY CARD -->
+                <div class="storage-card">
+                    <div class="section-header">
+                        <div>
+                            <p class="eyebrow" data-i18n="ai_inventory">AI PRODUCE INVENTORY</p>
+                            <h2 data-i18n="vegetables_inside_storage">Vegetables Inside Storage</h2>
+                        </div>
+                        <span class="ai-badge hidden" id="aiCameraActiveBadge" data-i18n="yolo_active">AI CAMERA ACTIVE</span>
+                    </div>
+
+                    <div class="vegetable-list" id="vegetableList">
+                        <p class="muted-note" id="vegetableEmptyNote" data-i18n="vegetable_waiting">
+                            Waiting for camera produce scan…
+                        </p>
+                    </div>
+                </div>
+
+                <!-- COMPUTER VISION & CAMERA CARD -->
+                <div id="camera" class="camera-card">
+                    <div class="section-header">
+                        <div>
+                            <p class="eyebrow" data-i18n="computer_vision">COMPUTER VISION &amp; CAMERA</p>
+                            <h2 data-i18n="cold_storage_camera">Storage Box Live Camera</h2>
+                        </div>
+
+                        <div class="camera-header-actions">
+                            <span class="camera-live hidden" id="cameraStatusBadge">
+                                ● <span id="cameraStatusText" data-i18n="status_active">Active Stream</span>
+                            </span>
+
+                            <button type="button" id="cameraToggleBtn" class="camera-toggle-btn" disabled>
+                                Turn Camera On
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="camera-screen" id="cameraScreenContainer">
+                        <div class="camera-grid"></div>
+
+                        <!-- Video / Image Stream element -->
+                        <img id="cameraStream" class="camera-stream hidden" alt="Live camera feed inside storage box">
+
+                        <!-- Camera Offline Placeholder -->
+                        <div class="camera-placeholder" id="cameraPlaceholder">
+                            <div class="camera-icon">
+                                <svg class="icon">
+                                    <use href="#icon-camera" />
+                                </svg>
+                            </div>
+                            <h3 data-i18n="yolo_vision_system">AI Produce Vision System</h3>
+                            <p id="cameraPlaceholderText" data-i18n="camera_feed_placeholder">
+                                Camera stream offline. Toggle camera button to activate.
+                            </p>
+                        </div>
+
+                        <!-- AI Bounding Box Overlay -->
+                        <div class="detection-box hidden" id="detectionBox">
+                            <div class="box-reticle"></div>
+                            <span id="detectionLabel" data-i18n="veg_tomatoes">Organic Tomatoes</span>
+                            <b id="detectionConfidence">98% <span data-i18n="unit_match">Match</span></b>
+                        </div>
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- SMART ALERT PANEL -->
+            <section class="alert-panel">
+                <div class="alert-icon" id="alertIcon">
+                    <svg class="icon">
+                        <use href="#icon-alert" />
+                    </svg>
+                </div>
+
+                <div>
+                    <h3 data-i18n="smart_alert_system">Smart Storage Alert System</h3>
+                    <p id="alertDesc" data-i18n="alert_normal_desc">
+                        All cold storage conditions are optimal for fresh vegetables.
+                    </p>
+                </div>
+
+                <div class="alert-state" id="alertState" data-i18n="alert_normal_tag">
+                    OPTIMAL
+                </div>
+            </section>
+
+        </main>
+
+    </section>
+
+    <!-- Scripts -->
+    <script src="js/translations.js"></script>
+    <script src="js/background.js"></script>
+    <script src="js/script.js"></script>
+    <script type="module" src="js/firebase-config.js"></script>
+
+</body>
+
+</html>
