@@ -37,7 +37,9 @@ window.handleContinueClick = function (e) {
     }
 
     window.location.hash = "dashboard";
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    const portalIntro = document.getElementById("portalIntro");
+    const portalOffset = portalIntro ? Math.max(0, portalIntro.offsetHeight - window.innerHeight + 2) : 0;
+    window.scrollTo({ top: portalOffset, behavior: "smooth" });
     return false;
 };
 
@@ -599,6 +601,76 @@ function initApp() {
     showSimulatedReadings();
     tempSimInterval = setInterval(showSimulatedReadings, 15000);
 
+    // Initialize Cinematic Portal Opening Animation
+    initPortalIntro();
+}
+
+/* ---------------- CINEMATIC PORTAL SCROLL PHYSICS ---------------- */
+function initPortalIntro() {
+    const introEl = document.getElementById("portalIntro");
+    const stageEl = document.getElementById("portalStickyStage");
+    const leftHalf = document.getElementById("portalHalfLeft");
+    const rightHalf = document.getElementById("portalHalfRight");
+    const wordmarkWrap = document.getElementById("portalWordmarkContainer");
+    const wordHim = document.getElementById("portalWordHim");
+    const wordArka = document.getElementById("portalWordArka");
+    const centerContent = document.getElementById("portalCenterContent");
+
+    if (!introEl || !leftHalf || !rightHalf || !wordmarkWrap) return;
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        introEl.style.display = "none";
+        return;
+    }
+
+    function updatePortal() {
+        const rect = introEl.getBoundingClientRect();
+        const totalHeight = introEl.offsetHeight;
+        const winH = window.innerHeight;
+        const maxScroll = Math.max(1, totalHeight - winH);
+        const scrolled = -rect.top;
+        const progress = Math.max(0, Math.min(1, scrolled / maxScroll));
+
+        // Smooth cubic ease
+        const ease = Math.pow(progress, 1.15);
+
+        // 1. Two halves split apart and travel beyond viewport edges (> 100px travel)
+        const panelTravel = ease * 105;
+        leftHalf.style.transform = `translate3d(-${panelTravel}%, 0, 0)`;
+        rightHalf.style.transform = `translate3d(${panelTravel}%, 0, 0)`;
+
+        // 2. Wordmark: SPLIT + EXPAND (Scale) + TIGHTEN (Letter Spacing)
+        const scale = 1.0 + ease * 0.28;
+        const letterSpacing = 0.05 - ease * 0.12;
+        wordmarkWrap.style.letterSpacing = `${letterSpacing}em`;
+        wordmarkWrap.style.transform = `scale(${scale})`;
+
+        // Spans move outward
+        const splitVw = ease * 25;
+        if (wordHim) wordHim.style.transform = `translate3d(-${splitVw}vw, 0, 0)`;
+        if (wordArka) wordArka.style.transform = `translate3d(${splitVw}vw, 0, 0)`;
+
+        // Fade center metadata gracefully
+        if (centerContent) {
+            const fade = Math.max(0, (progress - 0.65) / 0.35);
+            centerContent.style.opacity = Math.max(0, 1 - fade * 1.25);
+        }
+
+        // Pointer-events toggled when completely open
+        if (stageEl) {
+            if (progress >= 0.96) {
+                stageEl.classList.remove("is-closed");
+                stageEl.style.visibility = "hidden";
+            } else {
+                stageEl.classList.add("is-closed");
+                stageEl.style.visibility = "visible";
+            }
+        }
+    }
+
+    window.addEventListener("scroll", updatePortal, { passive: true });
+    window.addEventListener("resize", updatePortal, { passive: true });
+    updatePortal();
 }
 
 // Reliable Initialization Guard

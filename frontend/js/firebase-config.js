@@ -21,17 +21,19 @@ import {
   onValue
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-// Gemini API key from .env
-const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
+// Gemini API key from .env (safely checked for vanilla browser environments)
+const GEMINI_API_KEY = (typeof import.meta !== "undefined" && import.meta && import.meta.env && import.meta.env.VITE_GEMINI_API_KEY)
+  ? import.meta.env.VITE_GEMINI_API_KEY
+  : "";
 
 // Optional safety check
 if (!GEMINI_API_KEY) {
-  console.warn("GEMINI_API_KEY is not configured in the .env file.");
+  console.info("HIMARKA: GEMINI_API_KEY is not configured in .env (running in standard browser mode).");
 }
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "[GCP_API_KEY]",
+  apiKey: "AIzaSyAWlDnQQbgElBAI2x5MnezQyVTyvvKITAY",
   authDomain: "vegetable-box-system.firebaseapp.com",
   databaseURL:
     "https://vegetable-box-system-default-rtdb.asia-southeast1.firebasedatabase.app",

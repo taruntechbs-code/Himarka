@@ -1068,3 +1068,145 @@ select:focus-visible {
 .glass-card, .chart-card, .storage-card, .camera-card, .hero-panel, .alert-panel {
     animation: cardEnter 0.5s ease both;
 }
+
+/* =====================================================================
+   HIMARKA — CINEMATIC FULL-SCREEN SPLIT OPENING ANIMATION
+   ===================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&family=Syne:wght@700;800&display=swap');
+
+.portal-intro {
+    position: relative;
+    width: 100%;
+    height: 180vh;
+    z-index: 99999;
+    background: transparent;
+    pointer-events: none;
+    margin: 0;
+    padding: 0;
+}
+
+.portal-sticky-stage {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background: transparent;
+    pointer-events: none;
+}
+
+.portal-sticky-stage.is-closed {
+    pointer-events: auto;
+}
+
+.portal-half {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 50.5vw;
+    background-color: #0A0C0E;
+    z-index: 10;
+    will-change: transform;
+    pointer-events: auto;
+}
+
+.portal-half-left {
+    left: 0;
+    border-right: 1px solid rgba(237, 231, 220, 0.13);
+}
+
+.portal-half-right {
+    right: 0;
+    border-left: 1px solid rgba(237, 231, 220, 0.13);
+}
+
+.portal-center-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    user-select: none;
+    will-change: opacity;
+}
+
+.portal-top-meta {
+    position: absolute;
+    top: clamp(2rem, 5vh, 3.5rem);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: 'Sora', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #9EA5A8;
+}
+
+.portal-meta-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: #E8913C;
+}
+
+.portal-wordmark-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(3.2rem, 11vw, 9.5rem);
+    font-weight: 800;
+    line-height: 1;
+    color: #EDE7DC;
+    letter-spacing: 0.05em;
+    will-change: transform, letter-spacing;
+    white-space: nowrap;
+}
+
+.portal-word-span {
+    display: inline-block;
+    will-change: transform;
+}
+
+.portal-bottom-meta {
+    position: absolute;
+    bottom: clamp(2rem, 5vh, 3.5rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.65rem;
+    font-family: 'Sora', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #9EA5A8;
+}
+
+.portal-scroll-indicator {
+    width: 1px;
+    height: 36px;
+    background: linear-gradient(to bottom, #E8913C, transparent);
+    animation: portalPulse 2s infinite ease-in-out;
+}
+
+@keyframes portalPulse {
+    0% { transform: scaleY(0); transform-origin: top; }
+    50% { transform: scaleY(1); transform-origin: top; }
+    50.1% { transform: scaleY(1); transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #portalIntro {
+        display: none !important;
+    }
+}
+

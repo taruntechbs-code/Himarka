@@ -1,5 +1,5 @@
 /* =====================================================================
-   SITAGARAA — Complete 9 Northeast Regional Language Dictionaries
+   HIMARKA — Complete 9 Northeast Regional Language Dictionaries
    ---------------------------------------------------------------------
    Translates EVERY SINGLE element, text, badge, unit & produce name:
      1. English
@@ -17,7 +17,7 @@ const TRANSLATIONS = {
 
   English: {
     eyebrow_platform: "SOLAR POWERED SMART COLD STORAGE PLATFORM",
-    welcome_title: "Welcome to SITAGARAA",
+    welcome_title: "Welcome to HIMARKA",
     welcome_desc: "Select your preferred Northeast regional language to access real-time cold storage monitoring, AI produce detection, and solar analytics.",
     choose_language_label: "Choose your language",
     continue_btn: "Continue to Dashboard",
@@ -113,7 +113,7 @@ const TRANSLATIONS = {
 
   Assamese: {
     eyebrow_platform: "সৌৰ শক্তি চালিত স্মাৰ্ট কল্ড ষ্ট'ৰেজ প্লেটফৰ্ম",
-    welcome_title: "SITAGARAA লৈ স্বাগতম",
+    welcome_title: "HIMARKA লৈ স্বাগতম",
     welcome_desc: "ৰিয়েল-টাইম কল্ড ষ্ট'ৰেজ নিৰীক্ষণ, এআই শাক-পাচলি চিনাক্তকৰণ আৰু ছোলাৰ এনালিটিক্সৰ বাবে আপোনাৰ পছন্দৰ উত্তৰ-পূবীয় ভাষা বাছনি কৰক।",
     choose_language_label: "আপোনাৰ ভাষা বাছনি কৰক",
     continue_btn: "ডেশ্ববৰ্ডলৈ আগবাঢ়ক",
@@ -209,7 +209,7 @@ const TRANSLATIONS = {
 
   Bengali: {
     eyebrow_platform: "সৌর চালিত স্মার্ট কোল্ড স্টোরেজ প্ল্যাটফর্ম",
-    welcome_title: "SITAGARAA-এ স্বাগতম",
+    welcome_title: "HIMARKA-এ স্বাগতম",
     welcome_desc: "রিয়েল-টাইম কোল্ড স্টোরেজ মনিটরিং, এআই সবজি সনাক্তকরণ এবং সৌর অ্যানালিটিক্সের জন্য আপনার পছন্দের উত্তর-পূর্বাঞ্চলীয় ভাষা নির্বাচন করুন।",
     choose_language_label: "আপনার ভাষা নির্বাচন করুন",
     continue_btn: "ড্যাশবোর্ডে যান",
@@ -305,7 +305,7 @@ const TRANSLATIONS = {
 
   Hindi: {
     eyebrow_platform: "सौर ऊर्जा संचालित स्मार्ट कोल्ड स्टोरेज प्लेटफॉर्म",
-    welcome_title: "SITAGARAA में आपका स्वागत है",
+    welcome_title: "HIMARKA में आपका स्वागत है",
     welcome_desc: "पूर्वोत्तर क्षेत्र की अपनी पसंदीदा भाषा चुनें और रियल-टाइम कोल्ड स्टोरेज मॉनिटरिंग, AI सब्जी पहचान तथा सोलर एनालिटिक्स देखें।",
     choose_language_label: "अपनी भाषा चुनें",
     continue_btn: "डैशबोर्ड पर जाएं",
@@ -401,7 +401,7 @@ const TRANSLATIONS = {
 
   Nepali: {
     eyebrow_platform: "सोलार संचालित स्मार्ट कोल्ड स्टोरेज प्लेटफर्म",
-    welcome_title: "SITAGARAA मा स्वागत छ",
+    welcome_title: "HIMARKA मा स्वागत छ",
     welcome_desc: "पूर्वोत्तर क्षेत्रको आफ्नो मनपर्ने भाषा छान्नुहोस् र रियल-टाइम कोल्ड स्टोरेज मनिटरिङ, AI तरकारी पहिचान र सोलार विश्लेषण हेर्नुहोस्।",
     choose_language_label: "आफ्नो भाषा छान्नुहोस्",
     continue_btn: "ड्यासबोर्डमा जानुहोस्",
@@ -497,7 +497,7 @@ const TRANSLATIONS = {
 
   Manipuri: {
     eyebrow_platform: "सोलर ঙাক্লোন স্মাৰ্ট কোল্ড ষ্টোরেজ প্ল্যাটফৰ্ম",
-    welcome_title: "SITAGARAA দা তরাম্না ওকচরি",
+    welcome_title: "HIMARKA দা তরাম্না ওকচরি",
     welcome_desc: "নর্থ-ইষ্ট লমদমগী মখোল লোক্লয়ন ভাষা খন্দুনা কোল্ড ষ্টোরেজ অমসুং AI মানাক মচা মিকুপ-মিকুপ নিংথিনা য়েংবীয়ু।",
     choose_language_label: "নহাকগী ভাষা খনবীয়ু",
     continue_btn: "ড্যাশবোর্ডতা চংবীয়ু",
@@ -593,7 +593,7 @@ const TRANSLATIONS = {
 
   Bodo: {
     eyebrow_platform: "साननि शक्तिजों सोलिनाय स्मार्ट थान्दै फसंथान",
-    welcome_title: "SITAGARAA आव स्विगाथम",
+    welcome_title: "HIMARKA आव स्विगाथम",
     welcome_desc: "सा-सानजा ओनसोलनि नोंथांनि मोजां मोन्नाय रावखौ सायख'नानै रियल-टाइम थान्दै फसंथान आरो AI समफ्राम डेटा नाय।",
     choose_language_label: "राव सायख'",
     continue_btn: "डैशबोर्ड आव थां",
@@ -689,7 +689,7 @@ const TRANSLATIONS = {
 
   Mizo: {
     eyebrow_platform: "NI THOTHA THILDAHNA SMART COLD STORAGE PLATFORM",
-    welcome_title: "SITAGARAA-ah Chibai",
+    welcome_title: "HIMARKA-ah Chibai",
     welcome_desc: "Hmarchhak (Northeast) ṭawng zinga i duh ber thlang la, thlai dahna dinhmun, solar power leh AI thlai vawnhimna thlithlai rawh.",
     choose_language_label: "I ṭawng thlang rawh",
     continue_btn: "Dashboard-ah kal rawh",
@@ -785,7 +785,7 @@ const TRANSLATIONS = {
 
   Khasi: {
     eyebrow_platform: "PLATFORM KA PYNDONKAM BOR SNGI IABA KHYNNAH COLD STORAGE",
-    welcome_title: "Pdiang burom sha SITAGARAA",
+    welcome_title: "Pdiang burom sha HIMARKA",
     welcome_desc: "Jied ia ka ktien bad u khlaw ba phi sngewtynnad na ka bynta ka monitoring ia ki jhingthung, ka bor sngi bad ka AI.",
     choose_language_label: "Jied ia ka ktien jong phi",
     continue_btn: "Sha ka Dashboard",
