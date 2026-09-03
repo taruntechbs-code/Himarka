@@ -1,0 +1,71 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+
+    "liveData": {
+      ".read": true,
+      ".write": true,
+      ".validate": "newData.hasChildren(['temperature', 'humidity'])",
+      "temperature": {
+        ".validate": "newData.isNumber()"
+      },
+      "humidity": {
+        ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 100"
+      },
+      "co2": {
+        ".validate": "newData.isNumber()"
+      },
+      "gasLevel": {
+        ".validate": "newData.isNumber()"
+      },
+      "solarBattery": {
+        ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 100"
+      },
+      "solarWatts": {
+        ".validate": "newData.isNumber() && newData.val() >= 0"
+      },
+      "coolingState": {
+        ".validate": "newData.isBoolean() || newData.isString()"
+      },
+      "updatedAt": {
+        ".validate": "newData.isNumber()"
+      },
+      "$other": {
+        ".validate": false
+      }
+    },
+
+    "vegetableInfo": {
+      ".read": true,
+      ".write": true,
+      "currentVegetable": {
+        ".validate": "newData.isString() && newData.val().length <= 50"
+      },
+      "confidence": {
+        ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 1"
+      },
+      "freshnessScore": {
+        ".validate": "newData.isNumber() || newData.isString()"
+      },
+      "daysStored": {
+        ".validate": "newData.isNumber() && newData.val() >= 0"
+      },
+      "quantity": {
+        ".validate": "newData.isNumber() || newData.isString()"
+      },
+      "spoilageAlert": {
+        ".validate": "newData.isBoolean() || newData.isString()"
+      },
+      "storageStartTime": {
+        ".validate": "newData.isNumber()"
+      },
+      "detectedAt": {
+        ".validate": "newData.isNumber()"
+      },
+      "$other": {
+        ".validate": false
+      }
+    }
+  }
+}

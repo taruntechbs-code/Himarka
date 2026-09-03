@@ -65,5 +65,9 @@ firestore-debug.log*
 .env.local
 .env.*.local
 *.local
+*.pem
+*.key
 credentials.json
 service-account*.json
+*secret*.json
+google-services.json
