@@ -7,12 +7,15 @@ import { useTelemetry } from '@/services/telemetry/TelemetryContext';
 import { useTranslation } from 'react-i18next';
 import { Info, Snowflake, Sun, ShieldCheck } from 'lucide-react';
 
-// Module-level session flag: resets on browser refresh / fresh page load,
-// but persists across client-side React Router navigation.
-let hasCompletedIntroForSession = false;
+import {
+  shouldShowIntro,
+  markIntroCompleted,
+  resetIntroLifecycleState,
+  initializeDocumentScrollForIntro,
+} from '../intro/introLifecycle';
 
-export const resetIntroSessionForTesting = () => {
-  hasCompletedIntroForSession = false;
+export const resetIntroSessionForTesting = (isCompleted: boolean = false) => {
+  resetIntroLifecycleState(isCompleted);
 };
 
 export const AppLayout: React.FC = () => {
@@ -21,21 +24,38 @@ export const AppLayout: React.FC = () => {
 
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
+  // Ensure browser scroll restoration is set to manual and reset scroll to top on document load/reload
+  useEffect(() => {
+    initializeDocumentScrollForIntro();
+  }, []);
+
   // Check prefers-reduced-motion
   useEffect(() => {
     const mql = window.matchMedia('(prefers-reduced-motion: reduce)');
     setPrefersReducedMotion(mql.matches);
-    const handler = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
+    if (mql.matches) {
+      markIntroCompleted();
+      setIntroActive(false);
+      setIntroProgress(1);
+    }
+    const handler = (e: MediaQueryListEvent) => {
+      setPrefersReducedMotion(e.matches);
+      if (e.matches) {
+        markIntroCompleted();
+        setIntroActive(false);
+        setIntroProgress(1);
+      }
+    };
     mql.addEventListener('change', handler);
     return () => mql.removeEventListener('change', handler);
   }, []);
 
-  // Intro is active only on initial fresh session load when motion is not reduced
-  const [introActive, setIntroActive] = useState(() => !hasCompletedIntroForSession && !prefersReducedMotion);
+  // Intro is active only on initial fresh document load / reload when motion is not reduced
+  const [introActive, setIntroActive] = useState(() => shouldShowIntro(prefersReducedMotion));
   const [introProgress, setIntroProgress] = useState(introActive ? 0 : 1);
 
   const handleIntroComplete = React.useCallback(() => {
-    hasCompletedIntroForSession = true;
+    markIntroCompleted();
     setIntroActive(false);
     setIntroProgress(1);
     if (typeof window !== 'undefined') {
@@ -43,11 +63,12 @@ export const AppLayout: React.FC = () => {
     }
   }, []);
 
-  useEffect(() => {
-    if (prefersReducedMotion) {
+  const handleProgressChange = React.useCallback((progress: number) => {
+    setIntroProgress(progress);
+    if (progress >= 0.99) {
       handleIntroComplete();
     }
-  }, [prefersReducedMotion, handleIntroComplete]);
+  }, [handleIntroComplete]);
 
   // App shell visibility: completely invisible when closed (progress === 0),
   // then smoothly fades in as panels open. Once intro is unmounted, strictly 1.
@@ -68,12 +89,7 @@ export const AppLayout: React.FC = () => {
         <>
           <IntroPortal
             scrollThreshold={750}
-            onProgressChange={(progress) => {
-              setIntroProgress(progress);
-              if (progress >= 0.99) {
-                handleIntroComplete();
-              }
-            }}
+            onProgressChange={handleProgressChange}
             onComplete={handleIntroComplete}
           />
           {/* Intro Scroll Track: consumes the 750px scroll distance during intro only */}

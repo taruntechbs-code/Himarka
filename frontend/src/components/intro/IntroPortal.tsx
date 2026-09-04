@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 interface IntroPortalProps {
   scrollThreshold?: number;
@@ -14,6 +14,13 @@ export const IntroPortal: React.FC<IntroPortalProps> = ({
   const [scrollProgress, setScrollProgress] = useState(0);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
+  // Keep callback refs so scroll listener effect never re-subscribes on callback changes
+  const onProgressChangeRef = useRef(onProgressChange);
+  onProgressChangeRef.current = onProgressChange;
+
+  const onCompleteRef = useRef(onComplete);
+  onCompleteRef.current = onComplete;
+
   // Check prefers-reduced-motion
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -24,47 +31,38 @@ export const IntroPortal: React.FC<IntroPortalProps> = ({
     return () => mediaQuery.removeEventListener('change', handler);
   }, []);
 
-  const handleScroll = useCallback(() => {
+  // Native scroll-driven portal physics
+  // Runs once on mount; listens to passive window scroll events without blocking wheel/touch/keys
+  useEffect(() => {
     if (prefersReducedMotion) return;
-    const scrollY = window.scrollY || window.pageYOffset || 0;
-    const progress = Math.min(1, Math.max(0, scrollY / scrollThreshold));
-    setScrollProgress(progress);
-    onProgressChange?.(progress);
-    if (progress >= 0.99) {
-      onComplete?.();
+
+    // Reset scroll to 0 once on initial mount
+    try {
+      if (window.scrollY > 0) {
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      }
+    } catch {
+      // ignore
     }
-  }, [scrollThreshold, prefersReducedMotion, onProgressChange, onComplete]);
 
-  useEffect(() => {
-    if (prefersReducedMotion) return;
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [handleScroll, prefersReducedMotion]);
+    const handleScroll = () => {
+      const scrollY = window.scrollY || window.pageYOffset || 0;
+      const progress = Math.min(1, Math.max(0, scrollY / scrollThreshold));
+      setScrollProgress(progress);
+      onProgressChangeRef.current?.(progress);
 
-  // Keyboard accessibility: Allow ArrowDown, PageDown, Space to scroll intro track
-  useEffect(() => {
-    if (prefersReducedMotion) return;
-    const handleKeyDown = (e: KeyboardEvent) => {
-      const scrollY = window.scrollY || 0;
-      if (['ArrowDown', 'PageDown', ' '].includes(e.key)) {
-        if (scrollY < scrollThreshold) {
-          e.preventDefault();
-          const step = e.key === ' ' || e.key === 'PageDown' ? 300 : 120;
-          window.scrollBy({ top: step, behavior: 'smooth' });
-        }
-      } else if (['ArrowUp', 'PageUp'].includes(e.key)) {
-        if (scrollY > 0 && scrollY <= scrollThreshold + 50) {
-          e.preventDefault();
-          const step = e.key === 'PageUp' ? 300 : 120;
-          window.scrollBy({ top: -step, behavior: 'smooth' });
-        }
+      if (progress >= 0.99) {
+        onCompleteRef.current?.();
       }
     };
 
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [prefersReducedMotion, scrollThreshold]);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [scrollThreshold, prefersReducedMotion]);
 
   // Immediate bypass if reduced motion is requested or already completed
   if (prefersReducedMotion || scrollProgress >= 0.99) {
