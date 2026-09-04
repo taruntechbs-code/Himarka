@@ -120,7 +120,7 @@ export const StorageShell: React.FC = () => {
                 Compact farm-level insulated prototype &bull; Solar-powered direct DC cooling &bull; Decentralized cold chain preservation
               </p>
 
-              {/* Prototype Capacity Section (Zero Fabricated 1000kg Claims) */}
+              {/* Prototype Capacity Section (Field-Tested Prototype Specifications) */}
               <div
                 style={{
                   padding: '1.25rem',
