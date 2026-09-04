@@ -1,8 +1,8 @@
-from typing import List, Optional
+from typing import Optional
 from sqlalchemy import desc, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.db.models.energy import EnergyRecord
-from app.schemas.energy import EnergyRecordIn, EnergyRecordOut, EnergySummaryOut
+from app.schemas.energy import EnergyRecordIn, EnergyRecordOut
 
 
 class EnergyService:

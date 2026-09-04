@@ -6,7 +6,6 @@ Prepares task queue definitions for asynchronous non-blocking background jobs:
 - Energy forecasting
 """
 import os
-from typing import Any, Dict
 from app.core.logging import logger
 
 # Configuration placeholder for Celery / Redis broker

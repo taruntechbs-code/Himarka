@@ -1,6 +1,5 @@
 import logging
 import sys
-from typing import Any, Dict
 from contextvars import ContextVar
 
 # Context variable for request correlation ID

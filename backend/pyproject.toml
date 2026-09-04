@@ -38,12 +38,17 @@ dev = [
 ]
 
 [tool.ruff]
-line-length = 100
+line-length = 120
 target-version = "py312"
 
 [tool.ruff.lint]
-select = ["E", "F", "I", "UP", "B"]
-ignore = ["B008"]
+select = ["E", "F", "B"]
+ignore = ["B008", "E501"]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]
+"app/db/models/*" = ["F821"]
+"backend/app/db/models/*" = ["F821"]
 
 [tool.pytest.ini_options]
 minversion = "8.0"

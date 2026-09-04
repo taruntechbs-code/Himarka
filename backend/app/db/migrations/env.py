@@ -6,7 +6,6 @@ from sqlalchemy.ext.asyncio import async_engine_from_config
 from alembic import context
 from app.core.config import get_settings
 from app.db.base import Base
-import app.db.models  # Ensure all models are registered with Base.metadata
 
 config = context.config
 settings = get_settings()

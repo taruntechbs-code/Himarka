@@ -1,5 +1,4 @@
 import uuid
-from typing import Optional
 from sqlalchemy import Boolean, Float, ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.db.base import Base, TimestampMixin

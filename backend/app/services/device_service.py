@@ -1,9 +1,9 @@
 from datetime import datetime, timezone
-from typing import List, Optional
+from typing import List
 from app.core.exceptions import DeviceNotFoundException, HimarkaException, ErrorCode
 from app.db.models.device import Device
 from app.db.repositories.device_repository import DeviceRepository
-from app.schemas.device import DeviceCreate, DeviceHeartbeat, DeviceOut, DeviceUpdate
+from app.schemas.device import DeviceCreate, DeviceHeartbeat, DeviceOut
 
 
 class DeviceService:

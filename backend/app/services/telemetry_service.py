@@ -1,9 +1,8 @@
 from datetime import datetime
 from typing import List, Optional
-from app.core.exceptions import DeviceNotFoundException
 from app.db.repositories.device_repository import DeviceRepository
 from app.db.repositories.telemetry_repository import TelemetryRepository
-from app.schemas.telemetry import TelemetryRecordOut, TelemetrySummary
+from app.schemas.telemetry import TelemetryRecordOut
 
 
 class TelemetryService:

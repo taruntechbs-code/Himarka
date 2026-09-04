@@ -1,5 +1,3 @@
-from datetime import datetime, timezone
-from typing import Optional
 from app.core.config import get_settings
 from app.core.exceptions import NotConfiguredException
 from app.core.logging import logger

@@ -1,7 +1,6 @@
-from typing import List, Optional
+from typing import List
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.core.exceptions import NotFoundException
 from app.db.models.produce import ProduceBatch
 from app.schemas.produce import ProduceBatchCreate, ProduceBatchOut
 

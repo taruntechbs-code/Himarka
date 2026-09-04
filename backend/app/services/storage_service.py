@@ -1,8 +1,8 @@
-from typing import List, Optional
+from typing import List
 from app.core.exceptions import NotFoundException
 from app.db.models.storage_unit import StorageUnit
 from app.db.repositories.storage_repository import StorageRepository
-from app.schemas.storage import StorageUnitCreate, StorageUnitOut, StorageUnitUpdate
+from app.schemas.storage import StorageUnitCreate, StorageUnitOut
 
 
 class StorageService:

@@ -1,8 +1,6 @@
 import os
-from datetime import datetime, timezone
 from app.core.config import get_settings
 from app.core.exceptions import NotConfiguredException
-from app.core.logging import logger
 from app.integrations.ai.base import AIProvider
 from app.schemas.ai import DetectionResponse, SpoilagePredictionRequest, SpoilagePredictionResponse
 

@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.db.models.storage_unit import StorageUnit
