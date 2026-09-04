@@ -64,16 +64,24 @@ export const ClayTelemetryChart: React.FC<ClayTelemetryChartProps> = ({
       <div
         style={{
           width: '100%',
-          height: '240px',
+          height: '260px',
           backgroundColor: '#FAF8FD',
           borderRadius: 'var(--radius-medium)',
           boxShadow: 'var(--shadow-clay-recessed)',
-          padding: '1rem 0.5rem 0.5rem 0',
+          padding: '1.25rem 1rem 0.75rem 0.75rem',
           boxSizing: 'border-box',
         }}
       >
         <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={data} margin={{ top: 10, right: 20, left: -10, bottom: 0 }}>
+          <AreaChart
+            data={data}
+            margin={{
+              top: 10,
+              right: 12,
+              left: 6,
+              bottom: 4,
+            }}
+          >
             <defs>
               <linearGradient id={fillGradientId} x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor={gradientFrom} stopOpacity={0.8} />
@@ -85,14 +93,17 @@ export const ClayTelemetryChart: React.FC<ClayTelemetryChartProps> = ({
               dataKey="timeLabel"
               tickLine={false}
               axisLine={false}
-              tick={{ fill: '#635F69', fontSize: 11, fontFamily: 'var(--font-body)' }}
+              height={26}
+              dy={6}
+              tick={{ fill: '#635F69', fontSize: 11, fontFamily: 'var(--font-body)', fontWeight: 600 }}
               interval="preserveStartEnd"
             />
             <YAxis
               tickLine={false}
               axisLine={false}
+              width={unit.includes('ppm') ? 68 : unit.includes('W') ? 56 : 50}
               domain={[minDomain, maxDomain]}
-              tick={{ fill: '#635F69', fontSize: 11, fontFamily: 'var(--font-body)' }}
+              tick={{ fill: '#635F69', fontSize: 11, fontFamily: 'var(--font-body)', fontWeight: 600 }}
               tickFormatter={(v) => `${v}${unit}`}
             />
             <Tooltip
