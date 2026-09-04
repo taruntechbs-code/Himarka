@@ -1,8 +1,15 @@
 import uuid
-from typing import List, Optional
+from typing import TYPE_CHECKING, List, Optional
 from sqlalchemy import Boolean, Float, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.db.base import Base, TimestampMixin
+
+if TYPE_CHECKING:
+    from app.db.models.alert import Alert
+    from app.db.models.device import Device
+    from app.db.models.energy import EnergyRecord
+    from app.db.models.produce import ProduceBatch
+    from app.db.models.telemetry import TelemetryRecord
 
 
 class StorageUnit(Base, TimestampMixin):
