@@ -3,17 +3,175 @@
     "title": "HIMARKA",
     "tagline": "Solar-Powered Smart Mini Cold Storage System",
     "region": "North Eastern Region of India",
-    "phase": "Phase 0 Architectural Shell"
+    "phase": "Phase 1 Digital Clay Environment"
   },
   "nav": {
     "dashboard": "Dashboard",
-    "telemetry": "Telemetry",
-    "storage": "Storage Units",
-    "produce": "Produce",
+    "telemetry": "Environment",
+    "storage": "Storage",
+    "produce": "AI & Produce",
+    "energy": "Energy",
     "devices": "Devices",
-    "energy": "Solar & Energy",
     "alerts": "Alerts",
     "settings": "Settings"
+  },
+  "mode": {
+    "demo": "Demo Mode",
+    "real": "Live Backend",
+    "simulatedNotice": "SIMULATED TELEMETRY FOR VALIDATION & PROTOTYPE DEMONSTRATION",
+    "demoShort": "DEMO",
+    "realShort": "LIVE"
+  },
+  "dashboard": {
+    "overallStatus": "GOOD",
+    "overallMessage": "Your storage is in good condition and your vegetables are safe.",
+    "produceSafe": "Produce is Safe & Fresh",
+    "coldIdeal": "Cold Temperature is Ideal",
+    "humidityGood": "Moisture is Good for Produce",
+    "powerGood": "Solar Power is Running Normally",
+    "coolingGood": "Cooling is Working Normally",
+    "noAction": "No Action Needed — Everything is Safe",
+    "heroTitle": "Storage Condition",
+    "targetRange": "Current storage temperature",
+    "lastUpdated": "Last updated",
+    "checklistTitle": "Everything You Need to Know",
+    "checklist": {
+      "produce": "Produce",
+      "coldAir": "Cold Air",
+      "humidity": "Humidity",
+      "power": "Power",
+      "action": "Action Needed"
+    },
+    "statusTitle": "Current Storage Status",
+    "statusSubtitle": "Clear and actionable conditions inside your cold storage",
+    "produceTitle": "Produce Currently Stored",
+    "produceSubtitle": "Your fresh vegetables currently being preserved in the cold chamber",
+    "historyTitle": "24-Hour Temperature Record",
+    "historySubtitle": "Shows that your storage has stayed safely cold continuously day and night",
+    "chartTitle": "Chamber Coldness Over Last 24 Hours (°C)",
+    "chartSubtitle": "Temperature remained steady in the safe green zone (1.0°C – 4.0°C)",
+    "techTitle": "Looking for Technical Engineering Details?",
+    "techDesc": "Detailed voltages, battery metrics, sensor hardware, and raw telemetry are available on dedicated operator pages.",
+    "solarDetails": "Solar & Power Details",
+    "sensorHardware": "Sensor Hardware",
+    "metrics": {
+      "temperature": "Current Temperature",
+      "humidity": "Air Moisture (Humidity)",
+      "produceStatus": "Produce Freshness",
+      "power": "Solar Power Status",
+      "cooling": "Cooling System",
+      "alerts": "Alerts & Tasks",
+      "currentTemp": "Current",
+      "targetTemp": "Target Range"
+    },
+    "status": {
+      "good": "GOOD",
+      "optimal": "OPTIMAL",
+      "fresh": "FRESH & HEALTHY",
+      "active": "SOLAR ACTIVE",
+      "coolingWorking": "WORKING NORMALLY",
+      "noIssues": "NO ISSUES DETECTED",
+      "coolingActive": "Cooling Working",
+      "coolingIdle": "Standing By",
+      "healthySafe": "STORAGE HEALTHY & SAFE",
+      "tempGood": "TEMPERATURE LOOKS GOOD",
+      "tempDesc": "Temperature is within standard storage range",
+      "humidityStable": "HUMIDITY IS STABLE",
+      "humidityDesc": "Air moisture is stable to protect vegetables",
+      "conditionGood": "CONDITION: GOOD",
+      "produceGood": "PRODUCE CONDITION: GOOD",
+      "produceDesc": "Stored produce is in good, healthy condition",
+      "powerPlenty": "PLENTY OF POWER",
+      "solarActive": "SOLAR ACTIVE",
+      "powerDesc": "Running normally with full battery reserve",
+      "safe": "SAFE",
+      "coolingDesc": "Cold air circulating gently to protect harvest",
+      "alertsDesc": "All systems safe • No action needed from you",
+      "storedSafely": "Stored safely",
+      "withinTarget": "Within target range",
+      "tooCold": "Below target: Cooling will cycle off",
+      "tooWarm": "Above target: Active cooling engaged"
+    },
+    "currentStorage": "CURRENT STORAGE",
+    "changeCrop": "Change Crop",
+    "whatAreYouStoring": "What are you storing?",
+    "selectCropPrompt": "Select a vegetable to automatically configure the recommended temperature mode.",
+    "aiDetectLink": "Use Camera Detection",
+    "viewAllModes": "View All 24 Vegetable Profiles & Preset Modes"
+  },
+  "telemetry": {
+    "title": "Environmental Telemetry & Trends",
+    "subtitle": "Real-time downsampled environmental history and air quality records",
+    "tempTrend": "Temperature Variation (°C)",
+    "gasTrend": "Air Quality Variation (MQ-135 ppm)",
+    "solarTrend": "Solar Power Generation (Watts)",
+    "ranges": {
+      "1h": "1 Hour",
+      "6h": "6 Hours",
+      "24h": "24 Hours",
+      "7d": "7 Days"
+    }
+  },
+  "storage": {
+    "title": "Cold Storage Chambers",
+    "subtitle": "Multi-compartment climate control and insulated chamber status",
+    "capacity": "Storage Capacity",
+    "used": "Utilized",
+    "setpoint": "Temperature Setpoint",
+    "humidityTarget": "Humidity Target",
+    "doorState": "Chamber Access Door",
+    "doorClosed": "Secured & Sealed",
+    "doorOpen": "Door Open",
+    "dimensionsTitle": "Physical Prototype Dimensions & Specifications",
+    "modesTitle": "Vegetable-Specific Storage Operating Modes",
+    "modesSubtitle": "HIMARKA regulates cooling based on crop biology. Select an operating preset mode below:"
+  },
+  "energy": {
+    "title": "Solar Generation & Power System",
+    "subtitle": "Photovoltaic generation, lithium battery storage, and refrigeration load",
+    "batteryCapacity": "Battery Storage",
+    "generation": "Current Generation",
+    "coolingConsumption": "Cooling Power Draw",
+    "auxiliaryConsumption": "Auxiliary Electronics",
+    "gridFallback": "Grid Fallback Draw",
+    "gridStatus": "Zero Grid Consumption (100% Solar)"
+  },
+  "ai": {
+    "title": "Produce Intelligence & Vision",
+    "subtitle": "Edge detection and shelf-life monitoring for horticultural preservation",
+    "detectionTitle": "AI Produce Detection",
+    "detectionSubtitle": "Multi-class vegetable identification and freshness grading",
+    "predictionTitle": "AI Spoilage & Shelf-life Prediction",
+    "predictionSubtitle": "Predictive shelf-life degradation modeling",
+    "notConfigured": "NOT CONFIGURED",
+    "notConfiguredDesc": "Trained ML prediction checkpoint awaiting model registry deployment. Local rule-based safety guards active.",
+    "visionTitle": "ESP32-CAM / OV2640 Stream",
+    "cameraOffline": "CAMERA OFFLINE",
+    "waitingForDevice": "WAITING FOR EDGE HARDWARE STREAM",
+    "manualFallback": "Select Crop Manually"
+  },
+  "devices": {
+    "title": "Hardware Nodes & Health",
+    "subtitle": "Edge microcontroller telemetry, sensor connectivity, and firmware status",
+    "deviceId": "Device Identifier",
+    "firmware": "Firmware Version",
+    "hardware": "Hardware Architecture",
+    "sensors": "Sensor Suite",
+    "heartbeat": "Last Heartbeat"
+  },
+  "alerts": {
+    "title": "System Alerts & Notifications",
+    "subtitle": "Real-time safety thresholds, door events, and thermal boundaries",
+    "normal": "All Systems Normal",
+    "noActive": "No unresolved alerts. Storage conditions remain within bounds."
+  },
+  "settings": {
+    "title": "Platform Settings",
+    "subtitle": "Language preference, telemetry data mode, and system parameters",
+    "language": "Interface Language",
+    "dataSource": "Telemetry Data Source",
+    "demoDesc": "Display high-fidelity simulated telemetry for evaluation and UI verification",
+    "realDesc": "Stream live sensor readings from connected FastAPI and IoT hardware"
   },
   "status": {
     "healthy": "Healthy",
@@ -27,6 +185,26 @@
     "error": "An error occurred",
     "retry": "Retry",
     "save": "Save",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "viewDetails": "View Details"
+  },
+  "modes": {
+    "mode1": {
+      "name": "Mode 1",
+      "title": "Near-freezing storage",
+      "desc": "Cold-tolerant leafy greens and root vegetables preserving freshness without freezing damage."
+    },
+    "mode2": {
+      "name": "Mode 2",
+      "title": "Cool storage",
+      "desc": "Moderately cold temperatures for tubers and chill-tolerant pods."
+    },
+    "mode3": {
+      "name": "Mode 3",
+      "title": "Chilling-sensitive produce",
+      "desc": "Warmer cold-storage to prevent physiological chilling injury in sensitive produce."
+    },
+    "adjusting": "ADJUSTING",
+    "adjustingNotice": "Mode change requested. Cooling system will adjust toward the selected range."
   }
 }

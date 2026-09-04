@@ -1,0 +1,216 @@
+{
+  "app": {
+    "title": "HIMARKA",
+    "tagline": "Ka Kor Pynkhriat kaba shong halor ka Bor Sngi",
+    "region": "Ka Dong Shatei-Lam-Mihngi ka Ri India",
+    "phase": "Ka Bynta 1 Ka Dur Claymorphism"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "telemetry": "Ka Mariang",
+    "storage": "Ka Kynshew",
+    "produce": "AI & Jingthung",
+    "energy": "Borbasion",
+    "devices": "Ki Tiir",
+    "alerts": "Ki Maham",
+    "settings": "Ki Jingpynbeit"
+  },
+  "mode": {
+    "demo": "Demo Mode",
+    "real": "Live Backend",
+    "demoShort": "DEMO",
+    "realShort": "LIVE",
+    "simulatedNotice": "Ka jingbatai lem na ka bynta ban peit bad pynshisha"
+  },
+  "dashboard": {
+    "overallStatus": "BHA",
+    "overallMessage": "Ka jaka kynshew jong phi ka bha bad ki jhur ki shngain.",
+    "produceSafe": "Ki jhur ki shngain bad ki dang thymmai",
+    "coldIdeal": "Ka jingkhriat ka biang bha",
+    "humidityGood": "Ka jingjngem ka biang na ka bynta ki jhur",
+    "powerGood": "Ka bor sngi ka trei kam bha",
+    "coolingGood": "Ka kor pynkhriat ka trei kam bha",
+    "noAction": "Ym donkam ban leh eiei — Baroh ki shngain",
+    "heroTitle": "Ka Mariang Kynshew",
+    "targetRange": "Ka jingkhriat kynshew mynta",
+    "lastUpdated": "La pynthymmai khatduh",
+    "checklistTitle": "Kiei kiei kiba phi dei ban tip",
+    "checklist": {
+      "produce": "Jhur",
+      "coldAir": "Lyer khriat",
+      "humidity": "Jingjngem",
+      "power": "Bor sngi",
+      "action": "Jingleh"
+    },
+    "statusTitle": "Ka kyrdan kynshew mynta",
+    "statusSubtitle": "Ka jinglong jong ka jaka kynshew khriat",
+    "produceTitle": "Ki jhur kiba la kynshew mynta",
+    "produceSubtitle": "Ki jhur kiba la kynshew shngain ha ka kamra khriat",
+    "historyTitle": "Ka jingkhriat ha ki 24 kynta",
+    "historySubtitle": "Ka pyni ba ka jaka kynshew ka sah khriat beit mynsngi bad mynmiet",
+    "chartTitle": "Ka jingkhriat ha ki 24 kynta (°C)",
+    "chartSubtitle": "Ka jingkhriat ka sah ha ka kyrdan kaba biang (1.0°C – 4.0°C)",
+    "techTitle": "Phi kwah ban tip shaphang ki kor ki bor?",
+    "techDesc": "Ka voltage, battery bad ki sensor ki don ha kiwei pat ki sla.",
+    "solarDetails": "Ka Bor Sngi & Power",
+    "sensorHardware": "Ki Tiir Sensor",
+    "metrics": {
+      "temperature": "Ka jingkhriat kamra",
+      "humidity": "Ka jingjngem ka lyer",
+      "produceStatus": "Ka jingbha ki jhur",
+      "power": "Ka bor sngi",
+      "cooling": "Ka kor pynkhriat",
+      "alerts": "Ki maham bad ki kam",
+      "gas": "Jingbha ka Lyer (Gas)",
+      "battery": "Ka Bor Battery Sngi",
+      "solarPower": "Ka Bor Sngi ba rung",
+      "preservation": "Ka Jingbha ki Jhur",
+      "currentTemp": "Mynta",
+      "targetTemp": "Kaba Thmu"
+    },
+    "status": {
+      "good": "BHA",
+      "optimal": "BHA TAM",
+      "fresh": "THYMMAI BAD KOIT BHA",
+      "active": "TREI KAM",
+      "coolingWorking": "TREI KAM BHA",
+      "noIssues": "YM DON JINGEH",
+      "coolingActive": "Ka kor ka trei kam",
+      "coolingIdle": "Ka shongthait",
+      "healthySafe": "JAKA KYNSHEW KA SHNGAIN",
+      "tempGood": "JINGKHRIAT KA BIANG BHA",
+      "tempDesc": "Ka jingkhriat ka biang bha",
+      "humidityStable": "JINGJNGEM KA THIKNA",
+      "humidityDesc": "Ka jingjngem ka biang ban ri ia ki jhur",
+      "conditionGood": "KYRDAN: BHA",
+      "produceGood": "KYRDAN JHUR: BHA",
+      "produceDesc": "Ki jhur kiba kynshew ki bha bad shngain",
+      "powerPlenty": "BOR KA BIANG BHA",
+      "solarActive": "BOR SNGI KA TREI",
+      "powerDesc": "Ka battery ka dap bha bad ka trei kam thikna",
+      "safe": "SHNGAIN",
+      "coolingDesc": "Ka lyer khriat ka pyntrei kam ban ri ia ki jhur",
+      "alertsDesc": "Baroh ki kor ki shngain • Ym donkam leh eiei",
+      "storedSafely": "La kynshew shngain",
+      "online": "Online (ONLINE)",
+      "normal": "Kaba Bha",
+      "withinTarget": "Don hapoh kaba thmu",
+      "tooCold": "Khriat palat ban ia kaba thmu",
+      "tooWarm": "Khlit palat ban ia kaba thmu"
+    },
+    "currentStorage": "Kaba buh mynta",
+    "changeCrop": "Kylla Jhur",
+    "whatAreYouStoring": "Kiei kiba phi buh?",
+    "selectCropPrompt": "Jied ia ki jhur ban ioh ia ka jingkhriat kaba biang.",
+    "aiDetectLink": "Pyndonkam Camera ban ithuh",
+    "viewAllModes": "Peit baroh 24 ki rukom buh jhur"
+  },
+  "telemetry": {
+    "title": "Ki jingkhein ka Suinbneng",
+    "subtitle": "Ka jingbatai ia ka jingkhriat bad ka lyer ha ki por ba la leit",
+    "tempTrend": "Jingkylla ka Jingkhriat (°C)",
+    "gasTrend": "Jingdon ka Lyer Gas (MQ-135 ppm)",
+    "solarTrend": "Ka Bor Sngi ba Pynmih (Watts)",
+    "ranges": {
+      "1h": "1 Kynta",
+      "6h": "6 Kynta",
+      "24h": "24 Kynta",
+      "7d": "7 Sngi"
+    }
+  },
+  "storage": {
+    "title": "Ki Kamra Pynsah Khriat",
+    "subtitle": "Ka rukom pynbeit ia ka jingkhriat ha ki bynta bapher bapher",
+    "capacity": "Ka jingngiam baroh",
+    "used": "Ba la pyndonkam",
+    "setpoint": "Ka thong jingkhriat",
+    "humidityTarget": "Ka thong jingsngem",
+    "doorState": "Ka Jingkhang",
+    "doorClosed": "Kaba Khang bha",
+    "doorOpen": "Ka dang plie",
+    "dimensionsTitle": "Ka Jingheh bad Jingthew ka synduk",
+    "modesTitle": "Ki rukom pynkhriat katkum ki jhur",
+    "modesSubtitle": "Ka HIMARKA ka pynkhriat katkum ka jingdonkam jong ki jhur."
+  },
+  "energy": {
+    "title": "Ka Bor Sngi & Ka Bor Ding",
+    "subtitle": "Ka jingpynmih bor sngi, ka jingkynshew battery bad ka bor ba pyndonkam",
+    "batteryCapacity": "Jingdon ka Battery",
+    "generation": "Bor ba pynmih mynta",
+    "coolingConsumption": "Bor ba pynkhriat",
+    "auxiliaryConsumption": "Kiwei ki kor",
+    "gridFallback": "Bor ding na surok",
+    "gridStatus": "100% Ka Bor Sngi"
+  },
+  "ai": {
+    "title": "Ka AI & Ki Jhur",
+    "subtitle": "Ban ithuh ia ki jhur bad ban tip katno sngi kin neh",
+    "detectionTitle": "Ka AI ban ithuh Jhur",
+    "detectionSubtitle": "Ban ithuh bad ban bishar ia ka jingshlur ki jhur",
+    "predictionTitle": "Ka AI ban iathuh lypa ia ka jingsniew",
+    "predictionSubtitle": "Ka rukom pynshongdor sngi ban neh",
+    "notConfigured": "Ym pat pynbeit (NOT CONFIGURED)",
+    "notConfiguredDesc": "Ka model AI ba la hikai kam pat don. Dang pyndonkam da ki aiñ tynrai.",
+    "visionTitle": "Ka Camera ESP32-CAM",
+    "cameraOffline": "Camera kam pat trei",
+    "waitingForDevice": "Dang ap ban pyndait ia ka kor",
+    "manualFallback": "Jied da lade ia ki jhur"
+  },
+  "devices": {
+    "title": "Ki Kor Hardware & Jingbha",
+    "subtitle": "Ki kor IoT, ki sensor bad ka firmware",
+    "deviceId": "Ka Kyrteng Kor",
+    "firmware": "Ka Firmware Version",
+    "hardware": "Ka Jait Hardware",
+    "sensors": "Ki Sensor",
+    "heartbeat": "Ka jingai dak khatduh"
+  },
+  "alerts": {
+    "title": "Ki Jingpyntip Maham",
+    "subtitle": "Ki jingtip mardor lada ka jingkhriat ka palat pud",
+    "normal": "Bha Lut Baroh",
+    "noActive": "Ym don jingmaham eiei."
+  },
+  "settings": {
+    "title": "Ki Jingpynbeit",
+    "subtitle": "Ka ktien bad ka rukom shim ia ka data",
+    "language": "Ka Ktien",
+    "dataSource": "Tynrai ka Data",
+    "demoDesc": "Pyndonkam da ka data ba shu shna ban iohi",
+    "realDesc": "Shim na ki kor IoT shisha"
+  },
+  "status": {
+    "healthy": "Kaba Koit Bha",
+    "degraded": "Duna ka bor",
+    "offline": "Offline",
+    "active": "Dang trei",
+    "online": "Online"
+  },
+  "common": {
+    "loading": "Dang pynwan ia ka data...",
+    "error": "Don jingbakla",
+    "retry": "Pyrshang biang",
+    "save": "Kynshew",
+    "cancel": "Sangeh",
+    "viewDetails": "Peit bniah"
+  },
+  "modes": {
+    "mode1": {
+      "name": "Mode 1",
+      "title": "Ka jaka buh ba khriat bha",
+      "desc": "Na ka bynta ki jhur sla bad ki thied jhur kiba lah ban shah khriat."
+    },
+    "mode2": {
+      "name": "Mode 2",
+      "title": "Ka jaka buh ba khriat",
+      "desc": "Na ka bynta u phan, u rymbai bad u sohmynken."
+    },
+    "mode3": {
+      "name": "Mode 3",
+      "title": "Ki jhur ba bitam ha ka khriat",
+      "desc": "Na ka bynta u sohsaw, u sohbaingon kiba duh kynsan lada khriat palat."
+    },
+    "adjusting": "DANG PYNBHA",
+    "adjustingNotice": "La kyntu ban pynkylla mode. Ka kor pynkhriat kan pynbeit ialade sha kata ka jingkhriat."
+  }
+}

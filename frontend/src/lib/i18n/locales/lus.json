@@ -1,0 +1,216 @@
+{
+  "app": {
+    "title": "HIMARKA",
+    "tagline": "Ni zung chakna hmanga vawh dah khawl thiam",
+    "region": "India Hmarchhak Bial",
+    "phase": "Phase 1 Claymorphism Hmanrua"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "telemetry": "Boruk",
+    "storage": "Vawnṭhatna",
+    "produce": "AI & Thlai",
+    "energy": "Eng & Power",
+    "devices": "Khawl dinhmun",
+    "alerts": "Hriattirna",
+    "settings": "Siamṭhatna"
+  },
+  "mode": {
+    "demo": "Demo Mode",
+    "real": "Live Backend",
+    "demoShort": "DEMO",
+    "realShort": "LIVE",
+    "simulatedNotice": "Enchhinna leh fiahna atan telemetry lem hman a ni"
+  },
+  "dashboard": {
+    "overallStatus": "ṬHA",
+    "overallMessage": "I thlai vawnṭhatna hmun a ṭha a, i thlaite an him e.",
+    "produceSafe": "Thlai a him a, a tharlam bawk",
+    "coldIdeal": "Vawh lam a tawk chiah e",
+    "humidityGood": "Tuihnang a ṭha tawk e",
+    "powerGood": "Ni zung chakna a kal pangngai e",
+    "coolingGood": "Tihvawhna khawl a thawk ṭha e",
+    "noAction": "Tih ngai a awm lo — Engkim a him e",
+    "heroTitle": "Vawnṭhatna Boruk",
+    "targetRange": "Tun a vawh lam dinhmun",
+    "lastUpdated": "Update hnuhnung ber",
+    "checklistTitle": "I hriat tur pawimawh te",
+    "checklist": {
+      "produce": "Thlai",
+      "coldAir": "Boruk vawt",
+      "humidity": "Hnawng lam",
+      "power": "Chakna",
+      "action": "Tih tur"
+    },
+    "statusTitle": "Vawnṭhatna dinhmun",
+    "statusSubtitle": "Vawnṭhatna hmun chhung dinhmun chiangkuang tak",
+    "produceTitle": "Tun a thlai dah te",
+    "produceSubtitle": "Chhung a i thlai tharlam tak dah mek te",
+    "historyTitle": "Darkar 24 chhung vawh lam dinhmun",
+    "historySubtitle": "Chhun leh zan a vawt ṭha tawk reng tih a tarlang",
+    "chartTitle": "Darkar 24 chhung vawh lam (°C)",
+    "chartSubtitle": "Vawh lam chu dinhmun him (1.0°C – 4.0°C) ah a awm reng",
+    "techTitle": "Khawl lam chanchin kimchang i duh em?",
+    "techDesc": "Voltage, battery leh sensor chanchin te chu page dangah a en theih.",
+    "solarDetails": "Solar & Power Kimchang",
+    "sensorHardware": "Khawl Sensor Te",
+    "metrics": {
+      "temperature": "Pindan vawh lam",
+      "humidity": "Boruk hnawn lam",
+      "produceStatus": "Thlai tharlam dan",
+      "power": "Ni zung chakna dinhmun",
+      "cooling": "Tihvawhna khawl",
+      "alerts": "Hriattirna leh tih turte",
+      "gas": "Boruak Thianghlim Lam (Gas)",
+      "battery": "Battery Dinhmun",
+      "solarPower": "Ni Zung Chakna Lut",
+      "preservation": "Vawn Himna Dinhmun",
+      "currentTemp": "Tunah",
+      "targetTemp": "Bituk zawn"
+    },
+    "status": {
+      "good": "ṬHA",
+      "optimal": "ṬHA BER",
+      "fresh": "THARLAM LEH HIM",
+      "active": "A THAWK MEK",
+      "coolingWorking": "A THAWK ṬHA E",
+      "noIssues": "BUAINA A AWM LO",
+      "coolingActive": "Tihvawh a kal mek",
+      "coolingIdle": "Chawl mek",
+      "healthySafe": "VAWNṬHATNA A HIM E",
+      "tempGood": "VAWH LAM A TAWK CHIAH",
+      "tempDesc": "Vawh lam chu a tawk chiah e",
+      "humidityStable": "BORUK HNAWNG A TAWK CHIAH",
+      "humidityDesc": "Thlai venhim nan boruk hnawng a tawk",
+      "conditionGood": "DINHMUN: ṬHA",
+      "produceGood": "THLAI DINHMUN: ṬHA",
+      "produceDesc": "Dah mek te an ṭha a, an him e",
+      "powerPlenty": "CHAKNA A TAWK E",
+      "solarActive": "SOLAR A KAL",
+      "powerDesc": "Battery full in pangngai takin a kal e",
+      "safe": "HIM",
+      "coolingDesc": "Thlai ven nan boruk vawt a kal reng e",
+      "alertsDesc": "Engkim a him e • Tih ngai a awm lo",
+      "storedSafely": "Dah him a ni",
+      "online": "Online (ONLINE)",
+      "normal": "Pangngai",
+      "withinTarget": "Bituk chhungah a awm",
+      "tooCold": "A vawt mah mah",
+      "tooWarm": "A lum mah mah"
+    },
+    "currentStorage": "Dah mek thlai",
+    "changeCrop": "Thlai thlak rawh",
+    "whatAreYouStoring": "Eng thlai nge i dah dawn?",
+    "selectCropPrompt": "Vawhna mode tha ber thlang turin thlai thlang rawh.",
+    "aiDetectLink": "Camera hmangin enfiah rawh",
+    "viewAllModes": "Thlai 24 zinga vawhna en rawh"
+  },
+  "telemetry": {
+    "title": "Boruak Dinhmun & Thlalak",
+    "subtitle": "Boruak vawh lam leh boruak thianghlim chanchin tarlan",
+    "tempTrend": "Khawvawh Danglam Dan (°C)",
+    "gasTrend": "Gas Dinhmun (MQ-135 ppm)",
+    "solarTrend": "Ni Zung Chakna Tharchhuah (Watts)",
+    "ranges": {
+      "1h": "Darkar 1",
+      "6h": "Darkar 6",
+      "24h": "Darkar 24",
+      "7d": "Ni 7"
+    }
+  },
+  "storage": {
+    "title": "Vawh Dahna Pin Dan Hrang Hrang",
+    "subtitle": "Thlai dahna pin hrang hrang boruak vawn dan",
+    "capacity": "Dah theih zat",
+    "used": "Hman mek",
+    "setpoint": "Khawvawh bituk",
+    "humidityTarget": "Hnawn lam bituk",
+    "doorState": "Kawngkhar",
+    "doorClosed": "Khar tha a ni",
+    "doorOpen": "A inhawng mek",
+    "dimensionsTitle": "Bawm Lenlam leh Tehna",
+    "modesTitle": "Thlai zira Vawhna Mode",
+    "modesSubtitle": "HIMARKA hian thlai mamawh dan ang zelin a ti vawt thin."
+  },
+  "energy": {
+    "title": "Ni Zung Chakna & Power Hman Dan",
+    "subtitle": "Solar panel chakna siam, battery dahkhawl leh khawl hman zat",
+    "batteryCapacity": "Battery Neih Zat",
+    "generation": "Chakna Siam Mek",
+    "coolingConsumption": "Tihvawhna Hman Zat",
+    "auxiliaryConsumption": "Khawl Dang Hman",
+    "gridFallback": "Current Pangngai Hman",
+    "gridStatus": "100% Ni Zung Chakna Hman A Ni"
+  },
+  "ai": {
+    "title": "Thlai Enzui Tu AI & Vision",
+    "subtitle": "Thlai hmelhriatna leh a chhiat hun tur chhut lawkna",
+    "detectionTitle": "AI Thlai Hriatna",
+    "detectionSubtitle": "Thlai chi hrang hrang leh a thar dan enfiahna",
+    "predictionTitle": "AI Chhiat Hun Tur Chhut Lawkna",
+    "predictionSubtitle": "Thlai dam rei theih dan chhut lawkna",
+    "notConfigured": "Siam Fel A La Ni Lo (NOT CONFIGURED)",
+    "notConfiguredDesc": "Zirtir tawh AI model a la awm lo. Tunah chuan dan pangngai a hman mek a ni.",
+    "visionTitle": "ESP32-CAM Camera Enna",
+    "cameraOffline": "Camera A Inthiang Lo",
+    "waitingForDevice": "Khawl Inzawmna Nghah Mek A Ni",
+    "manualFallback": "Kuta thlai thlanna"
+  },
+  "devices": {
+    "title": "Hardware Khawl & Dinhmun",
+    "subtitle": "Microcontroller, sensor inzawmna leh firmware dinhmun",
+    "deviceId": "Khawl Hming/ID",
+    "firmware": "Firmware Version",
+    "hardware": "Hardware Chi",
+    "sensors": "Sensor Neih Te",
+    "heartbeat": "Inzawm Hnuhnun Ber"
+  },
+  "alerts": {
+    "title": "Hriattirna & Fimkhur Ngaite",
+    "subtitle": "Boruak chin tawk pelh thil thlengah hriattirna",
+    "normal": "Engkim A Kal Tluang",
+    "noActive": "Hriattirna pawimawh a awm lo."
+  },
+  "settings": {
+    "title": "Hman Dan Siamremna",
+    "subtitle": "Tawng hman leh data lakna thlanna",
+    "language": "Tawng Hman",
+    "dataSource": "Data Lakna Hmun",
+    "demoDesc": "Entirna atan siam chawp data hmang rawh",
+    "realDesc": "Khawl tak tak atangin data la rawh"
+  },
+  "status": {
+    "healthy": "A Tha",
+    "degraded": "A Buai Deuh",
+    "offline": "Offline",
+    "active": "A Nung",
+    "online": "Online"
+  },
+  "common": {
+    "loading": "Data Lak Mek A Ni...",
+    "error": "Thil dik lo a awm",
+    "retry": "Tih nawn lehna",
+    "save": "Vawng tha rawh",
+    "cancel": "Thulh rawh",
+    "viewDetails": "Chipchiar zawkin en rawh"
+  },
+  "modes": {
+    "mode1": {
+      "name": "Mode 1",
+      "title": "Vawt zual dahna",
+      "desc": "Hnahchawhmeh leh chawhmeh zung vawt tuar thei dahna hmun."
+    },
+    "mode2": {
+      "name": "Mode 2",
+      "title": "Vawt pangngai dahna",
+      "desc": "Alu, bean leh hmarcha dahna tur."
+    },
+    "mode3": {
+      "name": "Mode 3",
+      "title": "Vawt tuar theilo thlai",
+      "desc": "Tomato leh bawkbawn ang vawt lutuk tuar theilote dahna."
+    },
+    "adjusting": "SIAMTHA MEK",
+    "adjustingNotice": "Mode thlak dilna siam a ni. Vawhna chu a in adjust dawn e."
+  }
+}

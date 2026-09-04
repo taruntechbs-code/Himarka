@@ -8,7 +8,8 @@ export interface StorageUnit {
   name: string;
   location_village: string;
   location_state: string;
-  capacity_kg: number;
+  capacity_kg?: number | null; // Configurable: to be calibrated on physical prototype
+  is_prototype?: boolean;
   target_temp_min: number;
   target_temp_max: number;
   target_humidity_min: number;
