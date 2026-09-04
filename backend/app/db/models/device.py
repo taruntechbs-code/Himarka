@@ -1,9 +1,14 @@
 import uuid
 from datetime import datetime
-from typing import List, Optional
+from typing import TYPE_CHECKING, List, Optional
 from sqlalchemy import Boolean, DateTime, ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.db.base import Base, TimestampMixin
+
+if TYPE_CHECKING:
+    from app.db.models.sensor import Sensor
+    from app.db.models.storage_unit import StorageUnit
+    from app.db.models.telemetry import TelemetryRecord
 
 
 class Device(Base, TimestampMixin):

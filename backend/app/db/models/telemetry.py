@@ -1,9 +1,13 @@
 import uuid
 from datetime import datetime, timezone
-from typing import Optional
+from typing import TYPE_CHECKING, Optional
 from sqlalchemy import Boolean, DateTime, Float, ForeignKey, Index, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.db.base import Base
+
+if TYPE_CHECKING:
+    from app.db.models.device import Device
+    from app.db.models.storage_unit import StorageUnit
 
 
 class TelemetryRecord(Base):
