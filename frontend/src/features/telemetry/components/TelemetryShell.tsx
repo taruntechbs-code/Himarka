@@ -31,9 +31,9 @@ export const TelemetryShell: React.FC = () => {
         subtitle={t('telemetry.subtitle')}
         badge={
           mode === 'DEMO' ? (
-            <ClayBadge color="amber">SIMULATED HISTORICAL DATA</ClayBadge>
+            <ClayBadge color="amber">{t('telemetry.simulatedHistory', 'SIMULATED HISTORICAL DATA')}</ClayBadge>
           ) : (
-            <ClayBadge color="emerald">LIVE INGESTION</ClayBadge>
+            <ClayBadge color="emerald">{t('telemetry.liveIngestion', 'LIVE INGESTION')}</ClayBadge>
           )
         }
         actions={
@@ -103,7 +103,7 @@ export const TelemetryShell: React.FC = () => {
             </div>
             <div>
               <span style={{ fontSize: '0.75rem', color: 'var(--clay-text-secondary)', fontWeight: 700, textTransform: 'uppercase' }}>
-                Temp Range (24h)
+                {t('telemetry.tempRange24h', 'Temp Range (24h)')}
               </span>
               <p style={{ fontSize: '1.1rem', fontWeight: 900, fontFamily: 'var(--font-heading)' }}>
                 2.2°C &bull; 3.0°C
@@ -138,7 +138,7 @@ export const TelemetryShell: React.FC = () => {
             </div>
             <div>
               <span style={{ fontSize: '0.75rem', color: 'var(--clay-text-secondary)', fontWeight: 700, textTransform: 'uppercase' }}>
-                Air Quality Avg
+                {t('telemetry.avgHumidity', 'Air Quality Avg')}
               </span>
               <p style={{ fontSize: '1.1rem', fontWeight: 900, fontFamily: 'var(--font-heading)' }}>
                 208 ppm
@@ -173,7 +173,7 @@ export const TelemetryShell: React.FC = () => {
             </div>
             <div>
               <span style={{ fontSize: '0.75rem', color: 'var(--clay-text-secondary)', fontWeight: 700, textTransform: 'uppercase' }}>
-                Peak Solar (24h)
+                {t('telemetry.peakSolar', 'Peak Solar (24h)')}
               </span>
               <p style={{ fontSize: '1.1rem', fontWeight: 900, fontFamily: 'var(--font-heading)' }}>
                 68 Watts
@@ -208,7 +208,7 @@ export const TelemetryShell: React.FC = () => {
             </div>
             <div>
               <span style={{ fontSize: '0.75rem', color: 'var(--clay-text-secondary)', fontWeight: 700, textTransform: 'uppercase' }}>
-                Min Battery SoC
+                {t('telemetry.minBattery', 'Min Battery SoC')}
               </span>
               <p style={{ fontSize: '1.1rem', fontWeight: 900, fontFamily: 'var(--font-heading)' }}>
                 84%
@@ -228,8 +228,8 @@ export const TelemetryShell: React.FC = () => {
           {/* Chart 1: Temperature */}
           <ClayTelemetryChart
             id="analytics-chart-temp"
-            title="Chamber Temperature History (°C)"
-            subtitle="Internal cold chamber temperature record sampled across period"
+            title={t('telemetry.chamberTempHistory', 'Chamber Temperature History (°C)')}
+            subtitle={t('telemetry.chamberTempHistoryDesc', 'Internal cold chamber temperature record sampled across period')}
             data={filteredHistory}
             dataKey="temperature_c"
             unit="°C"
@@ -244,8 +244,8 @@ export const TelemetryShell: React.FC = () => {
           {/* Chart 2: Gas ppm */}
           <ClayTelemetryChart
             id="analytics-chart-gas"
-            title="Air Quality & Volatiles (MQ-135 ppm)"
-            subtitle="Raw gas resistance reading indicating air freshness and ventilation"
+            title={t('telemetry.airQualityVolatiles', 'Air Quality & Volatiles (MQ-135 ppm)')}
+            subtitle={t('telemetry.airQualityVolatilesDesc', 'Raw gas resistance reading indicating air freshness and ventilation')}
             data={filteredHistory}
             dataKey="gas_ppm"
             unit=" ppm"
@@ -260,8 +260,8 @@ export const TelemetryShell: React.FC = () => {
           {/* Chart 3: Solar Power Generation */}
           <ClayTelemetryChart
             id="analytics-chart-solar"
-            title="Photovoltaic Solar Power (Watts)"
-            subtitle="Solar panel generation tracking daylight cycles"
+            title={t('telemetry.photovoltaicPower', 'Photovoltaic Solar Power (Watts)')}
+            subtitle={t('telemetry.photovoltaicPowerDesc', 'Solar panel generation tracking daylight cycles')}
             data={filteredHistory}
             dataKey="solar_power_w"
             unit=" W"
@@ -276,8 +276,8 @@ export const TelemetryShell: React.FC = () => {
           {/* Chart 4: Battery SoC */}
           <ClayTelemetryChart
             id="analytics-chart-battery"
-            title="Lithium Battery State of Charge (%)"
-            subtitle="Battery pack energy storage buffer level"
+            title={t('telemetry.batterySoc', 'Lithium Battery State of Charge (%)')}
+            subtitle={t('telemetry.batterySocDesc', 'Battery pack energy storage buffer level')}
             data={filteredHistory}
             dataKey="battery_percent"
             unit="%"

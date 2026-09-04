@@ -128,7 +128,7 @@ export const Header: React.FC = () => {
         {/* CENTER: Compact Single-Row Desktop Navigation Links */}
         <nav
           id="desktop-navigation"
-          aria-label="Primary Navigation"
+          aria-label={t('nav.primaryNav', 'Primary Navigation')}
           className="desktop-nav-container"
           style={{
             display: 'flex',
@@ -218,10 +218,10 @@ export const Header: React.FC = () => {
               boxShadow: 'var(--shadow-clay-button-secondary)',
               transition: 'all var(--transition-fast)',
             }}
-            title="Switch between Demo Telemetry and Live Backend Hardware"
+            title={t('mode.toggleTooltip', 'Switch between Demo Telemetry and Live Backend Hardware')}
           >
             <Radio size={13} />
-            <span>{mode === 'DEMO' ? 'DEMO' : 'LIVE'}</span>
+            <span>{mode === 'DEMO' ? t('mode.demoShort', 'DEMO') : t('mode.realShort', 'LIVE')}</span>
           </button>
 
           {/* 9-Language Selector */}
@@ -240,7 +240,7 @@ export const Header: React.FC = () => {
             </span>
             <select
               id="language-select"
-              aria-label="Select Language"
+              aria-label={t('settings.selectLanguage', 'Select Language')}
               value={i18n.language}
               onChange={(e) => handleLanguageChange(e.target.value as SupportedLanguageCode)}
               style={{
@@ -272,7 +272,7 @@ export const Header: React.FC = () => {
             type="button"
             className="mobile-menu-btn"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle Navigation Menu"
+            aria-label={t('nav.toggleMenu', 'Toggle Navigation Menu')}
             style={{
               display: 'none',
               alignItems: 'center',

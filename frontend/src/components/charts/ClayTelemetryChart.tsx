@@ -10,6 +10,7 @@ import {
 } from 'recharts';
 import { ClayCard } from '../clay/ClayCard';
 import { TelemetryHistoryPoint } from '@/services/telemetry/TelemetryContext';
+import { useTranslation } from 'react-i18next';
 
 interface ClayTelemetryChartProps {
   title: string;
@@ -40,6 +41,7 @@ export const ClayTelemetryChart: React.FC<ClayTelemetryChartProps> = ({
   maxDomain = 'auto',
   id,
 }) => {
+  const { t } = useTranslation();
   return (
     <ClayCard id={id} className="clay-chart-container" style={{ padding: '1.75rem' }}>
       <div style={{ marginBottom: '1.25rem' }}>
@@ -121,7 +123,7 @@ export const ClayTelemetryChart: React.FC<ClayTelemetryChartProps> = ({
                       }}
                     >
                       <span style={{ fontSize: '0.75rem', color: '#635F69', display: 'block' }}>
-                        Time: {label}
+                        {t('common.time', 'Time')}: {label}
                       </span>
                       <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.3rem', marginTop: '0.2rem' }}>
                         <span

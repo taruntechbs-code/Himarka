@@ -1,4 +1,5 @@
 import { Component, ErrorInfo, ReactNode } from 'react';
+import i18n from '@/lib/i18n/i18n';
 
 interface Props {
   children: ReactNode;
@@ -31,7 +32,9 @@ export class ErrorBoundary extends Component<Props, State> {
       return (
         <div style={{ padding: '2rem', textAlign: 'center' }}>
           <div className="himarka-card" style={{ maxWidth: '600px', margin: '0 auto' }}>
-            <h2 style={{ color: 'var(--color-danger)', marginBottom: '1rem' }}>Application Error</h2>
+            <h2 style={{ color: 'var(--color-danger)', marginBottom: '1rem' }}>
+              {i18n.t('common.appError', 'Application Error')}
+            </h2>
             <p style={{ color: 'var(--color-text-muted)', marginBottom: '1.5rem' }}>
               {this.state.error?.message || 'An unexpected error occurred in the HIMARKA interface.'}
             </p>
@@ -46,7 +49,7 @@ export class ErrorBoundary extends Component<Props, State> {
                 fontWeight: 600,
               }}
             >
-              Reload Application
+              {i18n.t('common.reloadApp', 'Reload Application')}
             </button>
           </div>
         </div>

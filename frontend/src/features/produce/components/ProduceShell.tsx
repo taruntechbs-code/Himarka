@@ -47,7 +47,7 @@ export const ProduceShell: React.FC = () => {
       <ClaySection
         title={t('ai.title', 'Produce Intelligence & Crop Detection')}
         subtitle={t('ai.subtitle', 'Automatic vegetable classification, temperature mode recommendation, and produce profile browser')}
-        badge={<ClayBadge color="violet">EDGE INTELLIGENCE</ClayBadge>}
+        badge={<ClayBadge color="violet">{t('ai.edgeIntelligence', 'EDGE INTELLIGENCE')}</ClayBadge>}
       >
         {/* 1. AUTOMATIC VEGETABLE DETECTION PIPELINE (Sections 11–15, 20–22, 28–29) */}
         <ClayCard variant="deep" style={{ marginBottom: '2.5rem', padding: '2rem' }}>
@@ -58,11 +58,11 @@ export const ProduceShell: React.FC = () => {
                   YOLOv8 + OPENCV PIPELINE
                 </span>
                 <ClayBadge color={detectionState.source === 'DEMO' ? 'amber' : 'emerald'}>
-                  {detectionState.source === 'DEMO' ? 'DETECTION SOURCE: DEMO' : 'DETECTION SOURCE: LIVE HARDWARE'}
+                  {detectionState.source === 'DEMO' ? t('mode.demo', 'DEMO') : t('mode.real', 'LIVE HARDWARE')}
                 </ClayBadge>
                 {detectionState.status !== 'IDLE' && (
                   <ClayBadge color="violet">
-                    STATUS: {detectionState.status}
+                    {t(`status.${detectionState.status.toLowerCase()}`, detectionState.status)}
                   </ClayBadge>
                 )}
               </div>
@@ -200,7 +200,7 @@ export const ProduceShell: React.FC = () => {
                     style={{ height: '46px', padding: '0 1.75rem', fontSize: '0.95rem', fontWeight: 800 }}
                   >
                     <Check size={18} />
-                    <span>Confirm Storage Mode ({detectionState.recommendedMode ? STORAGE_MODES[detectionState.recommendedMode].name : 'Mode 3'})</span>
+                    <span>{t('ai.confirmStorageMode', 'Confirm Storage Mode')} ({detectionState.recommendedMode ? STORAGE_MODES[detectionState.recommendedMode].name : 'Mode 3'})</span>
                   </button>
 
                   <button
@@ -210,7 +210,7 @@ export const ProduceShell: React.FC = () => {
                     style={{ height: '46px', padding: '0 1.25rem', fontSize: '0.85rem' }}
                   >
                     <RotateCcw size={15} />
-                    <span>Reset</span>
+                    <span>{t('ai.resetScanner', 'Reset')}</span>
                   </button>
                 </div>
               </div>
@@ -234,7 +234,7 @@ export const ProduceShell: React.FC = () => {
                   <AlertTriangle size={24} color="#D97706" style={{ flexShrink: 0, marginTop: '2px' }} />
                   <div>
                     <h4 style={{ fontSize: '1.05rem', fontWeight: 900, color: '#92400E', margin: '0 0 0.3rem 0' }}>
-                      Detection Confidence is Low ({Math.round((detectionState.confidences[detectionState.detectedCrops[0]] || 0.54) * 100)}%)
+                      {t('ai.confidence', 'Confidence')}: {Math.round((detectionState.confidences[detectionState.detectedCrops[0]] || 0.54) * 100)}%
                     </h4>
                     <p style={{ fontSize: '0.88rem', color: '#B45309', margin: 0, lineHeight: 1.45 }}>
                       The optical model is uncertain about the detected produce. To protect your produce from cold injury or spoilage, manual confirmation is strictly required.
@@ -249,14 +249,14 @@ export const ProduceShell: React.FC = () => {
                     className="clay-btn clay-btn-secondary"
                     style={{ height: '42px', fontSize: '0.88rem' }}
                   >
-                    <span>Confirm as {getVegetableProfile(detectionState.detectedCrops[0])?.name || 'Tomato'}</span>
+                    <span>{t('ai.confirmMode', 'Confirm Mode')} ({getVegetableProfile(detectionState.detectedCrops[0])?.name || 'Tomato'})</span>
                   </button>
                   <a
                     href="#manual-crop-browser"
                     className="clay-btn clay-btn-primary"
                     style={{ height: '42px', fontSize: '0.88rem' }}
                   >
-                    <span>Select Crop Manually</span>
+                    <span>{t('ai.manualFallback', 'Select Crop Manually')}</span>
                   </a>
                   <button
                     type="button"
@@ -264,7 +264,7 @@ export const ProduceShell: React.FC = () => {
                     className="clay-btn clay-btn-outline"
                     style={{ height: '42px', fontSize: '0.88rem' }}
                   >
-                    <span>Rescan</span>
+                    <span>{t('ai.rescan', 'Rescan')}</span>
                   </button>
                 </div>
               </div>
@@ -348,7 +348,7 @@ export const ProduceShell: React.FC = () => {
                   style={{ height: '38px', fontSize: '0.82rem' }}
                 >
                   <RotateCcw size={14} />
-                  <span>Clear and Rescan</span>
+                  <span>{t('ai.clearAndRescan', 'Clear and Rescan')}</span>
                 </button>
               </div>
             )}
@@ -366,7 +366,7 @@ export const ProduceShell: React.FC = () => {
                   }}
                 >
                   <h4 style={{ fontSize: '1.05rem', fontWeight: 900, color: '#92400E', margin: '0 0 0.3rem 0' }}>
-                    Camera Unavailable / AI Detection Not Configured
+                    {t('ai.cameraOffline', 'CAMERA OFFLINE')}
                   </h4>
                   <p style={{ fontSize: '0.88rem', color: '#B45309', margin: 0 }}>
                     {detectionState.warning || 'Edge camera or ML inference service is not online. Please use manual crop selection below.'}
@@ -378,7 +378,7 @@ export const ProduceShell: React.FC = () => {
                   className="clay-btn clay-btn-primary"
                   style={{ height: '42px', fontSize: '0.88rem' }}
                 >
-                  <span>Select Crop Manually</span>
+                  <span>{t('ai.manualFallback', 'Select Crop Manually')}</span>
                 </a>
               </div>
             )}
@@ -396,7 +396,7 @@ export const ProduceShell: React.FC = () => {
                   <Sparkles size={14} style={{ display: 'inline', verticalAlign: 'text-bottom', marginRight: '0.3rem', color: '#F59E0B' }} />
                   Demo Verification Scenarios (Clearly labeled simulated sources)
                 </span>
-                <ClayBadge color="amber">EVALUATION TOOLBAR</ClayBadge>
+                <ClayBadge color="amber">{t('ai.evaluationToolbar', 'EVALUATION TOOLBAR')}</ClayBadge>
               </div>
 
               <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
@@ -524,10 +524,10 @@ export const ProduceShell: React.FC = () => {
                 <Info size={20} color="#D97706" style={{ flexShrink: 0, marginTop: '2px' }} />
                 <div>
                   <h4 style={{ fontSize: '0.95rem', fontWeight: 800, color: '#92400E', marginBottom: '0.3rem' }}>
-                    Trained Machine Learning Model Awaiting Checkpoint Deployment
+                    {t('ai.trainedModelNotice', 'Trained Machine Learning Model Awaiting Checkpoint Deployment')}
                   </h4>
                   <p style={{ fontSize: '0.85rem', color: 'var(--clay-text-secondary)', lineHeight: 1.5, margin: 0 }}>
-                    In compliance with the Phase 0/1 zero-fabrication standard, shelf-life prediction is not faked. Physical preservation operates strictly on validated temperature profiles (Mode 1, Mode 2, Mode 3).
+                    {t('ai.trainedModelDesc', 'In compliance with the Phase 0/1 zero-fabrication standard, shelf-life prediction is not faked. Physical preservation operates strictly on validated temperature profiles (Mode 1, Mode 2, Mode 3).')}
                   </p>
                 </div>
               </div>
@@ -536,7 +536,7 @@ export const ProduceShell: React.FC = () => {
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', fontSize: '0.82rem' }}>
               <div style={{ padding: '0.85rem', backgroundColor: '#FFFFFF', borderRadius: 'var(--radius-input)' }}>
                 <span style={{ color: 'var(--clay-text-secondary)', fontWeight: 700, display: 'block' }}>
-                  Model Architecture
+                  {t('ai.modelArchitecture', 'Model Architecture')}
                 </span>
                 <span style={{ fontWeight: 800, color: 'var(--clay-text-primary)' }}>
                   MobileNetV3-Small (Edge)
@@ -544,10 +544,10 @@ export const ProduceShell: React.FC = () => {
               </div>
               <div style={{ padding: '0.85rem', backgroundColor: '#FFFFFF', borderRadius: 'var(--radius-input)' }}>
                 <span style={{ color: 'var(--clay-text-secondary)', fontWeight: 700, display: 'block' }}>
-                  Registry Status
+                  {t('ai.registryStatus', 'Registry Status')}
                 </span>
                 <span style={{ fontWeight: 800, color: '#D97706' }}>
-                  Awaiting Weights File
+                  {t('ai.awaitingWeights', 'Awaiting Weights File')}
                 </span>
               </div>
             </div>
@@ -560,19 +560,19 @@ export const ProduceShell: React.FC = () => {
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.4rem' }}>
                 <span className="clay-badge clay-badge-violet">
-                  HARDWARE STREAM INTERFACE
+                  {t('ai.hardwareStreamInterface', 'HARDWARE STREAM INTERFACE')}
                 </span>
-                <ClayBadge color="amber">CAMERA OFFLINE</ClayBadge>
+                <ClayBadge color="amber">{t('ai.cameraOffline', 'CAMERA OFFLINE')}</ClayBadge>
               </div>
               <h3 style={{ fontSize: '1.6rem', fontWeight: 800 }}>{t('ai.visionTitle', 'ESP32-CAM / OV2640 Stream')}</h3>
               <p style={{ fontSize: '0.88rem', color: 'var(--clay-text-secondary)' }}>
-                Direct optical telemetry from cold chamber ESP32-CAM OV2640 module
+                {t('ai.streamDesc', 'Direct optical telemetry from cold chamber ESP32-CAM OV2640 module')}
               </p>
             </div>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem' }}>
               <span style={{ color: 'var(--clay-text-secondary)', fontWeight: 600 }}>
-                Resolution: 1600×1200 (UXGA max) &bull; Frame: MJPEG Stream
+                {t('ai.streamSpecs', 'Resolution: 1600×1200 (UXGA max) • Frame: MJPEG Stream')}
               </span>
             </div>
           </div>
@@ -708,7 +708,7 @@ export const ProduceShell: React.FC = () => {
                   <div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.5rem' }}>
                       <h4 style={{ fontSize: '1.15rem', fontWeight: 900, color: 'var(--clay-text-primary)', margin: 0 }}>
-                        {crop.name}
+                        {t(crop.nameKey, crop.name)}
                       </h4>
                       <ClayBadge color={crop.preferredMode === 'MODE_1' ? 'sky' : crop.preferredMode === 'MODE_2' ? 'amber' : 'violet'}>
                         {modeInfo.name}
@@ -721,7 +721,7 @@ export const ProduceShell: React.FC = () => {
 
                     <div style={{ padding: '0.6rem 0.75rem', backgroundColor: '#FFFFFF', borderRadius: 'var(--radius-input)', marginBottom: '0.75rem' }}>
                       <span style={{ fontSize: '0.72rem', color: 'var(--clay-text-secondary)', fontWeight: 700, textTransform: 'uppercase', display: 'block' }}>
-                        Vegetable Range
+                        {t('dashboard.metrics.targetTemp', 'Target Range')}
                       </span>
                       <strong style={{ fontSize: '1rem', color: isGarlic ? '#B45309' : 'var(--clay-text-primary)' }}>
                         {crop.temperatureRangeText}
@@ -731,7 +731,7 @@ export const ProduceShell: React.FC = () => {
                     {isGarlic && (
                       <div style={{ padding: '0.5rem', backgroundColor: '#FEF3C7', borderRadius: 'var(--radius-input)', fontSize: '0.72rem', color: '#92400E', marginBottom: '0.75rem' }}>
                         <AlertTriangle size={12} style={{ display: 'inline', verticalAlign: 'text-bottom', marginRight: '0.2rem' }} />
-                        Source value "0–C" requires verification before setting dedicated target.
+                        {t('storage.garlicNotice', 'Garlic: Requires Verification per scientific protocol.')}
                       </div>
                     )}
                   </div>
@@ -743,7 +743,7 @@ export const ProduceShell: React.FC = () => {
                     className={`clay-btn ${isSelected ? 'clay-btn-secondary' : 'clay-btn-outline'}`}
                     style={{ width: '100%', height: '36px', fontSize: '0.82rem', fontWeight: 800 }}
                   >
-                    {isSelected ? '✓ Currently Selected' : `Select ${crop.name} (${modeInfo.name})`}
+                    {isSelected ? `✓ ${t('dashboard.status.storedSafely', 'Currently Selected')}` : `${t('dashboard.changeCrop', 'Select')} ${t(crop.nameKey, crop.name)} (${modeInfo.name})`}
                   </button>
                 </ClayCard>
               );

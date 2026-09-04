@@ -141,9 +141,9 @@ export const SettingsShell: React.FC = () => {
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.4rem' }}>
                   <span style={{ fontWeight: 800, fontFamily: 'var(--font-heading)', fontSize: '1.05rem', color: '#92400E' }}>
-                    DEMO MODE (Recommended for Reviewers)
+                    {t('settings.demoOptionTitle', 'DEMO MODE (Recommended for Reviewers)')}
                   </span>
-                  {mode === 'DEMO' && <ClayBadge color="amber">ACTIVE</ClayBadge>}
+                  {mode === 'DEMO' && <ClayBadge color="amber">{t('settings.active', 'ACTIVE')}</ClayBadge>}
                 </div>
                 <p style={{ fontSize: '0.85rem', color: 'var(--clay-text-secondary)', lineHeight: 1.4 }}>
                   {t('settings.demoDesc')}
@@ -164,9 +164,9 @@ export const SettingsShell: React.FC = () => {
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.4rem' }}>
                   <span style={{ fontWeight: 800, fontFamily: 'var(--font-heading)', fontSize: '1.05rem', color: '#047857' }}>
-                    LIVE BACKEND HARDWARE
+                    {t('settings.liveOptionTitle', 'LIVE BACKEND HARDWARE')}
                   </span>
-                  {mode === 'REAL' && <ClayBadge color="emerald">ACTIVE</ClayBadge>}
+                  {mode === 'REAL' && <ClayBadge color="emerald">{t('settings.active', 'ACTIVE')}</ClayBadge>}
                 </div>
                 <p style={{ fontSize: '0.85rem', color: 'var(--clay-text-secondary)', lineHeight: 1.4 }}>
                   {t('settings.realDesc')}
@@ -180,10 +180,10 @@ export const SettingsShell: React.FC = () => {
         <ClayCard variant="deep">
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
             <Server size={22} color="var(--clay-accent-primary)" />
-            <h3 style={{ fontSize: '1.25rem', fontWeight: 800 }}>Platform Technical Information</h3>
+            <h3 style={{ fontSize: '1.25rem', fontWeight: 800 }}>{t('settings.platformTechTitle', 'Platform Technical Information')}</h3>
           </div>
           <p style={{ fontSize: '0.9rem', color: 'var(--clay-text-secondary)', lineHeight: 1.6, maxWidth: '800px' }}>
-            HIMARKA is engineered for the North Eastern Region of India. The frontend is built on React 18, Vite 5, and TypeScript with a pure Light Claymorphism design system. Zero fake hardware claims or uncalibrated machine learning metrics are generated.
+            {t('settings.platformTechDesc', 'HIMARKA is engineered for the North Eastern Region of India. The frontend is built on React 18, Vite 5, and TypeScript with a pure Light Claymorphism design system. Zero fake hardware claims or uncalibrated machine learning metrics are generated.')}
           </p>
         </ClayCard>
       </ClaySection>

@@ -20,9 +20,9 @@ export const DevicesShell: React.FC = () => {
         subtitle={t('devices.subtitle')}
         badge={
           mode === 'DEMO' ? (
-            <ClayBadge color="amber">SIMULATED DEVICE</ClayBadge>
+            <ClayBadge color="amber">{t('devices.simulatedDevice', 'SIMULATED DEVICE')}</ClayBadge>
           ) : (
-            <ClayBadge color="emerald">PHYSICAL HARDWARE</ClayBadge>
+            <ClayBadge color="emerald">{t('devices.physicalHardware', 'PHYSICAL HARDWARE')}</ClayBadge>
           )
         }
       >
@@ -41,10 +41,10 @@ export const DevicesShell: React.FC = () => {
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '0.4rem' }}>
                 <span className="clay-badge clay-badge-violet">
-                  MASTER IOT CONTROLLER
+                  {t('devices.masterIotController', 'MASTER IOT CONTROLLER')}
                 </span>
                 <ClayBadge color="emerald" pulse>
-                  {device.status}
+                  {t(`status.${device.status.toLowerCase()}`, device.status)}
                 </ClayBadge>
               </div>
 
@@ -58,13 +58,13 @@ export const DevicesShell: React.FC = () => {
 
             <div style={{ textAlign: 'right' }}>
               <span style={{ fontSize: '0.75rem', color: 'var(--clay-text-secondary)', textTransform: 'uppercase', fontWeight: 700, display: 'block' }}>
-                Data Freshness
+                {t('devices.dataFreshness', 'Data Freshness')}
               </span>
               <p style={{ fontSize: '1.2rem', fontWeight: 900, fontFamily: 'var(--font-heading)', color: 'var(--clay-success)' }}>
-                Live Stream Active
+                {t('devices.liveStreamActive', 'Live Stream Active')}
               </p>
               <span style={{ fontSize: '0.8rem', color: 'var(--clay-text-secondary)' }}>
-                Heartbeat: {lastUpdated}
+                {t('devices.heartbeatLabel', 'Heartbeat')}: {lastUpdated}
               </span>
             </div>
           </div>
@@ -83,7 +83,7 @@ export const DevicesShell: React.FC = () => {
           >
             <div>
               <span style={{ fontSize: '0.75rem', color: 'var(--clay-text-secondary)', fontWeight: 700, textTransform: 'uppercase', display: 'block' }}>
-                Firmware Version
+                {t('devices.firmwareVersion', 'Firmware Version')}
               </span>
               <p style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--clay-text-primary)', marginTop: '0.2rem' }}>
                 {device.firmware_version}
@@ -92,7 +92,7 @@ export const DevicesShell: React.FC = () => {
 
             <div>
               <span style={{ fontSize: '0.75rem', color: 'var(--clay-text-secondary)', fontWeight: 700, textTransform: 'uppercase', display: 'block' }}>
-                Network IP & Mode
+                {t('devices.networkMode', 'Network IP & Mode')}
               </span>
               <p style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--clay-text-primary)', marginTop: '0.2rem' }}>
                 {device.ip_address} (WiFi AP/STA)
@@ -101,19 +101,19 @@ export const DevicesShell: React.FC = () => {
 
             <div>
               <span style={{ fontSize: '0.75rem', color: 'var(--clay-text-secondary)', fontWeight: 700, textTransform: 'uppercase', display: 'block' }}>
-                Cooling Relay State
+                {t('devices.coolingRelayState', 'Cooling Relay State')}
               </span>
               <p style={{ fontSize: '1.1rem', fontWeight: 800, color: telemetry.cooling_active ? 'var(--clay-success)' : 'var(--clay-warning)', marginTop: '0.2rem' }}>
-                {telemetry.cooling_active ? 'PIN HIGH (ENGAGED)' : 'PIN LOW (OFF)'}
+                {telemetry.cooling_active ? t('status.pinHigh', 'PIN HIGH (ENGAGED)') : t('status.pinLow', 'PIN LOW (OFF)')}
               </p>
             </div>
 
             <div>
               <span style={{ fontSize: '0.75rem', color: 'var(--clay-text-secondary)', fontWeight: 700, textTransform: 'uppercase', display: 'block' }}>
-                Clock Skew Guard
+                {t('devices.clockSkewGuard', 'Clock Skew Guard')}
               </span>
               <p style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--clay-text-primary)', marginTop: '0.2rem' }}>
-                ±1.2s Validated
+                {t('status.clockValidated', '±1.2s Validated')}
               </p>
             </div>
           </div>
@@ -121,7 +121,7 @@ export const DevicesShell: React.FC = () => {
 
         {/* Connected Hardware Sensors Suite */}
         <h3 style={{ fontSize: '1.4rem', fontWeight: 800, marginBottom: '1.25rem' }}>
-          Connected Sensor Peripherals
+          {t('devices.connectedPeripherals', 'Connected Sensor Peripherals')}
         </h3>
 
         <div
@@ -137,10 +137,10 @@ export const DevicesShell: React.FC = () => {
                 <CheckCircle2 size={18} color="var(--clay-success)" />
                 <h4 style={{ fontSize: '1.1rem', fontWeight: 800 }}>SHT31 (I2C)</h4>
               </div>
-              <ClayBadge color="emerald">ONLINE</ClayBadge>
+              <ClayBadge color="emerald">{t('status.online', 'ONLINE')}</ClayBadge>
             </div>
             <p style={{ fontSize: '0.85rem', color: 'var(--clay-text-secondary)' }}>
-              Temperature & Humidity sensor on I2C bus address <code>0x44</code>. Verified internal thermal readings.
+              {t('devices.sht31Desc', 'I2C Bus Address 0x44 • High Accuracy ±0.2°C / ±2% RH')}
             </p>
           </ClayCard>
 
@@ -150,10 +150,10 @@ export const DevicesShell: React.FC = () => {
                 <CheckCircle2 size={18} color="var(--clay-success)" />
                 <h4 style={{ fontSize: '1.1rem', fontWeight: 800 }}>MQ-135 (ADC Pin 34)</h4>
               </div>
-              <ClayBadge color="emerald">ONLINE</ClayBadge>
+              <ClayBadge color="emerald">{t('status.online', 'ONLINE')}</ClayBadge>
             </div>
             <p style={{ fontSize: '0.85rem', color: 'var(--clay-text-secondary)' }}>
-              Air quality resistance sensor for volatile organic compounds and storage ventilation baseline.
+              {t('devices.mq135Desc', 'Analog Input Pin 34 • Volatile Organic Compounds & Spoilage Gases')}
             </p>
           </ClayCard>
 
@@ -163,10 +163,10 @@ export const DevicesShell: React.FC = () => {
                 <AlertTriangle size={18} color="var(--clay-warning)" />
                 <h4 style={{ fontSize: '1.1rem', fontWeight: 800 }}>OV2640 Camera</h4>
               </div>
-              <ClayBadge color="amber">STANDBY</ClayBadge>
+              <ClayBadge color="amber">{t('status.standby', 'STANDBY')}</ClayBadge>
             </div>
             <p style={{ fontSize: '0.85rem', color: 'var(--clay-text-secondary)' }}>
-              DVP camera ribbon interface on ESP32-CAM. Polling interval configured for on-demand inspection.
+              {t('devices.ov2640Desc', 'SPI / DVP Interface • 2MP Sensor for Chamber Crop Monitoring')}
             </p>
           </ClayCard>
         </div>

@@ -32,9 +32,9 @@ export const EnergyShell: React.FC = () => {
         subtitle={t('energy.subtitle')}
         badge={
           mode === 'DEMO' ? (
-            <ClayBadge color="amber">SIMULATED ENERGY LOOP</ClayBadge>
+            <ClayBadge color="amber">{t('energy.simulatedEnergyLoop', 'SIMULATED ENERGY LOOP')}</ClayBadge>
           ) : (
-            <ClayBadge color="emerald">LIVE POWER BUS</ClayBadge>
+            <ClayBadge color="emerald">{t('energy.livePowerBus', 'LIVE POWER BUS')}</ClayBadge>
           )
         }
       >
@@ -43,7 +43,7 @@ export const EnergyShell: React.FC = () => {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
             <div>
               <span className="clay-badge clay-badge-emerald" style={{ marginBottom: '0.4rem' }}>
-                PHOTOVOLTAIC MICROGRID
+                {t('energy.pvMicrogrid', 'PHOTOVOLTAIC MICROGRID')}
               </span>
               <h3 style={{ fontSize: '1.8rem', fontWeight: 900, fontFamily: 'var(--font-heading)' }}>
                 {t('energy.gridStatus')}
@@ -51,10 +51,10 @@ export const EnergyShell: React.FC = () => {
             </div>
             <div style={{ textAlign: 'right' }}>
               <span style={{ fontSize: '0.8rem', color: 'var(--clay-text-secondary)', fontWeight: 700, textTransform: 'uppercase' }}>
-                Net Energy Balance
+                {t('energy.netEnergyBalance', 'Net Energy Balance')}
               </span>
               <p style={{ fontSize: '1.5rem', fontWeight: 900, fontFamily: 'var(--font-heading)', color: 'var(--clay-success)' }}>
-                +{(solarW - (coolingW + auxW)).toFixed(1)} W Surplus
+                +{(solarW - (coolingW + auxW)).toFixed(1)} W {t('energy.surplus', 'Surplus')}
               </p>
             </div>
           </div>
@@ -73,49 +73,49 @@ export const EnergyShell: React.FC = () => {
           >
             <div style={{ textAlign: 'center' }}>
               <span style={{ fontSize: '0.78rem', color: 'var(--clay-text-secondary)', fontWeight: 700, textTransform: 'uppercase' }}>
-                Solar Generation
+                {t('energy.solarGeneration', 'Solar Generation')}
               </span>
               <p style={{ fontSize: '2rem', fontWeight: 900, fontFamily: 'var(--font-heading)', color: '#F59E0B', margin: '0.2rem 0' }}>
                 {solarW} W
               </p>
               <span style={{ fontSize: '0.75rem', color: 'var(--clay-text-secondary)' }}>
-                Bus: {solarV} V
+                {t('energy.bus', 'Bus')}: {solarV} V
               </span>
             </div>
 
             <div style={{ textAlign: 'center' }}>
               <span style={{ fontSize: '0.78rem', color: 'var(--clay-text-secondary)', fontWeight: 700, textTransform: 'uppercase' }}>
-                Battery Storage Buffer
+                {t('energy.batteryBuffer', 'Battery Storage Buffer')}
               </span>
               <p style={{ fontSize: '2rem', fontWeight: 900, fontFamily: 'var(--font-heading)', color: '#DB2777', margin: '0.2rem 0' }}>
                 {batterySoc}%
               </p>
               <span style={{ fontSize: '0.75rem', color: 'var(--clay-text-secondary)' }}>
-                Terminal: {batteryV} V
+                {t('energy.terminal', 'Terminal')}: {batteryV} V
               </span>
             </div>
 
             <div style={{ textAlign: 'center' }}>
               <span style={{ fontSize: '0.78rem', color: 'var(--clay-text-secondary)', fontWeight: 700, textTransform: 'uppercase' }}>
-                Cooling Compressor Draw
+                {t('energy.coolingCompressorDraw', 'Cooling Compressor Draw')}
               </span>
               <p style={{ fontSize: '2rem', fontWeight: 900, fontFamily: 'var(--font-heading)', color: '#7C3AED', margin: '0.2rem 0' }}>
                 {coolingW} W
               </p>
               <span style={{ fontSize: '0.75rem', color: 'var(--clay-text-secondary)' }}>
-                Brushless DC Drive
+                {t('energy.brushlessDcDrive', 'Brushless DC Drive')}
               </span>
             </div>
 
             <div style={{ textAlign: 'center' }}>
               <span style={{ fontSize: '0.78rem', color: 'var(--clay-text-secondary)', fontWeight: 700, textTransform: 'uppercase' }}>
-                Grid Fallback Draw
+                {t('energy.gridFallback', 'Grid Fallback Draw')}
               </span>
               <p style={{ fontSize: '2rem', fontWeight: 900, fontFamily: 'var(--font-heading)', color: '#10B981', margin: '0.2rem 0' }}>
                 {gridW} W
               </p>
               <span style={{ fontSize: '0.75rem', color: 'var(--clay-text-secondary)' }}>
-                Zero Dependency
+                {t('energy.zeroDependency', 'Zero Dependency')}
               </span>
             </div>
           </div>
@@ -136,9 +136,9 @@ export const EnergyShell: React.FC = () => {
             unit="%"
             icon={<BatteryCharging size={24} />}
             iconColor="pink"
-            statusText="HEALTHY"
+            statusText={t('status.healthy', 'HEALTHY')}
             statusColor="emerald"
-            supportingText={`Terminal Voltage: ${batteryV} V`}
+            supportingText={`${t('energy.terminal', 'Terminal')}: ${batteryV} V`}
           />
 
           <ClayMetric
@@ -147,9 +147,9 @@ export const EnergyShell: React.FC = () => {
             unit="W"
             icon={<SunMedium size={24} />}
             iconColor="amber"
-            statusText="ACTIVE"
+            statusText={t('status.active', 'ACTIVE')}
             statusColor="emerald"
-            supportingText={`Array Voltage: ${solarV} V`}
+            supportingText={`${t('energy.bus', 'Bus')}: ${solarV} V`}
           />
 
           <ClayMetric
@@ -158,9 +158,9 @@ export const EnergyShell: React.FC = () => {
             unit="W"
             icon={<Zap size={24} />}
             iconColor="violet"
-            statusText="RUNNING"
+            statusText={t('status.running', 'RUNNING')}
             statusColor="emerald"
-            supportingText="Thermal Inverter Active"
+            supportingText={t('energy.thermalInverter', 'Thermal Inverter Active')}
           />
 
           <ClayMetric
@@ -169,9 +169,9 @@ export const EnergyShell: React.FC = () => {
             unit="W"
             icon={<Cpu size={24} />}
             iconColor="sky"
-            statusText="ONLINE"
+            statusText={t('status.online', 'ONLINE')}
             statusColor="emerald"
-            supportingText="Microcontroller + Sensors"
+            supportingText={t('energy.microcontroller', 'Microcontroller Core')}
           />
         </div>
 
@@ -184,8 +184,8 @@ export const EnergyShell: React.FC = () => {
           }}
         >
           <ClayTelemetryChart
-            title="Solar Power Profile (Watts)"
-            subtitle="Photovoltaic power generation over daytime irradiance"
+            title={t('energy.solarPowerProfile', 'Solar Power Profile (Watts)')}
+            subtitle={t('energy.solarPowerProfileDesc', 'Photovoltaic power generation over daytime irradiance')}
             data={history}
             dataKey="solar_power_w"
             unit=" W"
@@ -198,8 +198,8 @@ export const EnergyShell: React.FC = () => {
           />
 
           <ClayTelemetryChart
-            title="Battery State of Charge Buffer (%)"
-            subtitle="Continuous battery SOC tracking diurnal storage"
+            title={t('energy.batterySocBuffer', 'Battery State of Charge Buffer (%)')}
+            subtitle={t('energy.batterySocBufferDesc', 'Continuous battery SOC tracking diurnal storage')}
             data={history}
             dataKey="battery_percent"
             unit="%"

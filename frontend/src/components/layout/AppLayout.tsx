@@ -4,9 +4,11 @@ import { Header } from './Header';
 import { ErrorBoundary } from '../feedback/ErrorBoundary';
 import { IntroPortal } from '../intro/IntroPortal';
 import { useTelemetry } from '@/services/telemetry/TelemetryContext';
+import { useTranslation } from 'react-i18next';
 import { Info, Snowflake, Sun, ShieldCheck } from 'lucide-react';
 
 export const AppLayout: React.FC = () => {
+  const { t } = useTranslation();
   const { mode } = useTelemetry();
   const location = useLocation();
   const isHome = location.pathname === '/';
@@ -130,11 +132,11 @@ export const AppLayout: React.FC = () => {
                     textTransform: 'uppercase',
                   }}
                 >
-                  Demonstration Mode Active
+                  {t('mode.demoActive', 'Demonstration Mode Active')}
                 </span>
               </div>
               <span style={{ fontSize: '0.74rem', color: '#B45309', fontWeight: 600 }}>
-                Realistic Simulated Telemetry &bull; Switch to Live Backend anytime at top right
+                {t('mode.demoNoticeDesc', 'Realistic Simulated Telemetry • Switch to Live Backend anytime at top right')}
               </span>
             </div>
           </div>
@@ -197,23 +199,23 @@ export const AppLayout: React.FC = () => {
             </div>
             <div>
               <span style={{ fontWeight: 800, fontFamily: 'var(--font-heading)', fontSize: '0.86rem' }}>
-                HIMARKA Platform
+                HIMARKA {t('app.platform', 'Platform')}
               </span>
               <p style={{ fontSize: '0.72rem', color: 'var(--clay-text-secondary)', margin: 0 }}>
-                Solar-Powered Smart Mini Cold Storage System for Fresh Vegetables
+                {t('app.footerDesc', 'Solar-Powered Smart Mini Cold Storage System for Fresh Vegetables')}
               </p>
             </div>
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', fontSize: '0.78rem', color: 'var(--clay-text-secondary)' }}>
             <span style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-              <Snowflake size={14} color="#7C3AED" /> Active Thermal Chamber
+              <Snowflake size={14} color="#7C3AED" /> {t('app.footerChamber', 'Active Thermal Chamber')}
             </span>
             <span style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-              <Sun size={14} color="#F59E0B" /> 100% Photovoltaic Loop
+              <Sun size={14} color="#F59E0B" /> {t('app.footerSolar', '100% Photovoltaic Loop')}
             </span>
             <span style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-              <ShieldCheck size={14} color="#10B981" /> NER Preserved
+              <ShieldCheck size={14} color="#10B981" /> {t('app.footerPreserved', 'NER Preserved')}
             </span>
           </div>
         </footer>

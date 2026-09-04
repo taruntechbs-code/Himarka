@@ -45,27 +45,28 @@ export const StorageShell: React.FC = () => {
       {/* Mode Adjustment Notification */}
       {isModeAdjusting && (
         <div
-          id="storage-adjusting-notice"
+          id="mode-adjusting-banner"
           style={{
             marginBottom: '1.5rem',
             padding: '1rem 1.5rem',
             borderRadius: 'var(--radius-card)',
             backgroundColor: '#EFF6FF',
-            border: '1px solid #BFDBFE',
+            border: '1.5px solid #BFDBFE',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
             gap: '1rem',
             boxShadow: 'var(--shadow-clay-card)',
+            animation: 'fadeIn 0.3s ease',
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
             <RotateCcw size={20} color="#2563EB" className="animate-spin" />
             <span style={{ fontSize: '0.95rem', color: '#1E40AF', fontWeight: 700 }}>
-              {modeAdjustmentMessage || 'Mode change requested. Cooling system will adjust toward the selected range.'}
+              {modeAdjustmentMessage || t('modes.adjustingNotice', 'Mode change requested. Cooling system will adjust toward the selected range.')}
             </span>
           </div>
-          <ClayBadge color="sky">ADJUSTING TARGET</ClayBadge>
+          <ClayBadge color="sky">{t('storage.adjustingTarget', 'ADJUSTING TARGET')}</ClayBadge>
         </div>
       )}
 
@@ -74,9 +75,9 @@ export const StorageShell: React.FC = () => {
         subtitle={t('storage.subtitle', 'Compact insulated chamber prototype for decentralized, small-batch solar cold preservation')}
         badge={
           mode === 'DEMO' ? (
-            <ClayBadge color="amber">PROTOTYPE DEMO</ClayBadge>
+            <ClayBadge color="amber">{t('storage.prototypeDemo', 'PROTOTYPE DEMO')}</ClayBadge>
           ) : (
-            <ClayBadge color="emerald">ACTIVE HARDWARE</ClayBadge>
+            <ClayBadge color="emerald">{t('storage.activeHardware', 'ACTIVE HARDWARE')}</ClayBadge>
           )
         }
       >
@@ -93,8 +94,8 @@ export const StorageShell: React.FC = () => {
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '0.75rem', flexWrap: 'wrap' }}>
                 <ClayBadge color="violet">UNIT #{storageUnit.id}</ClayBadge>
-                <ClayBadge color="emerald">SOLAR COOLING ENGAGED</ClayBadge>
-                <ClayBadge color="amber">PROTOTYPE CHAMBER</ClayBadge>
+                <ClayBadge color="emerald">{t('storage.coolingEngaged', 'SOLAR COOLING ENGAGED')}</ClayBadge>
+                <ClayBadge color="amber">{t('storage.prototypeChamber', 'PROTOTYPE CHAMBER')}</ClayBadge>
               </div>
 
               <h3
@@ -133,7 +134,7 @@ export const StorageShell: React.FC = () => {
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem', flexWrap: 'wrap', gap: '0.5rem' }}>
                   <span style={{ fontSize: '0.88rem', fontWeight: 800, color: 'var(--clay-text-primary)' }}>
-                    {t('storage.capacity', 'Storage Capacity')}: <span style={{ color: 'var(--clay-accent-primary)' }}>{PROTOTYPE_CONFIG.estimatedCapacityKg ? `${PROTOTYPE_CONFIG.estimatedCapacityKg} kg` : 'To be calibrated'}</span>
+                    {t('storage.capacity', 'Storage Capacity')}: <span style={{ color: 'var(--clay-accent-primary)' }}>{PROTOTYPE_CONFIG.estimatedCapacityKg ? `${PROTOTYPE_CONFIG.estimatedCapacityKg} kg` : t('storage.capacityToBeCalibrated', 'Awaiting physical measurement')}</span>
                   </span>
                   <span style={{ fontSize: '0.82rem', color: 'var(--clay-text-secondary)', fontWeight: 700 }}>
                     {totalStoredKg.toFixed(1)} kg Small-Batch Stored
@@ -184,13 +185,13 @@ export const StorageShell: React.FC = () => {
               >
                 <Thermometer size={24} color="#7C3AED" style={{ margin: '0 auto 0.4rem auto' }} />
                 <span style={{ fontSize: '0.72rem', color: 'var(--clay-text-secondary)', fontWeight: 700, textTransform: 'uppercase' }}>
-                  Chamber Temp
+                  {t('storage.chamberTemp', 'Chamber Temp')}
                 </span>
                 <p style={{ fontSize: '1.5rem', fontWeight: 900, fontFamily: 'var(--font-heading)', margin: '0.2rem 0' }}>
                   {telemetry.temperature_c.toFixed(1)}°C
                 </p>
                 <span style={{ fontSize: '0.75rem', color: 'var(--clay-success)', fontWeight: 600 }}>
-                  Active Preset: {STORAGE_MODES[activeMode].name}
+                  {t('storage.activePreset', 'Active Preset')}: {STORAGE_MODES[activeMode].name}
                 </span>
               </div>
 
@@ -205,13 +206,13 @@ export const StorageShell: React.FC = () => {
               >
                 <Droplets size={24} color="#0EA5E9" style={{ margin: '0 auto 0.4rem auto' }} />
                 <span style={{ fontSize: '0.72rem', color: 'var(--clay-text-secondary)', fontWeight: 700, textTransform: 'uppercase' }}>
-                  Chamber RH
+                  {t('storage.chamberRh', 'Chamber RH')}
                 </span>
                 <p style={{ fontSize: '1.5rem', fontWeight: 900, fontFamily: 'var(--font-heading)', margin: '0.2rem 0' }}>
                   {Math.round(telemetry.humidity_percent)}%
                 </p>
                 <span style={{ fontSize: '0.75rem', color: 'var(--clay-success)', fontWeight: 600 }}>
-                  High Humidity
+                  {t('status.highHumidity', 'High Humidity')}
                 </span>
               </div>
 
@@ -226,13 +227,13 @@ export const StorageShell: React.FC = () => {
               >
                 <DoorClosed size={24} color="#10B981" style={{ margin: '0 auto 0.4rem auto' }} />
                 <span style={{ fontSize: '0.72rem', color: 'var(--clay-text-secondary)', fontWeight: 700, textTransform: 'uppercase' }}>
-                  Door Status
+                  {t('storage.doorStatus', 'Door Status')}
                 </span>
                 <p style={{ fontSize: '1.1rem', fontWeight: 800, fontFamily: 'var(--font-heading)', margin: '0.4rem 0' }}>
-                  {telemetry.door_open ? 'OPEN' : 'SEALED'}
+                  {telemetry.door_open ? t('status.doorOpen', 'OPEN') : t('status.doorSecured', 'SEALED')}
                 </p>
                 <span style={{ fontSize: '0.75rem', color: 'var(--clay-success)', fontWeight: 600 }}>
-                  Magnetic Gasket
+                  {t('storage.magneticGasket', 'Magnetic Gasket')}
                 </span>
               </div>
             </div>
@@ -248,10 +249,10 @@ export const StorageShell: React.FC = () => {
                 {t('storage.dimensionsTitle', 'Physical Prototype Dimensions & Specifications')}
               </h4>
               <p style={{ fontSize: '0.85rem', color: 'var(--clay-text-secondary)', margin: 0 }}>
-                Centralized configuration model &bull; Zero fabricated numbers per scientific prototype standards
+                {t('storage.physicalPrototype', 'Physical Prototype Specifications')} &bull; {t('storage.prototypeChamber', 'Prototype Chamber')}
               </p>
             </div>
-            <ClayBadge color="amber">AWAITING PHYSICAL MEASUREMENT</ClayBadge>
+            <ClayBadge color="amber">{t('storage.capacityToBeCalibrated', 'Awaiting Physical Measurement').toUpperCase()}</ClayBadge>
           </div>
 
           <div
@@ -263,49 +264,49 @@ export const StorageShell: React.FC = () => {
           >
             <div style={{ padding: '1rem', backgroundColor: '#FAF8FD', borderRadius: 'var(--radius-medium)' }}>
               <span style={{ fontSize: '0.75rem', color: 'var(--clay-text-secondary)', fontWeight: 700, textTransform: 'uppercase', display: 'block' }}>
-                Internal Length
+                {t('storage.internalLength', 'Internal Length')}
               </span>
               <strong style={{ fontSize: '1.1rem', color: 'var(--clay-text-primary)' }}>
-                {PROTOTYPE_CONFIG.internalLengthMm ? `${PROTOTYPE_CONFIG.internalLengthMm} mm` : 'Configurable'}
+                {PROTOTYPE_CONFIG.internalLengthMm ? `${PROTOTYPE_CONFIG.internalLengthMm} mm` : t('storage.configurable', 'Configurable')}
               </strong>
               <span style={{ fontSize: '0.72rem', color: '#B45309', display: 'block', marginTop: '0.2rem' }}>
-                To be measured
+                {t('storage.capacityToBeCalibrated', 'To be measured')}
               </span>
             </div>
 
             <div style={{ padding: '1rem', backgroundColor: '#FAF8FD', borderRadius: 'var(--radius-medium)' }}>
               <span style={{ fontSize: '0.75rem', color: 'var(--clay-text-secondary)', fontWeight: 700, textTransform: 'uppercase', display: 'block' }}>
-                Internal Width
+                {t('storage.internalWidth', 'Internal Width')}
               </span>
               <strong style={{ fontSize: '1.1rem', color: 'var(--clay-text-primary)' }}>
-                {PROTOTYPE_CONFIG.internalWidthMm ? `${PROTOTYPE_CONFIG.internalWidthMm} mm` : 'Configurable'}
+                {PROTOTYPE_CONFIG.internalWidthMm ? `${PROTOTYPE_CONFIG.internalWidthMm} mm` : t('storage.configurable', 'Configurable')}
               </strong>
               <span style={{ fontSize: '0.72rem', color: '#B45309', display: 'block', marginTop: '0.2rem' }}>
-                To be measured
+                {t('storage.capacityToBeCalibrated', 'To be measured')}
               </span>
             </div>
 
             <div style={{ padding: '1rem', backgroundColor: '#FAF8FD', borderRadius: 'var(--radius-medium)' }}>
               <span style={{ fontSize: '0.75rem', color: 'var(--clay-text-secondary)', fontWeight: 700, textTransform: 'uppercase', display: 'block' }}>
-                Internal Height
+                {t('storage.internalHeight', 'Internal Height')}
               </span>
               <strong style={{ fontSize: '1.1rem', color: 'var(--clay-text-primary)' }}>
-                {PROTOTYPE_CONFIG.internalHeightMm ? `${PROTOTYPE_CONFIG.internalHeightMm} mm` : 'Configurable'}
+                {PROTOTYPE_CONFIG.internalHeightMm ? `${PROTOTYPE_CONFIG.internalHeightMm} mm` : t('storage.configurable', 'Configurable')}
               </strong>
               <span style={{ fontSize: '0.72rem', color: '#B45309', display: 'block', marginTop: '0.2rem' }}>
-                To be measured
+                {t('storage.capacityToBeCalibrated', 'To be measured')}
               </span>
             </div>
 
             <div style={{ padding: '1rem', backgroundColor: '#FAF8FD', borderRadius: 'var(--radius-medium)' }}>
               <span style={{ fontSize: '0.75rem', color: 'var(--clay-text-secondary)', fontWeight: 700, textTransform: 'uppercase', display: 'block' }}>
-                Usable Volume
+                {t('storage.usableVolume', 'Usable Volume')}
               </span>
               <strong style={{ fontSize: '1.1rem', color: 'var(--clay-text-primary)' }}>
-                {PROTOTYPE_CONFIG.usableVolumeLiters ? `${PROTOTYPE_CONFIG.usableVolumeLiters} L` : 'To be calibrated'}
+                {PROTOTYPE_CONFIG.usableVolumeLiters ? `${PROTOTYPE_CONFIG.usableVolumeLiters} L` : t('storage.capacityToBeCalibrated', 'To be calibrated')}
               </strong>
               <span style={{ fontSize: '0.72rem', color: '#B45309', display: 'block', marginTop: '0.2rem' }}>
-                Hackathon prototype
+                {t('storage.prototypeChamber', 'Prototype Chamber')}
               </span>
             </div>
           </div>
@@ -369,7 +370,7 @@ export const StorageShell: React.FC = () => {
                           marginBottom: '0.2rem',
                         }}
                       >
-                        {sm.name}
+                        {t(sm.nameKey, sm.name)}
                       </span>
                       <h4
                         style={{
@@ -379,7 +380,7 @@ export const StorageShell: React.FC = () => {
                           margin: 0,
                         }}
                       >
-                        {sm.title}
+                        {t(sm.titleKey, sm.title)}
                       </h4>
                     </div>
 
@@ -397,20 +398,20 @@ export const StorageShell: React.FC = () => {
                       </span>
                       {isActive && (
                         <ClayBadge color="emerald" icon={<CheckCircle2 size={13} />}>
-                          ACTIVE MODE
+                          {t('storage.activePreset', 'ACTIVE PRESET')}
                         </ClayBadge>
                       )}
                     </div>
                   </div>
 
                   <p style={{ fontSize: '0.86rem', color: 'var(--clay-text-secondary)', lineHeight: 1.45, marginBottom: '1.25rem' }}>
-                    {sm.description}
+                    {t(sm.descriptionKey, sm.description)}
                   </p>
 
                   {/* Suitable vegetables list */}
                   <div style={{ marginBottom: '1.25rem' }}>
                     <span style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--clay-text-primary)', textTransform: 'uppercase', display: 'block', marginBottom: '0.5rem' }}>
-                      Suitable Produce ({crops.length} crops):
+                      {t('storage.title', 'Suitable Produce')} ({crops.length}):
                     </span>
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem' }}>
                       {crops.map((c) => {
@@ -435,9 +436,9 @@ export const StorageShell: React.FC = () => {
                               alignItems: 'center',
                               gap: '0.25rem',
                             }}
-                            title={isGarlic ? 'Source specifies 0–C (Typo in reference, verification required)' : `${c.name} (${c.temperatureRangeText})`}
+                            title={isGarlic ? t('storage.garlicNotice', 'Garlic: Requires Verification per scientific protocol.') : `${t(c.nameKey, c.name)} (${c.temperatureRangeText})`}
                           >
-                            {c.name}
+                            {t(c.nameKey, c.name)}
                             {isGarlic && <AlertTriangle size={11} color="#D97706" />}
                           </span>
                         );
@@ -447,7 +448,7 @@ export const StorageShell: React.FC = () => {
                     {modeId === 'MODE_1' && (
                       <div style={{ marginTop: '0.65rem', padding: '0.5rem 0.75rem', backgroundColor: '#FEF3C7', borderRadius: 'var(--radius-input)', fontSize: '0.75rem', color: '#92400E', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
                         <AlertTriangle size={14} style={{ flexShrink: 0 }} />
-                        <span><strong>Garlic:</strong> Source specifies "0–C" (Typo). Marked as <em>Requires Verification</em> per scientific protocol.</span>
+                        <span><strong>{t('crops.garlic', 'Garlic')}:</strong> {t('storage.garlicNotice', 'Garlic: Requires Verification per scientific protocol.')}</span>
                       </div>
                     )}
                   </div>
@@ -467,7 +468,7 @@ export const StorageShell: React.FC = () => {
                       opacity: isActive ? 0.8 : 1,
                     }}
                   >
-                    {isActive ? '✓ Currently Active Mode' : `Set Mode: ${sm.name} (${sm.tempRangeLabel})`}
+                    {isActive ? `✓ ${t('storage.activePreset', 'Active Mode')}` : `${t('storage.setpoint', 'Set Mode')}: ${t(sm.nameKey, sm.name)} (${sm.tempRangeLabel})`}
                   </button>
                 </ClayCard>
               );
@@ -484,7 +485,7 @@ export const StorageShell: React.FC = () => {
             marginBottom: '1.25rem',
           }}
         >
-          Active Produce Batches in Storage
+          {t('storage.activeBatch', 'Active Produce Batches in Storage')}
         </h3>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -502,10 +503,10 @@ export const StorageShell: React.FC = () => {
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.35rem' }}>
                     <h4 style={{ fontSize: '1.25rem', fontWeight: 800 }}>{batch.produce_type}</h4>
-                    <ClayBadge color="emerald">ACTIVE BATCH</ClayBadge>
+                    <ClayBadge color="emerald">{t('storage.activeBatch', 'ACTIVE BATCH')}</ClayBadge>
                   </div>
                   <p style={{ color: 'var(--clay-text-secondary)', fontSize: '0.85rem', marginBottom: '0.6rem' }}>
-                    Batch ID: {batch.id} &bull; Origin: {batch.farmer_identifier}
+                    {t('alerts.unit', 'Batch ID')}: {batch.id} &bull; {t('devices.deviceId', 'Origin')}: {batch.farmer_identifier}
                   </p>
                   <p style={{ fontSize: '0.9rem', color: 'var(--clay-text-primary)' }}>
                     {batch.notes}
@@ -514,13 +515,13 @@ export const StorageShell: React.FC = () => {
 
                 <div style={{ textAlign: 'right', minWidth: '140px' }}>
                   <span style={{ fontSize: '0.78rem', color: 'var(--clay-text-secondary)', textTransform: 'uppercase', fontWeight: 700, display: 'block' }}>
-                    Batch Mass
+                    {t('storage.capacity', 'Batch Mass')}
                   </span>
                   <span style={{ fontSize: '1.8rem', fontWeight: 900, fontFamily: 'var(--font-heading)', color: 'var(--clay-text-primary)' }}>
                     {batch.quantity_kg} <span style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--clay-text-secondary)' }}>kg</span>
                   </span>
                   <span style={{ display: 'block', fontSize: '0.8rem', color: 'var(--clay-accent-primary)', fontWeight: 600, marginTop: '0.2rem' }}>
-                    Small-Batch Prototype Crate
+                    {t('storage.prototypeChamber', 'Small-Batch Prototype Crate')}
                   </span>
                 </div>
               </div>

@@ -14,7 +14,7 @@ import { ClaySection } from '@/components/clay/ClaySection';
 import { ClayButton } from '@/components/clay/ClayButton';
 
 export const AlertsShell: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { alerts, mode } = useTelemetry();
 
   return (
@@ -24,9 +24,9 @@ export const AlertsShell: React.FC = () => {
         subtitle={t('alerts.subtitle')}
         badge={
           mode === 'DEMO' ? (
-            <ClayBadge color="amber">SIMULATED AUDIT LOG</ClayBadge>
+            <ClayBadge color="amber">{t('alerts.simulatedAuditLog', 'SIMULATED AUDIT LOG')}</ClayBadge>
           ) : (
-            <ClayBadge color="emerald">LIVE MONITORING</ClayBadge>
+            <ClayBadge color="emerald">{t('alerts.liveMonitoring', 'LIVE MONITORING')}</ClayBadge>
           )
         }
       >
@@ -60,7 +60,7 @@ export const AlertsShell: React.FC = () => {
             </div>
 
             <ClayBadge color="emerald" pulse>
-              SAFETY ACTIVE
+              {t('status.safetyActive', 'SAFETY ACTIVE')}
             </ClayBadge>
           </div>
         </ClayCard>
@@ -72,6 +72,20 @@ export const AlertsShell: React.FC = () => {
             const isCritical = alert.severity === 'CRITICAL';
             const badgeColor = isCritical ? 'crimson' : isWarning ? 'amber' : 'emerald';
             const Icon = isWarning ? AlertTriangle : isCritical ? AlertTriangle : Info;
+
+            const localizedTitle =
+              alert.alert_type === 'PRESERVATION_STATUS_OPTIMAL'
+                ? t('alerts.storageConditionsOptimal', alert.title)
+                : alert.alert_type === 'DOOR_ACCESS_NOTICE'
+                ? t('alerts.loadingAccessVerified', alert.title)
+                : alert.title;
+
+            const localizedMessage =
+              alert.alert_type === 'PRESERVATION_STATUS_OPTIMAL'
+                ? t('alerts.storageConditionsOptimalMsg', alert.message)
+                : alert.alert_type === 'DOOR_ACCESS_NOTICE'
+                ? t('alerts.loadingAccessVerifiedMsg', alert.message)
+                : alert.message;
 
             return (
               <ClayCard
@@ -107,24 +121,24 @@ export const AlertsShell: React.FC = () => {
 
                     <div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.3rem', flexWrap: 'wrap' }}>
-                        <h4 style={{ fontSize: '1.2rem', fontWeight: 800 }}>{alert.title}</h4>
-                        <ClayBadge color={badgeColor}>{alert.severity}</ClayBadge>
+                        <h4 style={{ fontSize: '1.2rem', fontWeight: 800 }}>{localizedTitle}</h4>
+                        <ClayBadge color={badgeColor}>{t(`status.${alert.severity.toLowerCase()}`, alert.severity)}</ClayBadge>
                         {alert.is_resolved && (
-                          <ClayBadge color="emerald">RESOLVED</ClayBadge>
+                          <ClayBadge color="emerald">{t('status.resolved', 'RESOLVED')}</ClayBadge>
                         )}
                       </div>
 
                       <p style={{ fontSize: '0.92rem', color: 'var(--clay-text-secondary)', marginBottom: '0.6rem', lineHeight: 1.5 }}>
-                        {alert.message}
+                        {localizedMessage}
                       </p>
 
                       <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', fontSize: '0.8rem', color: 'var(--clay-text-muted)' }}>
                         <span style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
                           <Clock size={14} />
-                          <span>Logged: {new Date(alert.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                          <span>{t('alerts.loggedAt', { time: new Date(alert.created_at).toLocaleTimeString(i18n.language || 'en', { hour: '2-digit', minute: '2-digit' }) })}</span>
                         </span>
-                        <span>Unit: {alert.storage_unit_id}</span>
-                        {alert.device_id && <span>Device: {alert.device_id}</span>}
+                        <span>{t('alerts.unit', 'Unit')}: {alert.storage_unit_id}</span>
+                        {alert.device_id && <span>{t('alerts.device', 'Device')}: {alert.device_id}</span>}
                       </div>
                     </div>
                   </div>
@@ -141,11 +155,11 @@ export const AlertsShell: React.FC = () => {
                           fontSize: '0.85rem',
                         }}
                       >
-                        <CheckCircle2 size={16} /> Acknowledged
+                        <CheckCircle2 size={16} /> {t('alerts.acknowledged', 'Acknowledged')}
                       </span>
                     ) : (
                       <ClayButton variant="secondary" size="sm">
-                        Acknowledge
+                        {t('alerts.acknowledge', 'Acknowledge')}
                       </ClayButton>
                     )}
                   </div>

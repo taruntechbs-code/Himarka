@@ -125,7 +125,7 @@ export const DashboardShell: React.FC = () => {
                 </ClayBadge>
               )}
               <ClayBadge color="violet">
-                {modeObj.name}: {modeObj.tempRangeLabel}
+                {t(modeObj.nameKey, modeObj.name)}: {modeObj.tempRangeLabel}
               </ClayBadge>
             </div>
 
@@ -145,7 +145,7 @@ export const DashboardShell: React.FC = () => {
                     lineHeight: 1,
                   }}
                 >
-                  {cropProfile?.name || 'Tomato'}
+                  {cropProfile ? t(cropProfile.nameKey, cropProfile.name) : t('crops.tomato', 'Tomato')}
                 </span>
                 <button
                   type="button"
@@ -174,10 +174,10 @@ export const DashboardShell: React.FC = () => {
                   margin: '0 0 0.2rem 0',
                 }}
               >
-                <strong>{modeObj.name} ({modeObj.tempRangeLabel})</strong> &bull; {modeObj.title}
+                <strong>{t(modeObj.nameKey, modeObj.name)} ({modeObj.tempRangeLabel})</strong> &bull; {t(modeObj.titleKey, modeObj.title)}
               </p>
               <span style={{ fontSize: '0.84rem', color: 'var(--clay-text-secondary)' }}>
-                {cropProfile?.temperatureRangeText ? `${cropProfile.name} profile: ${cropProfile.temperatureRangeText}` : ''}
+                {cropProfile?.temperatureRangeText ? `${t(cropProfile.nameKey, cropProfile.name)}: ${cropProfile.temperatureRangeText}` : ''}
               </span>
             </div>
 
@@ -473,12 +473,12 @@ export const DashboardShell: React.FC = () => {
                   >
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <strong style={{ fontSize: '0.95rem', color: isSelected ? 'var(--clay-accent-primary)' : 'var(--clay-text-primary)' }}>
-                        {profile.name}
+                        {t(profile.nameKey, profile.name)}
                       </strong>
                       {isSelected && <Check size={14} color="var(--clay-accent-primary)" />}
                     </div>
                     <span style={{ fontSize: '0.75rem', color: 'var(--clay-text-secondary)', fontWeight: 600 }}>
-                      {recMode.name} ({recMode.tempRangeLabel})
+                      {t(recMode.nameKey, recMode.name)} ({recMode.tempRangeLabel})
                     </span>
                   </button>
                 );
@@ -537,7 +537,7 @@ export const DashboardShell: React.FC = () => {
                 <Thermometer size={24} />
               </div>
               <ClayBadge color={tempStatus === 'WITHIN_TARGET' ? 'emerald' : tempStatus === 'TOO_COLD' ? 'sky' : 'amber'}>
-                {tempStatus === 'WITHIN_TARGET' ? 'WITHIN TARGET' : tempStatus === 'TOO_COLD' ? 'TOO COLD' : 'TOO WARM'}
+                {tempStatus === 'WITHIN_TARGET' ? t('dashboard.status.optimal', 'OPTIMAL') : tempStatus === 'TOO_COLD' ? t('dashboard.status.tooCold', 'TOO COLD') : t('dashboard.status.tooWarm', 'TOO WARM')}
               </ClayBadge>
             </div>
             <span style={{ fontSize: '0.8rem', color: 'var(--clay-text-secondary)', fontWeight: 700, textTransform: 'uppercase', display: 'block', marginBottom: '0.2rem' }}>
@@ -548,11 +548,11 @@ export const DashboardShell: React.FC = () => {
                 {tempValue}°C
               </p>
               <span style={{ fontSize: '0.9rem', color: 'var(--clay-text-secondary)', fontWeight: 700 }}>
-                (Target: {modeObj.tempRangeLabel})
+                ({t('dashboard.metrics.targetTemp', 'Target')}: {modeObj.tempRangeLabel})
               </span>
             </div>
             <p style={{ fontSize: '0.85rem', color: 'var(--clay-text-secondary)', margin: 0 }}>
-              {modeObj.name} preset for {cropProfile?.name || 'Produce'} ({modeObj.title})
+              {t(modeObj.nameKey, modeObj.name)} ({modeObj.tempRangeLabel}) &bull; {cropProfile ? t(cropProfile.nameKey, cropProfile.name) : t('crops.tomato', 'Tomato')}
             </p>
           </ClayCard>
 

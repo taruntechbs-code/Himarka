@@ -3,7 +3,12 @@
     "title": "HIMARKA",
     "tagline": "Solar-Powered Smart Mini Cold Storage System",
     "region": "North Eastern Region of India",
-    "phase": "Phase 1 Digital Clay Environment"
+    "phase": "Phase 1 Digital Clay Environment",
+    "platform": "Platform",
+    "footerDesc": "Solar-Powered Smart Mini Cold Storage System for Fresh Vegetables",
+    "footerChamber": "Active Thermal Chamber",
+    "footerSolar": "100% Photovoltaic Loop",
+    "footerPreserved": "NER Preserved"
   },
   "nav": {
     "dashboard": "Dashboard",
@@ -13,14 +18,19 @@
     "energy": "Energy",
     "devices": "Devices",
     "alerts": "Alerts",
-    "settings": "Settings"
+    "settings": "Settings",
+    "primaryNav": "Primary Navigation",
+    "toggleMenu": "Toggle Navigation Menu"
   },
   "mode": {
     "demo": "Demo Mode",
     "real": "Live Backend",
     "simulatedNotice": "SIMULATED TELEMETRY FOR VALIDATION & PROTOTYPE DEMONSTRATION",
     "demoShort": "DEMO",
-    "realShort": "LIVE"
+    "realShort": "LIVE",
+    "demoActive": "Demonstration Mode Active",
+    "demoNoticeDesc": "Realistic Simulated Telemetry • Switch to Live Backend anytime at top right",
+    "toggleTooltip": "Switch between Demo Telemetry and Live Backend Hardware"
   },
   "dashboard": {
     "overallStatus": "GOOD",
@@ -62,7 +72,11 @@
       "cooling": "Cooling System",
       "alerts": "Alerts & Tasks",
       "currentTemp": "Current",
-      "targetTemp": "Target Range"
+      "targetTemp": "Target Range",
+      "solarPower": "Solar Power",
+      "gas": "Air Quality (MQ-135)",
+      "preservation": "Chamber Coldness",
+      "battery": "Battery Buffer"
     },
     "status": {
       "good": "GOOD",
@@ -90,7 +104,9 @@
       "storedSafely": "Stored safely",
       "withinTarget": "Within target range",
       "tooCold": "Below target: Cooling will cycle off",
-      "tooWarm": "Above target: Active cooling engaged"
+      "tooWarm": "Above target: Active cooling engaged",
+      "online": "ONLINE",
+      "normal": "NORMAL"
     },
     "currentStorage": "CURRENT STORAGE",
     "changeCrop": "Change Crop",
@@ -110,7 +126,21 @@
       "6h": "6 Hours",
       "24h": "24 Hours",
       "7d": "7 Days"
-    }
+    },
+    "simulatedHistory": "SIMULATED HISTORICAL DATA",
+    "liveIngestion": "LIVE INGESTION",
+    "tempRange24h": "Temp Range (24h)",
+    "avgHumidity": "Avg Humidity",
+    "peakSolar": "Peak Solar Generation",
+    "minBattery": "Min Battery Level",
+    "chamberTempHistory": "Chamber Temperature History (°C)",
+    "chamberTempHistoryDesc": "Internal cold chamber temperature record sampled across period",
+    "airQualityVolatiles": "Air Quality & Volatiles (MQ-135 ppm)",
+    "airQualityVolatilesDesc": "Raw gas resistance reading indicating air freshness and ventilation",
+    "photovoltaicPower": "Photovoltaic Solar Power (Watts)",
+    "photovoltaicPowerDesc": "Solar panel generation tracking daylight cycles",
+    "batterySoc": "Lithium Battery State of Charge (%)",
+    "batterySocDesc": "Battery pack energy storage buffer level"
   },
   "storage": {
     "title": "Cold Storage Chambers",
@@ -124,7 +154,29 @@
     "doorOpen": "Door Open",
     "dimensionsTitle": "Physical Prototype Dimensions & Specifications",
     "modesTitle": "Vegetable-Specific Storage Operating Modes",
-    "modesSubtitle": "HIMARKA regulates cooling based on crop biology. Select an operating preset mode below:"
+    "modesSubtitle": "HIMARKA regulates cooling based on crop biology. Select an operating preset mode below:",
+    "prototypeBox": "Prototype Storage Box",
+    "physicalPrototype": "Physical Prototype Specifications",
+    "internalLength": "Internal Length",
+    "internalWidth": "Internal Width",
+    "internalHeight": "Internal Height",
+    "externalDims": "External Dimensions",
+    "usableVolume": "Usable Volume",
+    "capacityToBeCalibrated": "Awaiting physical measurement",
+    "configurable": "Configurable",
+    "chamberTemp": "Chamber Temp",
+    "chamberRh": "Chamber RH",
+    "doorStatus": "Door Status",
+    "magneticGasket": "Magnetic Gasket",
+    "activePreset": "Active Preset",
+    "activeBatch": "Active Batch",
+    "garlicNotice": "Garlic: Requires Verification per scientific protocol.",
+    "coolingEngaged": "Solar Cooling Engaged",
+    "prototypeChamber": "Prototype Chamber",
+    "activeHardware": "Active Hardware",
+    "prototypeDemo": "Prototype Demo",
+    "adjustingTarget": "Adjusting Target",
+    "fieldTestedProto": "Field-Tested Prototype Specifications"
   },
   "energy": {
     "title": "Solar Generation & Power System",
@@ -134,7 +186,26 @@
     "coolingConsumption": "Cooling Power Draw",
     "auxiliaryConsumption": "Auxiliary Electronics",
     "gridFallback": "Grid Fallback Draw",
-    "gridStatus": "Zero Grid Consumption (100% Solar)"
+    "gridStatus": "Zero Grid Consumption (100% Solar)",
+    "simulatedEnergyLoop": "SIMULATED ENERGY LOOP",
+    "livePowerBus": "LIVE POWER BUS",
+    "pvMicrogrid": "PHOTOVOLTAIC MICROGRID",
+    "netEnergyBalance": "Net Energy Balance",
+    "surplus": "Surplus",
+    "solarGeneration": "Solar Generation",
+    "bus": "Bus",
+    "batteryBuffer": "Battery Storage Buffer",
+    "terminal": "Terminal",
+    "coolingCompressorDraw": "Cooling Compressor Draw",
+    "brushlessDcDrive": "Brushless DC Drive",
+    "zeroDependency": "Zero Dependency",
+    "solarPowerProfile": "Solar Power Profile (Watts)",
+    "solarPowerProfileDesc": "Photovoltaic power generation over daytime irradiance",
+    "batterySocBuffer": "Battery State of Charge Buffer (%)",
+    "batterySocBufferDesc": "Continuous battery SOC tracking diurnal storage",
+    "thermalInverter": "Thermal Inverter",
+    "microcontroller": "Microcontroller Core",
+    "sensorsPeripherals": "Sensors & Peripherals"
   },
   "ai": {
     "title": "Produce Intelligence & Vision",
@@ -148,7 +219,29 @@
     "visionTitle": "ESP32-CAM / OV2640 Stream",
     "cameraOffline": "CAMERA OFFLINE",
     "waitingForDevice": "WAITING FOR EDGE HARDWARE STREAM",
-    "manualFallback": "Select Crop Manually"
+    "manualFallback": "Select Crop Manually",
+    "edgeIntelligence": "EDGE INTELLIGENCE",
+    "prototypeCameraActive": "PROTOTYPE CAMERA ACTIVE",
+    "liveScannerActive": "LIVE SCANNER ACTIVE",
+    "modelArchitecture": "Model Architecture",
+    "registryStatus": "Registry Status",
+    "awaitingWeights": "Awaiting Weights File",
+    "trainedModelNotice": "Trained Machine Learning Model Awaiting Checkpoint Deployment",
+    "trainedModelDesc": "In compliance with the Phase 0/1 zero-fabrication standard, shelf-life prediction is not faked. Physical preservation operates strictly on validated temperature profiles (Mode 1, Mode 2, Mode 3).",
+    "hardwareStreamInterface": "HARDWARE STREAM INTERFACE",
+    "streamDesc": "Direct optical telemetry from cold chamber ESP32-CAM OV2640 module",
+    "streamSpecs": "Resolution: 1600×1200 (UXGA max) • Frame: MJPEG Stream",
+    "evaluationToolbar": "EVALUATION TOOLBAR",
+    "resetScanner": "Reset",
+    "rescan": "Rescan",
+    "clearAndRescan": "Clear and Rescan",
+    "confidence": "Confidence",
+    "confirmStorageMode": "Confirm Storage Mode",
+    "detectedCrop": "Detected {{crop}}",
+    "recommendedMode": "Recommended Mode",
+    "confirmMode": "Confirm Mode",
+    "vegetableDetected": "Vegetable Detected",
+    "recommendedSetting": "Recommended Setting"
   },
   "devices": {
     "title": "Hardware Nodes & Health",
@@ -157,13 +250,41 @@
     "firmware": "Firmware Version",
     "hardware": "Hardware Architecture",
     "sensors": "Sensor Suite",
-    "heartbeat": "Last Heartbeat"
+    "heartbeat": "Last Heartbeat",
+    "simulatedDevice": "SIMULATED DEVICE",
+    "physicalHardware": "PHYSICAL HARDWARE",
+    "masterIotController": "Master IoT Controller",
+    "dataFreshness": "Data Freshness",
+    "liveStreamActive": "Live Stream Active",
+    "heartbeatLabel": "Heartbeat",
+    "firmwareVersion": "Firmware Version",
+    "networkMode": "Network IP & Mode",
+    "coolingRelayState": "Cooling Relay State",
+    "clockSkewGuard": "Clock Skew Guard",
+    "connectedPeripherals": "Connected Sensor Peripherals",
+    "sht31Desc": "I2C Bus Address 0x44 • High Accuracy ±0.2°C / ±2% RH",
+    "mq135Desc": "Analog Input Pin 34 • Volatile Organic Compounds & Spoilage Gases",
+    "ov2640Desc": "SPI / DVP Interface • 2MP Sensor for Chamber Crop Monitoring"
   },
   "alerts": {
     "title": "System Alerts & Notifications",
     "subtitle": "Real-time safety thresholds, door events, and thermal boundaries",
     "normal": "All Systems Normal",
-    "noActive": "No unresolved alerts. Storage conditions remain within bounds."
+    "noActive": "No unresolved alerts. Storage conditions remain within bounds.",
+    "simulatedAuditLog": "SIMULATED AUDIT LOG",
+    "liveMonitoring": "LIVE MONITORING",
+    "safetyActive": "SAFETY ACTIVE",
+    "storageConditionsOptimal": "Storage Conditions Optimal",
+    "storageConditionsOptimalMsg": "Chamber temperature stable at 2.6°C and humidity at 89%. Solar battery buffer at 94%.",
+    "loadingAccessVerified": "Loading Access Verified",
+    "loadingAccessVerifiedMsg": "Chamber door opened for produce inspection (1 min 15s). Closed securely; temperature normalized within 4 minutes.",
+    "chamberDoorOpened": "Chamber Door Opened",
+    "acknowledge": "Acknowledge",
+    "acknowledged": "Acknowledged",
+    "resolved": "RESOLVED",
+    "loggedAt": "Logged: {{time}}",
+    "unit": "Unit",
+    "device": "Device"
   },
   "settings": {
     "title": "Platform Settings",
@@ -171,14 +292,38 @@
     "language": "Interface Language",
     "dataSource": "Telemetry Data Source",
     "demoDesc": "Display high-fidelity simulated telemetry for evaluation and UI verification",
-    "realDesc": "Stream live sensor readings from connected FastAPI and IoT hardware"
+    "realDesc": "Stream live sensor readings from connected FastAPI and IoT hardware",
+    "demoOptionTitle": "DEMO MODE (Recommended for Reviewers)",
+    "liveOptionTitle": "LIVE BACKEND HARDWARE",
+    "platformTechTitle": "Platform Technical Information",
+    "platformTechDesc": "HIMARKA is engineered for the North Eastern Region of India. The frontend is built on React 18, Vite 5, and TypeScript with a pure Light Claymorphism design system. Zero fake hardware claims or uncalibrated machine learning metrics are generated.",
+    "selectLanguage": "Select Language",
+    "active": "ACTIVE"
   },
   "status": {
     "healthy": "Healthy",
     "degraded": "Degraded",
     "offline": "Offline",
     "active": "Active",
-    "online": "Online"
+    "online": "Online",
+    "running": "Running",
+    "sealed": "Sealed",
+    "standby": "Standby",
+    "warning": "Warning",
+    "resolved": "Resolved",
+    "acknowledged": "Acknowledged",
+    "pending": "Pending",
+    "notConfigured": "Not Configured",
+    "awaitingWeights": "Awaiting Weights File",
+    "liveStreamActive": "Live Stream Active",
+    "demoMode": "Demonstration Mode Active",
+    "safetyActive": "Safety Active",
+    "highHumidity": "High Humidity",
+    "doorSecured": "Secured & Sealed",
+    "doorOpen": "Chamber Door Open",
+    "pinHigh": "PIN HIGH (ENGAGED)",
+    "pinLow": "PIN LOW (OFF)",
+    "clockValidated": "±1.2s Validated"
   },
   "common": {
     "loading": "Loading system data...",
@@ -186,7 +331,11 @@
     "retry": "Retry",
     "save": "Save",
     "cancel": "Cancel",
-    "viewDetails": "View Details"
+    "viewDetails": "View Details",
+    "time": "Time",
+    "close": "Close",
+    "appError": "Application Error",
+    "reloadApp": "Reload Application"
   },
   "modes": {
     "mode1": {
@@ -206,5 +355,31 @@
     },
     "adjusting": "ADJUSTING",
     "adjustingNotice": "Mode change requested. Cooling system will adjust toward the selected range."
+  },
+  "crops": {
+    "tomato": "Tomato",
+    "cabbage": "Cabbage",
+    "cauliflower": "Cauliflower",
+    "broccoli": "Broccoli",
+    "carrot": "Carrot",
+    "radish": "Radish",
+    "beetroot": "Beetroot",
+    "green_peas": "Green Peas",
+    "french_beans": "French Beans",
+    "capsicum": "Capsicum / Bell Pepper",
+    "green_chilli": "Green Chilli",
+    "brinjal": "Brinjal / Eggplant",
+    "okra": "Okra",
+    "cucumber": "Cucumber",
+    "spinach": "Spinach",
+    "lettuce": "Lettuce",
+    "mustard_greens": "Mustard Greens",
+    "celery": "Celery",
+    "spring_onion": "Spring Onion",
+    "onion_dry": "Onion (dry)",
+    "garlic": "Garlic",
+    "potato": "Potato",
+    "ginger": "Ginger",
+    "turmeric": "Turmeric"
   }
 }
