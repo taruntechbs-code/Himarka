@@ -113,7 +113,21 @@
     "whatAreYouStoring": "What are you storing?",
     "selectCropPrompt": "Select a vegetable to automatically configure the recommended temperature mode.",
     "aiDetectLink": "Use Camera Detection",
-    "viewAllModes": "View All 24 Vegetable Profiles & Preset Modes"
+    "viewAllModes": "View All 24 Vegetable Profiles & Preset Modes",
+    "storedProduce": "Stored Produce",
+    "manageCrops": "Manage Crops",
+    "addCrop": "Add Crop",
+    "removeCrop": "Remove Crop",
+    "noCropsStored": "No produce currently in storage",
+    "activeStorageGroup": "Active Storage Group",
+    "compatibleGroup": "All stored crops compatible with active preset",
+    "tempConflictWarning": "These crops have conflicting temperature requirements and should not share the same storage preset.",
+    "reviewRequired": "Review Required",
+    "singleChamberNotice": "Single Chamber Prototype: All stored produce shares the same temperature preset.",
+    "demoScenarios": "Demo Scenarios",
+    "duplicateCropNotice": "This vegetable is already in storage.",
+    "reference": "Reference",
+    "recommended": "Recommended"
   },
   "telemetry": {
     "title": "Environmental Telemetry & Trends",

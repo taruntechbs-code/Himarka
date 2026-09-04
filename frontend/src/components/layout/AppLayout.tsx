@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { Header } from './Header';
 import { ErrorBoundary } from '../feedback/ErrorBoundary';
 import { IntroPortal } from '../intro/IntroPortal';
@@ -7,11 +7,17 @@ import { useTelemetry } from '@/services/telemetry/TelemetryContext';
 import { useTranslation } from 'react-i18next';
 import { Info, Snowflake, Sun, ShieldCheck } from 'lucide-react';
 
+// Module-level session flag: resets on browser refresh / fresh page load,
+// but persists across client-side React Router navigation.
+let hasCompletedIntroForSession = false;
+
+export const resetIntroSessionForTesting = () => {
+  hasCompletedIntroForSession = false;
+};
+
 export const AppLayout: React.FC = () => {
   const { t } = useTranslation();
   const { mode } = useTelemetry();
-  const location = useLocation();
-  const isHome = location.pathname === '/';
 
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
@@ -24,20 +30,28 @@ export const AppLayout: React.FC = () => {
     return () => mql.removeEventListener('change', handler);
   }, []);
 
-  // Intro progress (0 = closed, 1 = fully open)
-  const isIntroActive = isHome && !prefersReducedMotion;
-  const [introProgress, setIntroProgress] = useState(isIntroActive ? 0 : 1);
+  // Intro is active only on initial fresh session load when motion is not reduced
+  const [introActive, setIntroActive] = useState(() => !hasCompletedIntroForSession && !prefersReducedMotion);
+  const [introProgress, setIntroProgress] = useState(introActive ? 0 : 1);
 
-  // If user navigates to a subroute or reduced motion is enabled, set intro progress to 1 immediately
-  useEffect(() => {
-    if (!isIntroActive) {
-      setIntroProgress(1);
+  const handleIntroComplete = React.useCallback(() => {
+    hasCompletedIntroForSession = true;
+    setIntroActive(false);
+    setIntroProgress(1);
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     }
-  }, [isIntroActive]);
+  }, []);
+
+  useEffect(() => {
+    if (prefersReducedMotion) {
+      handleIntroComplete();
+    }
+  }, [prefersReducedMotion, handleIntroComplete]);
 
   // App shell visibility: completely invisible when closed (progress === 0),
-  // then smoothly fades in as panels open.
-  const appShellOpacity = isIntroActive ? Math.min(1, Math.max(0, (introProgress - 0.05) / 0.8)) : 1;
+  // then smoothly fades in as panels open. Once intro is unmounted, strictly 1.
+  const appShellOpacity = introActive ? Math.min(1, Math.max(0, (introProgress - 0.05) / 0.8)) : 1;
 
   return (
     <div
@@ -49,26 +63,31 @@ export const AppLayout: React.FC = () => {
         overflowX: 'hidden',
       }}
     >
-      {/* Scroll-Driven Portal Opening Intro (Active on Home when motion not reduced) */}
-      {isIntroActive && (
-        <IntroPortal
-          scrollThreshold={750}
-          onProgressChange={(progress) => setIntroProgress(progress)}
-        />
-      )}
-
-      {/* Intro Scroll Track: consumes the 750px scroll distance on home */}
-      {isIntroActive && (
-        <div
-          id="intro-scroll-track"
-          style={{
-            height: '750px',
-            width: '100%',
-            pointerEvents: 'none',
-            visibility: 'hidden',
-          }}
-          aria-hidden="true"
-        />
+      {/* Scroll-Driven Portal Opening Intro (Active ONLY during initial fresh page load until completed) */}
+      {introActive && (
+        <>
+          <IntroPortal
+            scrollThreshold={750}
+            onProgressChange={(progress) => {
+              setIntroProgress(progress);
+              if (progress >= 0.99) {
+                handleIntroComplete();
+              }
+            }}
+            onComplete={handleIntroComplete}
+          />
+          {/* Intro Scroll Track: consumes the 750px scroll distance during intro only */}
+          <div
+            id="intro-scroll-track"
+            style={{
+              height: '750px',
+              width: '100%',
+              pointerEvents: 'none',
+              visibility: 'hidden',
+            }}
+            aria-hidden="true"
+          />
+        </>
       )}
 
       {/* Application Layer: Coordinates with Intro to Prevent Visual Leakage */}
@@ -79,7 +98,7 @@ export const AppLayout: React.FC = () => {
           flexDirection: 'column',
           minHeight: '100vh',
           opacity: appShellOpacity,
-          pointerEvents: introProgress < 0.85 ? 'none' : 'auto',
+          pointerEvents: introActive && introProgress < 0.85 ? 'none' : 'auto',
           transition: 'opacity 120ms ease-out',
         }}
       >

@@ -3,11 +3,13 @@ import React, { useState, useEffect, useCallback } from 'react';
 interface IntroPortalProps {
   scrollThreshold?: number;
   onProgressChange?: (progress: number) => void;
+  onComplete?: () => void;
 }
 
 export const IntroPortal: React.FC<IntroPortalProps> = ({
   scrollThreshold = 750,
   onProgressChange,
+  onComplete,
 }) => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
@@ -28,7 +30,10 @@ export const IntroPortal: React.FC<IntroPortalProps> = ({
     const progress = Math.min(1, Math.max(0, scrollY / scrollThreshold));
     setScrollProgress(progress);
     onProgressChange?.(progress);
-  }, [scrollThreshold, prefersReducedMotion, onProgressChange]);
+    if (progress >= 0.99) {
+      onComplete?.();
+    }
+  }, [scrollThreshold, prefersReducedMotion, onProgressChange, onComplete]);
 
   useEffect(() => {
     if (prefersReducedMotion) return;
@@ -61,18 +66,17 @@ export const IntroPortal: React.FC<IntroPortalProps> = ({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [prefersReducedMotion, scrollThreshold]);
 
-  // Immediate bypass if reduced motion is requested
-  if (prefersReducedMotion) {
+  // Immediate bypass if reduced motion is requested or already completed
+  if (prefersReducedMotion || scrollProgress >= 0.99) {
     return null;
   }
 
   // Animation values
-  const leftTranslate = -scrollProgress * 100; // in %
-  const rightTranslate = scrollProgress * 100; // in %
+  const leftTranslate = -scrollProgress * 105; // in %
+  const rightTranslate = scrollProgress * 105; // in %
   const wordSeparation = scrollProgress * 28; // in px
   const centerScale = 1 + scrollProgress * 0.12; // controlled scale: 1.0 -> 1.12
   const contentOpacity = Math.max(0, 1 - scrollProgress * 1.8);
-  const isFullyOpen = scrollProgress >= 0.99;
 
   return (
     <div
@@ -85,10 +89,9 @@ export const IntroPortal: React.FC<IntroPortalProps> = ({
         zIndex: 1000,
         overflow: 'hidden',
         pointerEvents: 'none',
-        visibility: isFullyOpen ? 'hidden' : 'visible',
+        visibility: 'visible',
         isolation: 'isolate',
       }}
-      aria-hidden={isFullyOpen}
       aria-label="HIMARKA Portal Introduction"
     >
       {/* Left Clay Door Panel (Solid 50.1vw, meeting at center) */}

@@ -17,6 +17,10 @@ import {
   ChevronRight,
   Check,
   RotateCcw,
+  Plus,
+  X,
+  AlertTriangle,
+  Layers,
 } from 'lucide-react';
 import { ClayCard } from '@/components/clay/ClayCard';
 import { ClayBadge } from '@/components/clay/ClayBadge';
@@ -24,6 +28,7 @@ import { ClaySection } from '@/components/clay/ClaySection';
 import { ClayTelemetryChart } from '@/components/charts/ClayTelemetryChart';
 import {
   STORAGE_MODES,
+  VEGETABLE_PROFILES,
   getVegetableProfile,
   getTemperatureStatus,
 } from '@/domain/temperatureProfiles';
@@ -40,7 +45,11 @@ export const DashboardShell: React.FC = () => {
     activeMode,
     isModeAdjusting,
     modeAdjustmentMessage,
-    setActiveCropAndMode,
+    storedCrops,
+    cropsCompatibility,
+    addStoredCrop,
+    removeStoredCrop,
+    loadMultiCropDemoScenario,
   } = useTelemetry();
 
   const [isCropSelectorOpen, setIsCropSelectorOpen] = useState(false);
@@ -53,19 +62,6 @@ export const DashboardShell: React.FC = () => {
   // Simple farmer values
   const tempValue = telemetry.temperature_c.toFixed(1);
   const humidityValue = Math.round(telemetry.humidity_percent);
-
-  // Common popular crops for quick farmer selection
-  const popularCrops = [
-    'tomato',
-    'cabbage',
-    'potato',
-    'green_chilli',
-    'ginger',
-    'french_beans',
-    'capsicum',
-    'spinach',
-    'cucumber',
-  ];
 
   return (
     <div id="dashboard-shell" style={{ width: '100%' }}>
@@ -124,61 +120,158 @@ export const DashboardShell: React.FC = () => {
                   {t('mode.demo', 'DEMO MODE')}
                 </ClayBadge>
               )}
-              <ClayBadge color="violet">
-                {t(modeObj.nameKey, modeObj.name)}: {modeObj.tempRangeLabel}
+              <ClayBadge
+                color={cropsCompatibility.compatible ? 'violet' : 'crimson'}
+                icon={cropsCompatibility.compatible ? undefined : <AlertTriangle size={13} />}
+              >
+                {cropsCompatibility.compatible
+                  ? `${t('dashboard.activeStorageGroup', 'Active Storage Group')}: ${t(modeObj.nameKey, modeObj.name)} (${modeObj.tempRangeLabel})`
+                  : `${t('dashboard.activeStorageGroup', 'Active Storage Group')}: ${t('dashboard.reviewRequired', 'Review Required')}`}
               </ClayBadge>
             </div>
 
-            {/* Current Storage Crop & Mode Heading */}
+            {/* Multi-Crop Stored Produce Section (Single Chamber Prototype) */}
             <div style={{ marginBottom: '1.25rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap', marginBottom: '0.4rem' }}>
-                <span style={{ fontSize: '0.85rem', color: 'var(--clay-text-secondary)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-                  {t('dashboard.currentStorage', 'CURRENT STORAGE')}:
-                </span>
-                <span
-                  id="active-crop-name"
-                  style={{
-                    fontFamily: 'var(--font-heading)',
-                    fontSize: 'clamp(2rem, 4.5vw, 3rem)',
-                    fontWeight: 900,
-                    color: 'var(--clay-accent-primary)',
-                    lineHeight: 1,
-                  }}
-                >
-                  {cropProfile ? t(cropProfile.nameKey, cropProfile.name) : t('crops.tomato', 'Tomato')}
-                </span>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.75rem', marginBottom: '0.5rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <Layers size={20} color="var(--clay-accent-primary)" />
+                  <span style={{ fontSize: '0.85rem', color: 'var(--clay-text-secondary)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                    {t('dashboard.storedProduce', 'STORED PRODUCE')} ({storedCrops.length}):
+                  </span>
+                </div>
                 <button
                   type="button"
-                  id="change-crop-button"
+                  id="manage-crops-button"
                   onClick={() => setIsCropSelectorOpen(!isCropSelectorOpen)}
                   className="clay-btn clay-btn-secondary"
                   style={{
-                    fontSize: '0.78rem',
-                    padding: '0.35rem 0.85rem',
-                    height: '32px',
+                    fontSize: '0.82rem',
+                    padding: '0.35rem 0.95rem',
+                    height: '36px',
+                    minHeight: '36px',
                     borderRadius: 'var(--radius-full)',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.4rem',
                   }}
+                  aria-expanded={isCropSelectorOpen}
+                  aria-label={t('dashboard.manageCrops', 'Manage Crops')}
                 >
-                  {isCropSelectorOpen ? t('common.close', 'Close') : t('dashboard.changeCrop', 'Change Crop')}
+                  <Plus size={15} />
+                  <span>{isCropSelectorOpen ? t('common.close', 'Close') : t('dashboard.manageCrops', 'Manage Crops')}</span>
                 </button>
               </div>
 
-              {/* Farmer Mode Description */}
-              <p
-                style={{
-                  fontFamily: 'var(--font-body)',
-                  fontSize: '1rem',
-                  fontWeight: 600,
-                  color: 'var(--clay-text-primary)',
-                  lineHeight: 1.4,
-                  margin: '0 0 0.2rem 0',
-                }}
-              >
-                <strong>{t(modeObj.nameKey, modeObj.name)} ({modeObj.tempRangeLabel})</strong> &bull; {t(modeObj.titleKey, modeObj.title)}
+              {/* Single Chamber Constraint Note */}
+              <p style={{ fontSize: '0.8rem', color: 'var(--clay-text-secondary)', margin: '0 0 0.85rem 0' }}>
+                {t('dashboard.singleChamberNotice', 'Single Chamber Prototype: All stored produce shares the same temperature preset.')}
               </p>
-              <span style={{ fontSize: '0.84rem', color: 'var(--clay-text-secondary)' }}>
-                {cropProfile?.temperatureRangeText ? `${t(cropProfile.nameKey, cropProfile.name)}: ${cropProfile.temperatureRangeText}` : ''}
-              </span>
+
+              {/* Stored Crops Chip/Card List */}
+              {storedCrops.length === 0 ? (
+                <div style={{ padding: '0.85rem 1.25rem', backgroundColor: '#FAF8FD', borderRadius: 'var(--radius-medium)', border: '1px dashed rgba(160, 150, 180, 0.4)', marginBottom: '0.85rem' }}>
+                  <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--clay-text-secondary)' }}>
+                    {t('dashboard.noCropsStored', 'No produce currently in storage')}
+                  </p>
+                </div>
+              ) : (
+                <div
+                  id="stored-crops-list"
+                  style={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    gap: '0.65rem',
+                    marginBottom: '0.85rem',
+                  }}
+                >
+                  {storedCrops.map((crop) => {
+                    const cropMode = STORAGE_MODES[crop.preferredMode];
+                    const isConflicting = !cropsCompatibility.compatible && cropsCompatibility.conflictingModes?.some((m) => m.cropId === crop.id);
+
+                    return (
+                      <div
+                        key={crop.id}
+                        id={`stored-crop-chip-${crop.id}`}
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          gap: '0.75rem',
+                          padding: '0.55rem 0.95rem',
+                          backgroundColor: isConflicting ? '#FEF2F2' : '#FFFFFF',
+                          borderRadius: 'var(--radius-card)',
+                          border: isConflicting ? '1.5px solid #EF4444' : '1px solid rgba(160, 150, 180, 0.25)',
+                          boxShadow: 'var(--shadow-clay-subtle)',
+                          minWidth: '200px',
+                        }}
+                      >
+                        <div>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                            <strong style={{ fontSize: '1.05rem', color: isConflicting ? '#B91C1C' : 'var(--clay-text-primary)' }}>
+                              {t(crop.nameKey, crop.name)}
+                            </strong>
+                            {isConflicting && <AlertTriangle size={14} color="#EF4444" />}
+                          </div>
+                          <span style={{ fontSize: '0.76rem', color: 'var(--clay-text-secondary)', display: 'block', marginTop: '0.15rem' }}>
+                            {t('dashboard.reference', 'Reference')}: {crop.temperatureRangeText} &bull; {t('dashboard.recommended', 'Recommended')}: {t(cropMode.nameKey, cropMode.name)}
+                          </span>
+                        </div>
+
+                        <button
+                          type="button"
+                          id={`remove-crop-btn-${crop.id}`}
+                          onClick={() => removeStoredCrop(crop.id)}
+                          style={{
+                            background: 'transparent',
+                            border: 'none',
+                            cursor: 'pointer',
+                            padding: '0.3rem',
+                            borderRadius: '50%',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            color: '#9CA3AF',
+                            minWidth: '28px',
+                            minHeight: '28px',
+                            transition: 'all 0.15s ease',
+                          }}
+                          title={`${t('dashboard.removeCrop', 'Remove Crop')} ${t(crop.nameKey, crop.name)}`}
+                          aria-label={`${t('dashboard.removeCrop', 'Remove Crop')} ${t(crop.nameKey, crop.name)}`}
+                        >
+                          <X size={16} />
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+
+              {/* Temperature Conflict Incompatibility Warning */}
+              {!cropsCompatibility.compatible && (
+                <div
+                  id="crop-compatibility-warning"
+                  style={{
+                    padding: '0.85rem 1.15rem',
+                    backgroundColor: '#FEF3C7',
+                    border: '1.5px solid #F59E0B',
+                    borderRadius: 'var(--radius-card)',
+                    marginBottom: '0.85rem',
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    gap: '0.65rem',
+                  }}
+                >
+                  <AlertTriangle size={20} color="#D97706" style={{ flexShrink: 0, marginTop: '2px' }} />
+                  <div>
+                    <strong style={{ fontSize: '0.88rem', color: '#92400E', display: 'block', marginBottom: '0.2rem' }}>
+                      ⚠ {t('dashboard.tempConflictWarning', 'These crops have conflicting temperature requirements and should not share the same storage preset.')}
+                    </strong>
+                    <span style={{ fontSize: '0.8rem', color: '#B45309' }}>
+                      {cropsCompatibility.warning || t('dashboard.reviewRequired', 'Review Required')}
+                    </span>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Temperature Metrics Comparison: Current vs Target */}
@@ -401,91 +494,144 @@ export const DashboardShell: React.FC = () => {
           </div>
         </div>
 
-        {/* 1B. INLINE CROP SELECTION ACCORDION */}
+        {/* 1B. INLINE MULTI-CROP MANAGEMENT PANEL */}
         {isCropSelectorOpen && (
           <div
             id="inline-crop-selector"
             style={{
               marginTop: '1.75rem',
-              padding: '1.5rem',
+              padding: '1.75rem',
               backgroundColor: '#FFFFFF',
               borderRadius: 'var(--radius-card)',
               boxShadow: 'var(--shadow-clay-card)',
-              border: '1px solid rgba(160, 150, 180, 0.2)',
+              border: '1px solid rgba(160, 150, 180, 0.25)',
               animation: 'fadeIn 0.25s ease',
             }}
           >
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.5rem' }}>
+            {/* Header with Camera Detection shortcut */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '0.75rem' }}>
               <div>
-                <h4 style={{ fontSize: '1.15rem', fontWeight: 900, color: 'var(--clay-text-primary)' }}>
-                  {t('dashboard.whatAreYouStoring', 'What are you storing?')}
+                <h4 style={{ fontSize: '1.25rem', fontWeight: 900, color: 'var(--clay-text-primary)', margin: '0 0 0.25rem 0' }}>
+                  {t('dashboard.manageCrops', 'Manage Crops')}
                 </h4>
                 <p style={{ fontSize: '0.85rem', color: 'var(--clay-text-secondary)', margin: 0 }}>
-                  {t('dashboard.selectCropPrompt', 'Select a vegetable to automatically configure the recommended temperature mode.')}
+                  {t('dashboard.singleChamberNotice', 'Single Chamber Prototype: All stored produce shares the same temperature preset.')}
                 </p>
               </div>
 
               <Link
                 to="/produce"
                 className="clay-btn clay-btn-secondary"
-                style={{ fontSize: '0.8rem', padding: '0.35rem 0.85rem', height: '34px' }}
+                style={{ fontSize: '0.82rem', padding: '0.35rem 0.85rem', height: '36px' }}
               >
                 <span>{t('dashboard.aiDetectLink', 'Use Camera Detection')}</span>
                 <ArrowRight size={14} />
               </Link>
             </div>
 
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fill, minmax(135px, 1fr))',
-                gap: '0.75rem',
-              }}
-            >
-              {popularCrops.map((cropId) => {
-                const profile = getVegetableProfile(cropId);
-                if (!profile) return null;
-                const isSelected = activeCrop === cropId;
-                const recMode = STORAGE_MODES[profile.preferredMode];
-
-                return (
+            {/* Demo Scenarios Bar (Visible when in DEMO mode) */}
+            {mode === 'DEMO' && (
+              <div style={{ marginBottom: '1.5rem', padding: '1rem', backgroundColor: '#FAF8FD', borderRadius: 'var(--radius-medium)', border: '1px solid rgba(160, 150, 180, 0.15)' }}>
+                <span style={{ fontSize: '0.78rem', fontWeight: 800, textTransform: 'uppercase', color: 'var(--clay-text-secondary)', display: 'block', marginBottom: '0.5rem' }}>
+                  {t('dashboard.demoScenarios', 'Demo Scenarios')}:
+                </span>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
                   <button
-                    key={cropId}
                     type="button"
-                    id={`crop-select-${cropId}`}
-                    onClick={() => {
-                      setActiveCropAndMode(cropId);
-                      setIsCropSelectorOpen(false);
-                    }}
-                    style={{
-                      padding: '0.75rem 0.85rem',
-                      borderRadius: 'var(--radius-medium)',
-                      border: isSelected ? '2px solid var(--clay-accent-primary)' : '1px solid rgba(160, 150, 180, 0.25)',
-                      backgroundColor: isSelected ? 'rgba(124, 58, 237, 0.08)' : '#FAF8FD',
-                      boxShadow: isSelected ? 'var(--shadow-clay-orb)' : 'none',
-                      textAlign: 'left',
-                      cursor: 'pointer',
-                      transition: 'all 0.15s ease',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      gap: '0.25rem',
-                    }}
+                    id="demo-scenario-single"
+                    onClick={() => loadMultiCropDemoScenario('SINGLE_TOMATO')}
+                    className="clay-btn clay-btn-ghost"
+                    style={{ fontSize: '0.78rem', height: '32px', minHeight: '32px', padding: '0 0.75rem', backgroundColor: '#FFFFFF', border: '1px solid rgba(160, 150, 180, 0.2)' }}
                   >
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <strong style={{ fontSize: '0.95rem', color: isSelected ? 'var(--clay-accent-primary)' : 'var(--clay-text-primary)' }}>
-                        {t(profile.nameKey, profile.name)}
-                      </strong>
-                      {isSelected && <Check size={14} color="var(--clay-accent-primary)" />}
-                    </div>
-                    <span style={{ fontSize: '0.75rem', color: 'var(--clay-text-secondary)', fontWeight: 600 }}>
-                      {t(recMode.nameKey, recMode.name)} ({recMode.tempRangeLabel})
-                    </span>
+                    Scenario 1: Single Crop (Tomato)
                   </button>
-                );
-              })}
+                  <button
+                    type="button"
+                    id="demo-scenario-compatible"
+                    onClick={() => loadMultiCropDemoScenario('COMPATIBLE_GROUP')}
+                    className="clay-btn clay-btn-ghost"
+                    style={{ fontSize: '0.78rem', height: '32px', minHeight: '32px', padding: '0 0.75rem', backgroundColor: '#FFFFFF', border: '1px solid rgba(160, 150, 180, 0.2)' }}
+                  >
+                    Scenario 2: Compatible (Cabbage + Carrot + Spinach)
+                  </button>
+                  <button
+                    type="button"
+                    id="demo-scenario-incompatible"
+                    onClick={() => loadMultiCropDemoScenario('INCOMPATIBLE_GROUP')}
+                    className="clay-btn clay-btn-ghost"
+                    style={{ fontSize: '0.78rem', height: '32px', minHeight: '32px', padding: '0 0.75rem', backgroundColor: '#FFFFFF', border: '1px solid rgba(160, 150, 180, 0.2)' }}
+                  >
+                    Scenario 3: Incompatible (Tomato + Cabbage)
+                  </button>
+                  <button
+                    type="button"
+                    id="demo-scenario-multi"
+                    onClick={() => loadMultiCropDemoScenario('MULTI_COMPATIBLE')}
+                    className="clay-btn clay-btn-ghost"
+                    style={{ fontSize: '0.78rem', height: '32px', minHeight: '32px', padding: '0 0.75rem', backgroundColor: '#FFFFFF', border: '1px solid rgba(160, 150, 180, 0.2)' }}
+                  >
+                    Scenario 4: Multi-Compatible (Potato + Beans)
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* 24-Crop Grid to Add Vegetables */}
+            <div style={{ marginBottom: '1rem' }}>
+              <span style={{ fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', color: 'var(--clay-text-secondary)', display: 'block', marginBottom: '0.65rem' }}>
+                {t('dashboard.addCrop', 'Add Crop')}:
+              </span>
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))',
+                  gap: '0.65rem',
+                }}
+              >
+                {Object.values(VEGETABLE_PROFILES).map((profile) => {
+                  const isAlreadyStored = storedCrops.some((c) => c.id === profile.id);
+                  const recMode = STORAGE_MODES[profile.preferredMode];
+
+                  return (
+                    <button
+                      key={profile.id}
+                      type="button"
+                      id={`crop-select-${profile.id}`}
+                      disabled={isAlreadyStored}
+                      onClick={() => {
+                        addStoredCrop(profile.id);
+                      }}
+                      style={{
+                        padding: '0.65rem 0.75rem',
+                        borderRadius: 'var(--radius-medium)',
+                        border: isAlreadyStored ? '1.5px solid var(--clay-success)' : '1px solid rgba(160, 150, 180, 0.25)',
+                        backgroundColor: isAlreadyStored ? 'rgba(16, 185, 129, 0.08)' : '#FAF8FD',
+                        textAlign: 'left',
+                        cursor: isAlreadyStored ? 'not-allowed' : 'pointer',
+                        opacity: isAlreadyStored ? 0.75 : 1,
+                        transition: 'all 0.15s ease',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '0.2rem',
+                      }}
+                      title={isAlreadyStored ? t('dashboard.duplicateCropNotice', 'This vegetable is already in storage.') : `${profile.name} (${profile.temperatureRangeText})`}
+                    >
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <strong style={{ fontSize: '0.88rem', color: isAlreadyStored ? 'var(--clay-success)' : 'var(--clay-text-primary)' }}>
+                          {t(profile.nameKey, profile.name)}
+                        </strong>
+                        {isAlreadyStored ? <Check size={13} color="var(--clay-success)" /> : <Plus size={13} color="var(--clay-accent-primary)" />}
+                      </div>
+                      <span style={{ fontSize: '0.72rem', color: 'var(--clay-text-secondary)', fontWeight: 600 }}>
+                        {t(recMode.nameKey, recMode.name)} ({recMode.tempRangeLabel})
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
 
-            <div style={{ marginTop: '1rem', textAlign: 'right' }}>
+            <div style={{ marginTop: '1.25rem', textAlign: 'right' }}>
               <Link
                 to="/storage"
                 style={{

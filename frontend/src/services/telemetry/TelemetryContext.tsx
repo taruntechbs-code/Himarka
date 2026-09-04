@@ -21,6 +21,10 @@ import {
 } from './demoFixtures';
 import {
   StorageModeId,
+  StoredCrop,
+  MultiCropDemoScenario,
+  MULTI_CROP_DEMO_SCENARIOS,
+  createStoredCrop,
   getVegetableProfile,
   getModeForVegetable,
   areCropsCompatible,
@@ -81,13 +85,26 @@ interface TelemetryContextValue {
   lastUpdated: string;
   refreshData: () => void;
 
-  // HIMARKA Phase 1.3: Vegetable-Specific Mode & Prototype Alignment
+  // HIMARKA Phase 1.3 & 1.4: Vegetable-Specific Mode & Multi-Crop Storage
   activeCrop: string;
   activeMode: StorageModeId;
   isModeAdjusting: boolean;
   modeAdjustmentMessage?: string;
   setActiveCropAndMode: (cropId: string, modeId?: StorageModeId) => void;
   setActiveModeOnly: (modeId: StorageModeId) => void;
+
+  // Multi-Crop Storage State (Phase 1.4)
+  storedCrops: StoredCrop[];
+  cropsCompatibility: {
+    compatible: boolean;
+    sharedModeId?: StorageModeId;
+    conflictingModes?: { cropId: string; cropName: string; modeId: StorageModeId }[];
+    warning?: string;
+  };
+  addStoredCrop: (cropId: string, options?: Partial<StoredCrop>) => boolean;
+  removeStoredCrop: (cropId: string) => void;
+  setStoredCrops: (crops: StoredCrop[]) => void;
+  loadMultiCropDemoScenario: (scenario: MultiCropDemoScenario) => void;
 
   // Automatic Detection Pipeline
   detectionState: DetectionState;
@@ -108,13 +125,30 @@ export const TelemetryProvider: React.FC<{ children: ReactNode }> = ({ children 
     return 'DEMO';
   });
 
-  // HIMARKA Phase 1.3: Vegetable-specific temperature storage mode
-  const [activeCrop, setActiveCrop] = useState<string>(() => {
+  // HIMARKA Phase 1.4: Multi-crop storage in single chamber
+  const [storedCrops, setStoredCrops] = useState<StoredCrop[]>(() => {
     if (typeof localStorage !== 'undefined') {
-      return localStorage.getItem('himarka_active_crop') || 'tomato';
+      try {
+        const saved = localStorage.getItem('himarka_stored_crops');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            return parsed;
+          }
+        }
+      } catch {
+        // Fallback to default
+      }
     }
-    return 'tomato';
+    return MULTI_CROP_DEMO_SCENARIOS.SINGLE_TOMATO;
   });
+
+  const cropsCompatibility = useMemo(() => {
+    return areCropsCompatible(storedCrops.map((c) => c.id));
+  }, [storedCrops]);
+
+  // Backward compatibility alias for single-crop consumers
+  const activeCrop = storedCrops[0]?.id || 'tomato';
 
   const [activeMode, setActiveMode] = useState<StorageModeId>(() => {
     if (typeof localStorage !== 'undefined') {
@@ -145,13 +179,70 @@ export const TelemetryProvider: React.FC<{ children: ReactNode }> = ({ children 
     }
   };
 
+  const addStoredCrop = (cropId: string, options?: Partial<StoredCrop>): boolean => {
+    if (storedCrops.some((c) => c.id === cropId)) {
+      return false; // Duplicate rejected
+    }
+    const newCrop = createStoredCrop(
+      cropId,
+      options?.source || 'MANUAL',
+      options?.confidence,
+      options?.quantityKg
+    );
+    if (!newCrop) return false;
+
+    const nextCrops = [...storedCrops, newCrop];
+    setStoredCrops(nextCrops);
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('himarka_stored_crops', JSON.stringify(nextCrops));
+    }
+
+    // If this is the only crop or first crop, set activeMode to its preferred mode
+    if (storedCrops.length === 0) {
+      setActiveMode(newCrop.preferredMode);
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem('himarka_active_mode', newCrop.preferredMode);
+      }
+    }
+
+    return true;
+  };
+
+  const removeStoredCrop = (cropId: string) => {
+    const nextCrops = storedCrops.filter((c) => c.id !== cropId);
+    setStoredCrops(nextCrops);
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('himarka_stored_crops', JSON.stringify(nextCrops));
+    }
+  };
+
+  const loadMultiCropDemoScenario = (scenario: MultiCropDemoScenario) => {
+    const crops = MULTI_CROP_DEMO_SCENARIOS[scenario] || MULTI_CROP_DEMO_SCENARIOS.SINGLE_TOMATO;
+    setStoredCrops(crops);
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('himarka_stored_crops', JSON.stringify(crops));
+    }
+    if (scenario === 'COMPATIBLE_GROUP') {
+      setActiveMode('MODE_1');
+    } else if (scenario === 'MULTI_COMPATIBLE') {
+      setActiveMode('MODE_2');
+    } else if (scenario === 'SINGLE_TOMATO') {
+      setActiveMode('MODE_3');
+    }
+  };
+
   const setActiveCropAndMode = (cropId: string, modeId?: StorageModeId) => {
     const targetMode: StorageModeId = modeId || getModeForVegetable(cropId)?.id || 'MODE_3';
-    setActiveCrop(cropId);
+    const newCrop = createStoredCrop(cropId, 'MANUAL');
+    if (newCrop) {
+      setStoredCrops([newCrop]);
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem('himarka_stored_crops', JSON.stringify([newCrop]));
+      }
+    }
     setActiveMode(targetMode);
 
     if (typeof localStorage !== 'undefined') {
-      localStorage.setItem('himarka_active_crop', cropId);
       localStorage.setItem('himarka_active_mode', targetMode);
     }
 
@@ -257,10 +348,16 @@ export const TelemetryProvider: React.FC<{ children: ReactNode }> = ({ children 
   };
 
   const confirmDetection = () => {
-    if (detectionState.detectedCrops.length > 0 && detectionState.isCompatible) {
-      const primaryCrop = detectionState.detectedCrops[0];
-      const recMode: StorageModeId = detectionState.recommendedMode || getModeForVegetable(primaryCrop)?.id || 'MODE_3';
-      setActiveCropAndMode(primaryCrop, recMode);
+    if (detectionState.detectedCrops.length > 0) {
+      detectionState.detectedCrops.forEach((cropId) => {
+        addStoredCrop(cropId, {
+          source: 'AI',
+          confidence: detectionState.confidences[cropId],
+        });
+      });
+      if (detectionState.isCompatible && detectionState.recommendedMode) {
+        setActiveMode(detectionState.recommendedMode);
+      }
       setDetectionState((prev) => ({
         ...prev,
         status: 'IDLE',
@@ -306,12 +403,12 @@ export const TelemetryProvider: React.FC<{ children: ReactNode }> = ({ children 
     queryKey: ['real-energy-latest'],
     queryFn: async () => {
       const response = await apiClient.get<EnergyRecord>(
-        `${API_ENDPOINTS.ENERGY_LATEST}?storage_unit_id=himarka-unit-01`
+        `${API_ENDPOINTS.ENERGY_LATEST}?device_id=ESP32-HIMARKA-01`
       );
       return response;
     },
     enabled: mode === 'REAL',
-    refetchInterval: mode === 'REAL' ? 10000 : false,
+    refetchInterval: mode === 'REAL' ? 5000 : false,
     retry: 1,
   });
 
@@ -332,8 +429,8 @@ export const TelemetryProvider: React.FC<{ children: ReactNode }> = ({ children 
     return DEMO_CURRENT_ENERGY;
   }, [mode, realEnergyData]);
 
-  const isBackendConnected = Boolean(mode === 'REAL' && !realTelemError && realTelemetryData);
-  const backendError = realTelemError ? (realTelemError as Error).message : undefined;
+  const isBackendConnected = mode === 'REAL' ? !realTelemError && !!realTelemetryData : true;
+  const backendError = realTelemError instanceof Error ? realTelemError.message : undefined;
 
   const refreshData = () => {
     if (mode === 'REAL') {
@@ -365,6 +462,14 @@ export const TelemetryProvider: React.FC<{ children: ReactNode }> = ({ children 
     modeAdjustmentMessage,
     setActiveCropAndMode,
     setActiveModeOnly,
+
+    // Phase 1.4 Multi-Crop Storage
+    storedCrops,
+    cropsCompatibility,
+    addStoredCrop,
+    removeStoredCrop,
+    setStoredCrops,
+    loadMultiCropDemoScenario,
 
     // Automatic Detection Pipeline
     detectionState,

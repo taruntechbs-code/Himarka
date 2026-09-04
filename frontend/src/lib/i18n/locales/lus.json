@@ -113,7 +113,21 @@
     "whatAreYouStoring": "Eng thlai nge i dah dawn?",
     "selectCropPrompt": "Vawhna mode tha ber thlang turin thlai thlang rawh.",
     "aiDetectLink": "Camera hmangin enfiah rawh",
-    "viewAllModes": "Thlai 24 zinga vawhna en rawh"
+    "viewAllModes": "Thlai 24 zinga vawhna en rawh",
+    "storedProduce": "Thlai Dahthatte",
+    "manageCrops": "Thlai Enkawlna",
+    "addCrop": "Thlai Dah Belhna",
+    "removeCrop": "Thlai Paihna",
+    "noCropsStored": "Tunah hian dahthat engmah a awm lo",
+    "activeStorageGroup": "Dahthat Hmanlai Pawl",
+    "compatibleGroup": "Thlai zawng zawngte hi inmil tlang an ni",
+    "tempConflictWarning": "Heng thlaite hian khawvawh zawng hrang an mamawh avangin dah dun loh tur a ni.",
+    "reviewRequired": "Ennawn Ngai",
+    "singleChamberNotice": "Chamber khata dah: Thlai zawng zawng hian khawvawh zawng inang an hmang tlang vek.",
+    "demoScenarios": "Demo Entirnate",
+    "duplicateCropNotice": "He thlai hi dahthat a ni tawh.",
+    "reference": "Tehkhawng",
+    "recommended": "Rawtna"
   },
   "telemetry": {
     "title": "Boruak Dinhmun & Thlalak",

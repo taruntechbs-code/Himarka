@@ -39,6 +39,136 @@ export interface VegetableProfile {
   verificationNote?: string;
 }
 
+export interface StoredCrop {
+  id: string;
+  name: string;
+  nameKey: string;
+  preferredMode: StorageModeId;
+  temperatureRangeText: string;
+  quantityKg?: number | null;
+  confidence?: number;
+  source: 'MANUAL' | 'AI' | 'DEMO';
+  addedAt: string;
+}
+
+export type MultiCropDemoScenario =
+  | 'SINGLE_TOMATO'
+  | 'COMPATIBLE_GROUP'
+  | 'INCOMPATIBLE_GROUP'
+  | 'MULTI_COMPATIBLE';
+
+export const MULTI_CROP_DEMO_SCENARIOS: Record<MultiCropDemoScenario, StoredCrop[]> = {
+  SINGLE_TOMATO: [
+    {
+      id: 'tomato',
+      name: 'Tomato',
+      nameKey: 'crops.tomato',
+      preferredMode: 'MODE_3',
+      temperatureRangeText: '13–15°C',
+      quantityKg: null,
+      source: 'DEMO',
+      addedAt: '2026-09-04T10:00:00Z',
+    },
+  ],
+  COMPATIBLE_GROUP: [
+    {
+      id: 'cabbage',
+      name: 'Cabbage',
+      nameKey: 'crops.cabbage',
+      preferredMode: 'MODE_1',
+      temperatureRangeText: '0–1°C',
+      quantityKg: null,
+      source: 'DEMO',
+      addedAt: '2026-09-04T08:30:00Z',
+    },
+    {
+      id: 'carrot',
+      name: 'Carrot',
+      nameKey: 'crops.carrot',
+      preferredMode: 'MODE_1',
+      temperatureRangeText: '0–1°C',
+      quantityKg: null,
+      source: 'DEMO',
+      addedAt: '2026-09-04T09:15:00Z',
+    },
+    {
+      id: 'spinach',
+      name: 'Spinach',
+      nameKey: 'crops.spinach',
+      preferredMode: 'MODE_1',
+      temperatureRangeText: '0–2°C',
+      quantityKg: null,
+      source: 'DEMO',
+      addedAt: '2026-09-04T09:45:00Z',
+    },
+  ],
+  INCOMPATIBLE_GROUP: [
+    {
+      id: 'tomato',
+      name: 'Tomato',
+      nameKey: 'crops.tomato',
+      preferredMode: 'MODE_3',
+      temperatureRangeText: '13–15°C',
+      quantityKg: null,
+      source: 'DEMO',
+      addedAt: '2026-09-04T07:00:00Z',
+    },
+    {
+      id: 'cabbage',
+      name: 'Cabbage',
+      nameKey: 'crops.cabbage',
+      preferredMode: 'MODE_1',
+      temperatureRangeText: '0–1°C',
+      quantityKg: null,
+      source: 'DEMO',
+      addedAt: '2026-09-04T09:00:00Z',
+    },
+  ],
+  MULTI_COMPATIBLE: [
+    {
+      id: 'potato',
+      name: 'Potato',
+      nameKey: 'crops.potato',
+      preferredMode: 'MODE_2',
+      temperatureRangeText: '3–4°C',
+      quantityKg: null,
+      source: 'DEMO',
+      addedAt: '2026-09-04T08:00:00Z',
+    },
+    {
+      id: 'french_beans',
+      name: 'French Beans',
+      nameKey: 'crops.french_beans',
+      preferredMode: 'MODE_2',
+      temperatureRangeText: '4–7°C',
+      quantityKg: null,
+      source: 'DEMO',
+      addedAt: '2026-09-04T08:20:00Z',
+    },
+  ],
+};
+
+export function createStoredCrop(
+  cropId: string,
+  source: 'MANUAL' | 'AI' | 'DEMO' = 'MANUAL',
+  confidence?: number,
+  quantityKg?: number | null
+): StoredCrop | null {
+  const profile = getVegetableProfile(cropId);
+  if (!profile) return null;
+  return {
+    id: profile.id,
+    name: profile.name,
+    nameKey: profile.nameKey,
+    preferredMode: profile.preferredMode,
+    temperatureRangeText: profile.temperatureRangeText,
+    quantityKg: quantityKg ?? null,
+    confidence,
+    source,
+    addedAt: new Date().toISOString(),
+  };
+}
+
 export const STORAGE_MODES: Record<StorageModeId, StorageMode> = {
   MODE_1: {
     id: 'MODE_1',

@@ -113,7 +113,21 @@
     "whatAreYouStoring": "Kiei kiba phi buh?",
     "selectCropPrompt": "Jied ia ki jhur ban ioh ia ka jingkhriat kaba biang.",
     "aiDetectLink": "Pyndonkam Camera ban ithuh",
-    "viewAllModes": "Peit baroh 24 ki rukom buh jhur"
+    "viewAllModes": "Peit baroh 24 ki rukom buh jhur",
+    "storedProduce": "Ki Jingthung ba la kynshew",
+    "manageCrops": "Pyniaid ia ki jingthung",
+    "addCrop": "Pynlang jingthung",
+    "removeCrop": "Weng ia ka jingthung",
+    "noCropsStored": "Ym don jingthung ha ka jaka kynshew",
+    "activeStorageGroup": "Ka kynhun ba dang pynkynshew",
+    "compatibleGroup": "Baroh ki jingthung ki iadei lang",
+    "tempConflictWarning": "Kine ki jingthung ki donkam ia ka jingkhriat kaba pher bad ym dei ban buh lang ha kajuh ka jaka.",
+    "reviewRequired": "Donkam ban bishar biang",
+    "singleChamberNotice": "Ka kamra ba marwei: Baroh ki jingthung ki ioh kajuh ka jingkhriat.",
+    "demoScenarios": "Ki Demo ba pyni",
+    "duplicateCropNotice": "Kane ka jhur ka la don lypa ha ka jaka kynshew.",
+    "reference": "Kaba kdew",
+    "recommended": "Ba la ai jingmut"
   },
   "telemetry": {
     "title": "Ki jingkhein ka Suinbneng",
